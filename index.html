@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proseti - Consultoria em Processos e Soluções Digitais</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #0f172a;
+        --secondary: #3b82f6;
+        --accent: #10b981;
+        --text: #334155;
+        --light: #f8fafc;
+        --gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", system-ui, sans-serif;
+        text-decoration: none;
+        list-style: none;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        line-height: 1.6;
+        color: var(--text);
+        background-color: var(--light);
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* Header & Navigation */
+      header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+        transition: all 0.3s ease;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 3rem;
+        list-style: none;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--secondary);
+        transition: width 0.3s;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 180px 0 100px;
+        background: var(--gradient);
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Menu Mobile */
+      .menu-button {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 101;
+      }
+
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        padding: 6rem 2rem 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 100;
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu ul {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .mobile-menu a {
+        font-size: 1.25rem;
+        padding: 0.5rem 0;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23FFFFFF" fill-opacity="0.05" d="M45,-78.1C58.3,-71.3,69.1,-58.7,77.8,-44.3C86.5,-29.9,93.2,-14.9,92.3,-0.5C91.4,13.9,82.9,27.8,73.5,40.2C64.1,52.6,53.8,63.5,41.3,70.7C28.8,77.9,14.4,81.4,-0.7,82.6C-15.8,83.8,-31.6,82.7,-45.4,76.2C-59.2,69.7,-71,57.8,-79.1,43.5C-87.2,29.2,-91.7,14.6,-91.6,0C-91.5,-14.5,-86.9,-29,-78.9,-41.2C-70.9,-53.4,-59.5,-63.3,-46.2,-70.1C-32.9,-76.9,-16.5,-80.7,-0.2,-80.3C16,-79.9,31.7,-84.9,45,-78.1Z" transform="translate(100 100)" /></svg>')
+          no-repeat center center;
+        background-size: 800px;
+        opacity: 0.1;
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+        font-weight: 800;
+      }
+
+      .hero p {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+      }
+
+      .about {
+        padding: 120px 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .about::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%230f172a" fill-opacity="0.03" d="M39.7,-44.1C51.9,-33.9,62.4,-21.1,64.4,-6.8C66.3,7.5,59.8,23.3,49.2,35.7C38.6,48.1,24,57.1,7.2,61.3C-9.6,65.5,-28.5,64.8,-41.5,55.2C-54.5,45.6,-61.5,27,-63.7,7.9C-65.9,-11.2,-63.3,-30.9,-52.2,-42.1C-41.1,-53.3,-21.5,-56.1,-3.8,-52.8C13.9,-49.4,27.5,-54.3,39.7,-44.1Z" transform="translate(100 100)" /></svg>')
+          no-repeat center center;
+        background-size: 800px;
+        opacity: 0.5;
+        z-index: 0;
+      }
+
+      .about-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .about-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .about-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .mission-vision {
+        background: white;
+        border-radius: 16px;
+        padding: 3rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      .mission-vision h3 {
+        color: var(--secondary);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .mission-vision h3 i {
+        font-size: 1.25rem;
+      }
+
+      .mission-vision p {
+        color: var(--text);
+        font-size: 1.1rem;
+        line-height: 1.7;
+      }
+
+      .values-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .value-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .value-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      }
+
+      .value-card h4 {
+        color: var(--primary);
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .value-card h4 i {
+        color: var(--secondary);
+        font-size: 1rem;
+      }
+
+      .value-card p {
+        color: var(--text);
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 2rem;
+        background: var(--secondary);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+      }
+
+      /* Services Carousel */
+      .services {
+        padding: 120px 0;
+        background: white;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 6rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-header h2 {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+      }
+
+      .section-header p {
+        font-size: 1.25rem;
+        color: var(--text);
+        opacity: 0.8;
+      }
+
+      .carousel {
+        position: relative;
+        overflow: hidden;
+        padding: 2rem 0;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+
+      .service-card {
+        flex: 0 0 calc(33.333% - 2rem);
+        margin: 0 1rem;
+        padding: 3rem;
+        background: var(--light);
+        border-radius: 16px;
+        transition: all 0.3s;
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .service-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--gradient);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .service-icon i {
+        font-size: 2rem;
+        color: white;
+      }
+
+      .service-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      /* Numbers Section */
+      .numbers {
+        padding: 120px 0;
+        background: var(--gradient);
+        color: white;
+      }
+
+      .numbers-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4rem;
+        text-align: center;
+      }
+
+      .number-item h3 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        font-weight: 800;
+      }
+
+      .number-item p {
+        font-size: 1.25rem;
+        opacity: 0.9;
+      }
+
+      /* Cases Section */
+      .cases {
+        padding: 120px 0;
+        background: white;
+      }
+
+      .cases-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+      }
+
+      .case-card {
+        background: var(--light);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s;
+      }
+
+      .case-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .case-image {
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .case-content {
+        padding: 2rem;
+      }
+
+      .case-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      /* Testimonials */
+      .testimonials {
+        padding: 120px 0;
+        background: var(--light);
+      }
+
+      .testimonial-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 16px;
+        margin: 0 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      .testimonial-content {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        position: relative;
+      }
+
+      .testimonial-content::before {
+        content: '"';
+        font-size: 4rem;
+        color: var(--secondary);
+        opacity: 0.2;
+        position: absolute;
+        top: -1rem;
+        left: -1rem;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .author-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-size: cover;
+      }
+
+      .author-info h4 {
+        font-size: 1.25rem;
+        color: var(--primary);
+      }
+
+      .author-info p {
+        color: var(--text);
+        opacity: 0.8;
+      }
+
+      /* Contact Section */
+      .contact {
+        padding: 120px 0;
+        background: var(--gradient);
+        color: white;
+        position: relative;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+
+      .contact-info h2 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-info p {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+      }
+
+      .contact-form {
+        background: white;
+        padding: 3rem;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--secondary);
+      }
+
+      .form-group textarea {
+        height: 150px;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 1rem;
+        background: var(--gradient);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      button[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--primary);
+        color: white;
+        padding: 6rem 0 2rem;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr repeat(3, 1fr);
+        gap: 4rem;
+        margin-bottom: 4rem;
+      }
+
+      .footer-info h4 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-info p {
+        opacity: 0.8;
+        margin-bottom: 1rem;
+      }
+
+      .footer-links h4 {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-links a {
+        color: white;
+        opacity: 0.8;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 1rem;
+        transition: opacity 0.3s;
+      }
+
+      .footer-links a:hover {
+        opacity: 1;
+      }
+
+      .footer-bottom {
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        opacity: 0.8;
+        font-size: 0.875rem;
+      }
+
+      /* Social Icons */
+      .social-icons {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .social-icons a {
+        color: white;
+        font-size: 1.5rem;
+        opacity: 0.8;
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .social-icons a:hover {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+
+      /* Estilos base para animações */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      .fade-down {
+        opacity: 0;
+        transform: translateY(-30px);
+        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      .fade-left {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      .fade-right {
+        opacity: 0;
+        transform: translateX(30px);
+        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      .fade-scale {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      /* Classe para elementos visíveis */
+      .visible {
+        opacity: 1;
+        transform: translate(0) scale(1);
+      }
+
+      /* Otimização para dispositivos que preferem menos movimento */
+      @media (prefers-reduced-motion: reduce) {
+        .fade-up,
+        .fade-down,
+        .fade-left,
+        .fade-right,
+        .fade-scale {
+          transition: opacity 0.5s ease;
+          transform: none;
+        }
+
+        .visible {
+          transform: none;
+        }
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      /* Responsiveness */
+      @media (max-width: 1200px) {
+        .numbers-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 3rem;
+        }
+
+        .service-card {
+          flex: 0 0 calc(50% - 2rem);
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .about-cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-content,
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+
+        .hero h1 {
+          font-size: 3rem;
+        }
+
+        .about-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .values-grid {
+          grid-template-columns: 1fr;
+        }
+
+        nav ul {
+          display: none;
+        }
+
+        .service-card {
+          flex: 0 0 calc(100% - 2rem);
+        }
+
+        .numbers-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-button {
+          display: block;
+        }
+
+        nav ul {
+          display: none;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+          text-align: center;
+        }
+
+        .footer-links {
+          text-align: center;
+        }
+
+        .social-icons {
+          justify-content: center;
+        }
+
+        .footer-info p {
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer-bottom {
+          padding: 1.5rem 0;
+          font-size: 0.75rem;
+        }
+
+        .social-icons {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-content">
+        <a href="#" class="logo">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <path
+              d="M20 4L4 12L20 20L36 12L20 4Z"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <path
+              d="M4 20L20 28L36 20"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <path
+              d="M4 28L20 36L36 28"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+          </svg>
+          Proseti
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#cases">Cases</a></li>
+            <li><a href="#depoimentos">Depoimentos</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </nav>
+        <button class="menu-button" aria-label="Menu" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="mobile-menu">
+          <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#cases">Cases</a></li>
+            <li><a href="#depoimentos">Depoimentos</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero" id="inicio">
+      <div class="container hero-content">
+        <div class="animate">
+          <h1>Transforme seus processos empresariais</h1>
+          <p>
+            Soluções digitais e consultoria especializada para otimizar
+            operações e impulsionar resultados mensuráveis para seu negócio.
+          </p>
+          <a href="#contato" class="cta-button">
+            Iniciar Transformação
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="animate">
+          <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Gradientes -->
+              <linearGradient
+                id="techGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" style="stop-color: #3b82f6" />
+                <stop offset="100%" style="stop-color: #60a5fa" />
+              </linearGradient>
+
+              <linearGradient
+                id="dataGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" style="stop-color: #10b981" />
+                <stop offset="100%" style="stop-color: #34d399" />
+              </linearGradient>
+
+              <linearGradient
+                id="glowGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop
+                  offset="0%"
+                  style="stop-color: #ffffff; stop-opacity: 0.5"
+                />
+                <stop
+                  offset="100%"
+                  style="stop-color: #ffffff; stop-opacity: 0"
+                />
+              </linearGradient>
+
+              <!-- Filtros para efeito de brilho -->
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Linhas de Grade de Fundo -->
+            <g opacity="0.15">
+              <path d="M0 150 L800 150" stroke="#ffffff" stroke-width="1" />
+              <path d="M0 300 L800 300" stroke="#ffffff" stroke-width="1" />
+              <path d="M0 450 L800 450" stroke="#ffffff" stroke-width="1" />
+              <path d="M200 0 L200 600" stroke="#ffffff" stroke-width="1" />
+              <path d="M400 0 L400 600" stroke="#ffffff" stroke-width="1" />
+              <path d="M600 0 L600 600" stroke="#ffffff" stroke-width="1" />
+            </g>
+
+            <!-- Fluxo de Processo Principal -->
+            <g transform="translate(100, 200)">
+              <!-- Nodos de Processo -->
+              <g filter="url(#glow)">
+                <!-- Nodo 1: Entrada de Dados -->
+                <rect
+                  x="0"
+                  y="0"
+                  width="60"
+                  height="60"
+                  rx="15"
+                  fill="url(#techGradient)"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0.8;1;0.8"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+                <path
+                  d="M10 30 L50 30 M30 10 L30 50"
+                  stroke="white"
+                  stroke-width="3"
+                />
+
+                <!-- Nodo 2: Processamento -->
+                <rect
+                  x="200"
+                  y="0"
+                  width="60"
+                  height="60"
+                  rx="15"
+                  fill="url(#dataGradient)"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="1;0.8;1"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+                <circle
+                  cx="230"
+                  cy="30"
+                  r="20"
+                  stroke="white"
+                  stroke-width="3"
+                  fill="none"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 230 30"
+                    to="360 230 30"
+                    dur="4s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+
+                <!-- Nodo 3: Saída Otimizada -->
+                <rect
+                  x="400"
+                  y="0"
+                  width="60"
+                  height="60"
+                  rx="15"
+                  fill="url(#techGradient)"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0.8;1;0.8"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+                <path d="M420 20 L440 30 L420 40 Z" fill="white" />
+              </g>
+
+              <!-- Linhas de Conexão Animadas -->
+              <g stroke="url(#techGradient)" stroke-width="3">
+                <path d="M60 30 L200 30" stroke-dasharray="10,5">
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    values="15;0"
+                    dur="1s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+                <path d="M260 30 L400 30" stroke-dasharray="10,5">
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    values="0;15"
+                    dur="1s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </g>
+
+              <!-- Partículas de Dados -->
+              <circle cx="100" cy="30" r="4" fill="white">
+                <animate
+                  attributeName="cx"
+                  values="60;200"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  values="0;1;0"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="300" cy="30" r="4" fill="white">
+                <animate
+                  attributeName="cx"
+                  values="260;400"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  values="0;1;0"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+
+            <!-- Elementos Decorativos -->
+            <g transform="translate(0, 100)" opacity="0.7">
+              <!-- Símbolos Tecnológicos -->
+              <g fill="none" stroke="url(#dataGradient)" stroke-width="2">
+                <rect x="50" y="350" width="30" height="30" rx="5">
+                  <animate
+                    attributeName="opacity"
+                    values="0.5;1;0.5"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+                <circle cx="700" cy="150" r="15">
+                  <animate
+                    attributeName="r"
+                    values="15;20;15"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+                <path d="M650 400 L680 400 L665 370 Z">
+                  <animate
+                    attributeName="opacity"
+                    values="1;0.5;1"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </g>
+
+              <!-- Linhas de Conexão Secundárias -->
+              <g stroke="url(#techGradient)" stroke-width="1" opacity="0.3">
+                <path
+                  d="M100 380 C200 380, 300 420, 400 420"
+                  stroke-dasharray="5,5"
+                >
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    values="10;0"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+                <path
+                  d="M500 150 C600 150, 650 200, 700 200"
+                  stroke-dasharray="5,5"
+                >
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    values="0;10"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </g>
+            </g>
+
+            <!-- Círculos Flutuantes -->
+            <g>
+              <circle cx="150" cy="450" r="5" fill="white" opacity="0.5">
+                <animate
+                  attributeName="cy"
+                  values="450;430;450"
+                  dur="4s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="600" cy="100" r="5" fill="white" opacity="0.5">
+                <animate
+                  attributeName="cy"
+                  values="100;120;100"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="sobre">
+      <div class="container">
+        <div class="section-header animate">
+          <h2>Nossa Essência</h2>
+          <p>
+            Conheça os princípios que direcionam nossa atuação e compromisso com
+            a excelência
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-cards animate">
+            <div class="mission-vision">
+              <h3><i class="fas fa-bullseye"></i> Nossa Missão</h3>
+              <p>
+                Transformar e otimizar organizações através da integração
+                inteligente entre processos e tecnologia, gerando eficiência
+                operacional e valor sustentável para nossos clientes.
+              </p>
+            </div>
+
+            <div class="mission-vision">
+              <h3><i class="fas fa-binoculars"></i> Nossa Visão</h3>
+              <p>
+                Ser reconhecida até 2030 como referência nacional em consultoria
+                de processos e soluções tecnológicas, destacando-se pela
+                excelência na entrega de resultados mensuráveis e pela
+                capacidade de inovação adaptada à realidade de cada cliente.
+              </p>
+            </div>
+
+            <div class="mission-vision">
+              <h3><i class="fas fa-gem"></i> Nossos Valores</h3>
+              <p>
+                Nossos valores fundamentais guiam cada aspecto de nossa atuação,
+                desde o desenvolvimento de soluções até o relacionamento com
+                nossos clientes. Eles são a base de nossa cultura organizacional
+                e refletem nosso compromisso com a excelência.
+              </p>
+            </div>
+          </div>
+
+          <div class="values-grid animate">
+            <div class="value-card">
+              <h4><i class="fas fa-star"></i> Excelência Técnica</h4>
+              <p>
+                Buscamos constantemente o aprimoramento técnico e a qualidade
+                superior em nossas entregas, mantendo-nos atualizados com as
+                melhores práticas do mercado.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <h4><i class="fas fa-lightbulb"></i> Inovação Pragmática</h4>
+              <p>
+                Desenvolvemos soluções inovadoras que são práticas e viáveis,
+                sempre considerando o contexto e as necessidades específicas de
+                cada cliente.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <h4><i class="fas fa-handshake"></i> Transparência</h4>
+              <p>
+                Mantemos uma comunicação clara e honesta em todas as interações,
+                estabelecendo relacionamentos baseados na confiança e no
+                profissionalismo.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <h4>
+                <i class="fas fa-chart-line"></i> Compromisso com Resultados
+              </h4>
+              <p>
+                Focamos em entregar valor mensurável e tangível, alinhando
+                nossas soluções aos objetivos estratégicos dos clientes.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <h4><i class="fas fa-users"></i> Parceria Colaborativa</h4>
+              <p>
+                Trabalhamos em estreita colaboração com nossos clientes,
+                construindo relacionamentos duradouros e compartilhando
+                conhecimento para alcançar os melhores resultados.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <h4><i class="fas fa-sync-alt"></i> Adaptabilidade</h4>
+              <p>
+                Mantemos a flexibilidade para adequar nossas soluções às
+                mudanças do mercado e às necessidades específicas de cada
+                organização.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="servicos">
+      <div class="container">
+        <div class="section-header animate">
+          <h2>Nossas Soluções</h2>
+          <p>
+            Combinamos expertise em processos e tecnologia para entregar
+            resultados excepcionais
+          </p>
+        </div>
+        <div class="carousel">
+          <div class="carousel-track">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h3>Consultoria em Processos</h3>
+              <p>
+                Análise, redesenho e otimização de processos para maior
+                eficiência operacional e redução de custos.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <h3>Desenvolvimento Web</h3>
+              <p>
+                Criação de sistemas web personalizados e intuitivos para
+                automatizar e simplificar operações.
+              </p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-robot"></i>
+              </div>
+              <h3>Automação de Processos</h3>
+              <p>
+                Implementação de soluções para automatizar tarefas repetitivas e
+                aumentar a produtividade.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="numbers">
+      <div class="container">
+        <div class="numbers-grid">
+          <div class="number-item animate">
+            <h3>98%</h3>
+            <p>Satisfação dos clientes</p>
+          </div>
+          <div class="number-item animate">
+            <h3>150+</h3>
+            <p>Projetos entregues</p>
+          </div>
+          <div class="number-item animate">
+            <h3>45%</h3>
+            <p>Aumento médio em eficiência</p>
+          </div>
+          <div class="number-item animate">
+            <h3>12+</h3>
+            <p>Anos de experiência</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cases" id="cases">
+      <div class="container">
+        <div class="section-header animate">
+          <h2>Cases de Sucesso</h2>
+          <p>Conheça algumas das transformações que ajudamos a realizar</p>
+        </div>
+        <div class="cases-grid">
+          <div class="case-card animate">
+            <div
+              class="case-image"
+              style="background-image: url('/api/placeholder/400/250')"
+            ></div>
+            <div class="case-content">
+              <h3>Indústria Manufatureira</h3>
+              <p>
+                Redução de 40% no tempo de processamento de pedidos através da
+                automação de processos.
+              </p>
+            </div>
+          </div>
+          <div class="case-card animate">
+            <div
+              class="case-image"
+              style="background-image: url('/api/placeholder/400/250')"
+            ></div>
+            <div class="case-content">
+              <h3>Empresa de Logística</h3>
+              <p>
+                Sistema integrado de gestão que aumentou a eficiência
+                operacional em 60%.
+              </p>
+            </div>
+          </div>
+          <div class="case-card animate">
+            <div
+              class="case-image"
+              style="background-image: url('/api/placeholder/400/250')"
+            ></div>
+            <div class="case-content">
+              <h3>Varejo</h3>
+              <p>
+                Implementação de dashboard em tempo real resultando em decisões
+                mais ágeis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials" id="depoimentos">
+      <div class="container">
+        <div class="section-header animate">
+          <h2>O que dizem nossos clientes</h2>
+          <p>A opinião de quem já transformou seus processos com a Proseti</p>
+        </div>
+        <div class="testimonial-card animate">
+          <div class="testimonial-content">
+            "A Proseti não apenas modernizou nossos processos, mas também nos
+            ajudou a criar uma cultura de melhoria contínua. Os resultados
+            superaram nossas expectativas."
+          </div>
+          <div class="testimonial-author">
+            <div
+              class="author-image"
+              style="background-image: url('/api/placeholder/60/60')"
+            ></div>
+            <div class="author-info">
+              <h4>Maria Silva</h4>
+              <p>Diretora de Operações - Tech Solutions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contato">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info animate">
+            <h2>Vamos conversar?</h2>
+            <p>
+              Estamos prontos para entender seus desafios e propor soluções
+              customizadas para sua empresa.
+            </p>
+            <!-- <div class="contact-methods">
+              <p><i class="fas fa-envelope"></i> contato@proseti.com.br</p>
+              <p><i class="fas fa-phone"></i> +55 (11) 99999-9999</p>
+            </div> -->
+          </div>
+          <form class="contact-form animate">
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input type="text" id="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" required />
+            </div>
+            <div class="form-group">
+              <label for="company">Empresa</label>
+              <input type="text" id="company" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Mensagem</label>
+              <textarea id="message" required></textarea>
+            </div>
+            <button type="submit">Enviar Mensagem</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <h4>Proseti</h4>
+            <p>
+              Transformando processos e impulsionando resultados através de
+              soluções digitais inovadoras.
+            </p>
+          </div>
+          <div class="footer-links">
+            <h4>Navegação</h4>
+            <a href="#inicio">Início</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#cases">Cases</a>
+            <a href="#depoimentos">Depoimentos</a>
+          </div>
+          <div class="footer-links">
+            <h4>Serviços</h4>
+            <a href="#servicos">Consultoria em Processos</a>
+            <a href="#servicos">Desenvolvimento Web</a>
+            <a href="#servicos">Automação</a>
+          </div>
+          <div class="footer-links">
+            <h4>Contato</h4>
+            <a href="mailto:contato@proseti.com.br">contato@proseti.com.br</a>
+            <a href="tel:+5511999999999">+55 (11) 99999-9999</a>
+          </div>
+        </div>
+        <div class="social-icons">
+          <a href="#" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Proseti. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Configuração do Intersection Observer para animações de entrada
+      const observerOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -10% 0px",
+      };
+
+      // Função para definir classes de animação iniciais
+      function setInitialAnimations() {
+        // Hero section - Animação diferente para cada lado
+        document
+          .querySelector(".hero .hero-content > div:first-child")
+          .classList.add("fade-left");
+        document
+          .querySelector(".hero .hero-content > div:last-child")
+          .classList.add("fade-right");
+
+        // About section
+        document
+          .querySelectorAll(".about-cards .mission-vision")
+          .forEach((el, index) => {
+            el.classList.add("fade-up");
+            el.style.transitionDelay = `${index * 0.2}s`;
+          });
+
+        // Value cards com efeito escala
+        document.querySelectorAll(".value-card").forEach((el, index) => {
+          el.classList.add("fade-scale");
+          el.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        // Services cards entrando pelos lados alternadamente
+        document.querySelectorAll(".service-card").forEach((el, index) => {
+          el.classList.add(index % 2 === 0 ? "fade-left" : "fade-right");
+          el.style.transitionDelay = `${index * 0.2}s`;
+        });
+
+        // Numbers com fade up sequencial
+        document.querySelectorAll(".number-item").forEach((el, index) => {
+          el.classList.add("fade-up");
+          el.style.transitionDelay = `${index * 0.2}s`;
+        });
+
+        // Cases cards com fade up
+        document.querySelectorAll(".case-card").forEach((el, index) => {
+          el.classList.add("fade-up");
+          el.style.transitionDelay = `${index * 0.2}s`;
+        });
+
+        // Testimonial com fade scale
+        document.querySelectorAll(".testimonial-card").forEach((el) => {
+          el.classList.add("fade-scale");
+        });
+
+        // Contact form e info
+        document.querySelector(".contact-info").classList.add("fade-left");
+        document.querySelector(".contact-form").classList.add("fade-right");
+      }
+
+      // Observer simplificado apenas para entrada dos elementos
+      const appearOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("visible");
+          // Removemos o observer após a animação para melhor performance
+          observer.unobserve(entry.target);
+        });
+      }, observerOptions);
+
+      // Carousel de serviços
+      function initCarousel() {
+        const track = document.querySelector(".carousel-track");
+        const cards = document.querySelectorAll(".service-card");
+        let currentIndex = 0;
+
+        function updateCarousel() {
+          if (!track) return;
+          const cardWidth = cards[0].offsetWidth + 32; // Inclui margem
+          track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+
+        function nextSlide() {
+          currentIndex = (currentIndex + 1) % (cards.length - 2);
+          updateCarousel();
+        }
+
+        window.addEventListener("resize", updateCarousel);
+        setInterval(nextSlide, 5000);
+      }
+
+      // Header scroll effect
+      function initHeaderScroll() {
+        let lastScroll = 0;
+        const header = document.querySelector("header");
+
+        window.addEventListener("scroll", () => {
+          const currentScroll = window.pageYOffset;
+
+          if (currentScroll <= 0) {
+            header.style.boxShadow = "none";
+            return;
+          }
+
+          if (currentScroll > lastScroll) {
+            header.style.transform = "translateY(-100%)";
+          } else {
+            header.style.transform = "translateY(0)";
+            header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+          }
+
+          lastScroll = currentScroll;
+        });
+      }
+
+      // Smooth scroll para links de navegação
+      function initSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          });
+        });
+      }
+
+      // Formulário de contato
+      function initContactForm() {
+        const form = document.querySelector(".contact-form");
+        if (!form) return;
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const formData = {
+            name: document.querySelector("#name").value,
+            email: document.querySelector("#email").value,
+            company: document.querySelector("#company").value,
+            message: document.querySelector("#message").value,
+          };
+
+          console.log("Dados do formulário:", formData);
+          alert("Obrigado pelo contato! Retornaremos em breve.");
+          form.reset();
+        });
+      }
+
+      // Menu Mobile
+      function initMobileMenu() {
+        const menuButton = document.querySelector(".menu-button");
+        const mobileMenu = document.querySelector(".mobile-menu");
+        const menuLinks = document.querySelectorAll(".mobile-menu a");
+
+        function toggleMenu() {
+          const isOpen = mobileMenu.classList.contains("active");
+          mobileMenu.classList.toggle("active");
+          menuButton.setAttribute("aria-expanded", !isOpen);
+          document.body.style.overflow = isOpen ? "" : "hidden";
+        }
+
+        menuButton.addEventListener("click", toggleMenu);
+
+        // Fecha o menu ao clicar em um link
+        menuLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            toggleMenu();
+          });
+        });
+
+        // Fecha o menu ao clicar fora
+        document.addEventListener("click", (e) => {
+          if (
+            mobileMenu.classList.contains("active") &&
+            !mobileMenu.contains(e.target) &&
+            !menuButton.contains(e.target)
+          ) {
+            toggleMenu();
+          }
+        });
+      }
+
+      // Função de inicialização principal
+      document.addEventListener("DOMContentLoaded", () => {
+        // Inicializa as animações
+        setInitialAnimations();
+
+        // Observa elementos para animações
+        const animatedElements = document.querySelectorAll(
+          ".fade-up, .fade-down, .fade-left, .fade-right, .fade-scale"
+        );
+        animatedElements.forEach((el) => {
+          appearOnScroll.observe(el);
+        });
+
+        // Inicializa todas as funcionalidades
+        initMobileMenu();
+        initCarousel();
+        initHeaderScroll();
+        initSmoothScroll();
+        initContactForm();
+
+        // Revela os elementos inicialmente visíveis
+        setTimeout(() => {
+          const visibleElements = document.querySelectorAll('[class*="fade-"]');
+          visibleElements.forEach((el) => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+              el.classList.add("visible");
+            }
+          });
+        }, 100);
+      });
+    </script>
+  </body>
+</html>

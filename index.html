@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff">
     <title>Proseti - Consultoria em Processos e Soluções Digitais</title>
     <link
       rel="stylesheet"
@@ -2157,7 +2158,16 @@
         const theme = savedTheme || "light";
 
         document.documentElement.setAttribute("data-theme", theme);
+        updateThemeColor(theme);
         return theme;
+      };
+
+      const updateThemeColor = (theme) => {
+        const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeColorMeta) {
+          // Atualiza a cor da barra do navegador baseado no tema
+          themeColorMeta.setAttribute('content', theme === 'dark' ? '#000000' : '#ffffff');
+        }
       };
 
       const toggleTheme = () => {
@@ -2167,6 +2177,7 @@
 
         document.documentElement.setAttribute("data-theme", newTheme);
         localStorage.setItem("theme", newTheme);
+        updateThemeColor(theme);
       };
 
       // Paletas de cores

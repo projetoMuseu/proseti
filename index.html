@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0f172a">
     <title>Proseti - Consultoria em Processos e Soluções Digitais</title>
     <link
       rel="stylesheet"
@@ -2156,28 +2156,36 @@
         const savedTheme = localStorage.getItem("theme");
         // Se não houver tema salvo, usa 'light'
         const theme = savedTheme || "light";
-
+      
         document.documentElement.setAttribute("data-theme", theme);
         updateThemeColor(theme);
         return theme;
       };
-
+      
+      const getThemeColor = (theme) => {
+        // Obtém a cor atual da variável CSS
+        const styles = getComputedStyle(document.documentElement);
+        if (theme === 'dark') {
+          return '#000000';
+        }
+        return styles.getPropertyValue('--primary').trim();
+      };
+      
       const updateThemeColor = (theme) => {
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
         if (themeColorMeta) {
-          // Atualiza a cor da barra do navegador baseado no tema
-          themeColorMeta.setAttribute('content', theme === 'dark' ? '#000000' : '#ffffff');
+          const color = getThemeColor(theme);
+          themeColorMeta.setAttribute('content', color);
         }
       };
-
+      
       const toggleTheme = () => {
-        const currentTheme =
-          document.documentElement.getAttribute("data-theme");
+        const currentTheme = document.documentElement.getAttribute("data-theme");
         const newTheme = currentTheme === "dark" ? "light" : "dark";
-
+      
         document.documentElement.setAttribute("data-theme", newTheme);
         localStorage.setItem("theme", newTheme);
-        updateThemeColor(theme);
+        updateThemeColor(newTheme);
       };
 
       // Paletas de cores
@@ -2279,12 +2287,12 @@
           button.addEventListener("click", () => {
             const paletteId = button.dataset.palette;
             const palette = palettes[paletteId];
-
+        
             // Remove active class de todos os botões
             paletteButtons.forEach((btn) => btn.classList.remove("active"));
             // Adiciona active class ao botão clicado
             button.classList.add("active");
-
+        
             // Aplica a paleta
             document.documentElement.style.setProperty(
               "--primary",
@@ -2307,7 +2315,11 @@
               "--gradient",
               `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`
             );
-
+        
+            // Atualiza a cor do theme-color
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            updateThemeColor(currentTheme);
+        
             // Salva a paleta selecionada
             localStorage.setItem("selectedPalette", paletteId);
           });

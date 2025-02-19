@@ -118,7 +118,7 @@
         font-size: 1.5rem;
         cursor: pointer;
         padding: 0.5rem;
-        z-index: 101;
+        z-index: 102;
       }
 
       .mobile-menu {
@@ -128,7 +128,7 @@
         left: 0;
         width: 100%;
         height: 100vh;
-        background: var(--primary);
+        background: var(--secondary);
         padding: 6rem 2rem 2rem;
         transform: translateX(-100%);
         transition: transform 0.3s ease;
@@ -876,12 +876,518 @@
         }
       }
     </style>
+    <style>
+      /* Variáveis de tema - serão atualizadas via JavaScript */
+      :root {
+        /* Tema claro - padrão (usando a paleta original) */
+        --primary: #0f172a;
+        --secondary: #3b82f6;
+        --accent: #10b981;
+        --text: #334155;
+        --light: #f8fafc;
+        --gradient: linear-gradient(135deg, #0f172a 0%, #3b82f6 100%);
+        --theme-transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* Ajuste do header */
+      header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+        transition: all 0.3s ease;
+      }
+
+      [data-theme="dark"] header {
+        background: rgba(0, 0, 0, 0.95);
+      }
+
+      /* Tema escuro simplificado - Apenas preto e branco */
+      [data-theme="dark"] {
+        --primary: #ffffff;
+        --secondary: #ffffff;
+        --accent: #ffffff;
+        --text: #ffffff;
+        --light: #000000;
+        --dark-surface: #000000;
+        --dark-background: #000000;
+        --dark-card: #000000;
+        --gradient: linear-gradient(135deg, #000000 0%, #000000 100%);
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit;
+        z-index: 1;
+      }
+
+      /* Posicionamento dos botões de tema */
+      .theme-toggle {
+        position: fixed;
+        top: 95px;
+        right: 20px;
+        z-index: 99;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: var(--gradient);
+        color: var(--light);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      }
+
+      /* Esconder botões quando menu mobile está ativo */
+      .mobile-menu.active ~ .theme-customizer,
+      .mobile-menu.active ~ .theme-toggle {
+        display: none;
+      }
+
+      /* Melhorias no tema escuro - Base */
+      [data-theme="dark"] {
+        --primary: #f8fafc;
+        --secondary: #60a5fa;
+        --accent: #34d399;
+        --text: #e2e8f0;
+        --light: #0f172a;
+        --dark-surface: #1e293b;
+        --dark-background: #0f172a;
+        --dark-card: #1e293b;
+        --gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+
+      /* Melhorias nas paletas de cores para o tema escuro com melhor contraste */
+      [data-theme="dark"][data-palette="ocean"] {
+        --primary: #ffffff;
+        --secondary: #38bdf8;
+        --accent: #0ea5e9;
+        --text: #f0f9ff;
+        --dark-background: #082f49;
+        --dark-surface: #0c4a6e;
+        --dark-card: #075985;
+        --gradient: linear-gradient(135deg, #082f49 0%, #0c4a6e 100%);
+      }
+
+      [data-theme="dark"][data-palette="forest"] {
+        --primary: #ffffff;
+        --secondary: #4ade80;
+        --accent: #22c55e;
+        --text: #f0fdf4;
+        --dark-background: #052e16;
+        --dark-surface: #064e3b;
+        --dark-card: #065f46;
+        --gradient: linear-gradient(135deg, #052e16 0%, #064e3b 100%);
+      }
+
+      [data-theme="dark"][data-palette="amethyst"] {
+        --primary: #ffffff;
+        --secondary: #a78bfa;
+        --accent: #8b5cf6;
+        --text: #f5f3ff;
+        --dark-background: #2e1065;
+        --dark-surface: #4c1d95;
+        --dark-card: #5b21b6;
+        --gradient: linear-gradient(135deg, #2e1065 0%, #4c1d95 100%);
+      }
+
+      [data-theme="dark"] body {
+        background-color: #000000;
+        color: #ffffff;
+      }
+
+      /* Ajustes para SVGs e ícones no tema escuro */
+      [data-theme="dark"] .cls-1 {
+        stroke: #ffffff !important;
+      }
+
+      [data-theme="dark"] .fas,
+      [data-theme="dark"] .fab {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .service-icon {
+        background: #000000;
+        border: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .value-card,
+      [data-theme="dark"] .service-card,
+      [data-theme="dark"] .case-card,
+      [data-theme="dark"] .testimonial-card,
+      [data-theme="dark"] .contact-form {
+        background-color: #000000;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .form-group input,
+      [data-theme="dark"] .form-group textarea {
+        background-color: #000000;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .form-group input:focus,
+      [data-theme="dark"] .form-group textarea:focus {
+        border-color: #ffffff;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+      }
+
+      [data-theme="dark"] .form-group label {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .theme-toggle,
+      [data-theme="dark"] .customizer-toggle {
+        background: #000000;
+        border: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .theme-toggle i,
+      [data-theme="dark"] .customizer-toggle i {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .customizer-panel {
+        background-color: #000000;
+        border-left: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .customizer-header {
+        border-bottom: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .font-button {
+        background-color: #000000;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .font-button:hover {
+        background-color: var(--dark-card);
+      }
+
+      [data-theme="dark"] .about {
+        background: #000000;
+      }
+
+      [data-theme="dark"] .numbers {
+        background: #000000;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .services,
+      [data-theme="dark"] .cases,
+      [data-theme="dark"] .testimonials {
+        background-color: #000000;
+      }
+
+      /* Ajuste das cores dos textos no tema escuro */
+      [data-theme="dark"] h1,
+      [data-theme="dark"] h2,
+      [data-theme="dark"] h3,
+      [data-theme="dark"] h4,
+      [data-theme="dark"] p,
+      [data-theme="dark"] a {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .section-header h2 {
+        color: var(--secondary);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] .section-header p {
+        opacity: 0.95;
+      }
+
+      /* Ajuste dos botões no tema escuro */
+      [data-theme="dark"] .cta-button,
+      [data-theme="dark"] button[type="submit"] {
+        background: #000000;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .cta-button:hover,
+      [data-theme="dark"] button[type="submit"]:hover {
+        background: #ffffff;
+        color: #000000;
+      }
+
+      [data-theme="dark"] button[type="submit"] {
+        background: var(--gradient);
+        color: var(--text);
+      }
+
+      /* Ajustes para missão, visão e valores no tema escuro */
+      [data-theme="dark"] .mission-vision {
+        background: #000000;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .mission-vision h3 {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .mission-vision p {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .mission-vision h3 i {
+        color: #ffffff;
+      }
+
+      /* Ajuste do menu mobile no tema escuro */
+      [data-theme="dark"] .mobile-menu {
+        background: #000000;
+      }
+
+      [data-theme="dark"] .mobile-menu a {
+        color: #ffffff;
+        border-bottom: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .mobile-menu a:hover {
+        background-color: #ffffff;
+        color: #000000;
+      }
+
+      [data-theme="dark"] .menu-button {
+        color: #ffffff;
+      }
+
+      /* Footer no tema escuro */
+      [data-theme="dark"] footer {
+        background: #000000;
+        border-top: 1px solid #ffffff;
+      }
+
+      /* Customizador de tema */
+      .theme-customizer {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .customizer-toggle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: var(--gradient);
+        color: var(--light);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .customizer-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      .theme-toggle i {
+        position: absolute;
+        transition: transform 0.5s ease;
+      }
+
+      .theme-toggle .fa-sun {
+        transform: rotate(0) scale(1);
+      }
+
+      .theme-toggle .fa-moon {
+        transform: rotate(100deg) scale(0);
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-sun {
+        transform: rotate(-100deg) scale(0);
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-moon {
+        transform: rotate(0) scale(1);
+      }
+
+      .customizer-panel {
+        position: fixed;
+        top: 0;
+        right: -360px;
+        width: 360px;
+        height: 100vh;
+        background: var(--light);
+        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      .customizer-panel.active {
+        transform: translateX(-360px);
+      }
+
+      .customizer-header {
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .customizer-header h3 {
+        margin: 0;
+        color: var(--primary);
+        font-size: 1.25rem;
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 1.25rem;
+        padding: 0.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .close-button:hover {
+        color: var(--primary);
+      }
+
+      .customizer-content {
+        padding: 1.5rem;
+      }
+
+      .customizer-section {
+        margin-bottom: 2rem;
+      }
+
+      .customizer-section h4 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      .color-palettes {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .palette-button {
+        display: flex;
+        gap: 4px;
+        padding: 0.5rem;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        background: none;
+        transition: border-color 0.3s ease;
+      }
+
+      .palette-button:hover {
+        border-color: var(--secondary);
+      }
+
+      .palette-button.active {
+        border-color: var(--accent);
+      }
+
+      .palette-button span {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+      }
+
+      .font-options {
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      .font-button {
+        padding: 0.75rem 1rem;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        background: var(--light);
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: left;
+        font-size: 1rem;
+      }
+
+      .font-button:hover {
+        border-color: var(--secondary);
+      }
+
+      .font-button.active {
+        border-color: var(--accent);
+        color: var(--primary);
+        background: var(--light);
+      }
+
+      @media (max-width: 768px) {
+        .customizer-panel {
+          width: 100%;
+          right: -100%;
+        }
+
+        .customizer-panel.active {
+          transform: translateX(-100%);
+        }
+
+        .menu-button {
+          display: block;
+          position: relative;
+        }
+
+        .mobile-menu.active ~ .menu-button {
+          position: fixed;
+          right: 20px;
+          top: 20px;
+        }
+      }
+    </style>
   </head>
   <body>
     <header>
       <div class="container header-content">
         <a href="#" class="logo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 157.29 311.65" height="40">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 157.29 311.65"
+            height="40"
+          >
             <defs>
               <style>
                 .cls-1 {
@@ -894,9 +1400,15 @@
             </defs>
             <g id="Camada_2" data-name="Camada 2">
               <g id="CAPA">
-                <circle class="cls-1" cx="133.84" cy="23.45" r="20.95"></circle>
-                <path class="cls-1" d="M3.9,105C-.39,94,5.33,76.29,19.34,53.05a8,8,0,0,1,5.14-3.64c18.9-4.21,43.68-2.85,62.81-1.59a10.52,10.52,0,0,1,8.14,16.26c-4.88,7.34-12.77,14.51-27.11,18.47-2.89.79-5,3.23-6.8,5.66-4.06,5.62-9.67,15.87-19.48,24.46a21.1,21.1,0,0,1-15.61,5.09c-6.77-.57-12-2.14-15.88-4.67A16.79,16.79,0,0,1,3.9,105Z"></path>
-                <path class="cls-1" d="M105.77,308.15c17-1.93,26.84-8.18,28.1-19.68.69-6.21-1.72-12.32-5.83-17-18.38-21-9-83.43,20.58-175.94,1.81-19.76-11.87-34.7-40.09-45.12-7.16,96.67-60.48,200.47-43.9,241.1,2.08,7.31,9.12,15.73,16.58,16.9C90.44,309.83,98.75,308.94,105.77,308.15Z"></path>
+                <circle class="cls-1" cx="133.84" cy="23.45" r="20.95" />
+                <path
+                  class="cls-1"
+                  d="M3.9,105C-.39,94,5.33,76.29,19.34,53.05a8,8,0,0,1,5.14-3.64c18.9-4.21,43.68-2.85,62.81-1.59a10.52,10.52,0,0,1,8.14,16.26c-4.88,7.34-12.77,14.51-27.11,18.47-2.89.79-5,3.23-6.8,5.66-4.06,5.62-9.67,15.87-19.48,24.46a21.1,21.1,0,0,1-15.61,5.09c-6.77-.57-12-2.14-15.88-4.67A16.79,16.79,0,0,1,3.9,105Z"
+                />
+                <path
+                  class="cls-1"
+                  d="M105.77,308.15c17-1.93,26.84-8.18,28.1-19.68.69-6.21-1.72-12.32-5.83-17-18.38-21-9-83.43,20.58-175.94,1.81-19.76-11.87-34.7-40.09-45.12-7.16,96.67-60.48,200.47-43.9,241.1,2.08,7.31,9.12,15.73,16.58,16.9C90.44,309.83,98.75,308.94,105.77,308.15Z"
+                />
               </g>
             </g>
           </svg>
@@ -1544,6 +2056,336 @@
         </div>
       </div>
     </footer>
+
+    <div id="theme-customizer" class="theme-customizer">
+      <button
+        id="theme-toggle"
+        class="theme-toggle"
+        aria-label="Alternar modo claro/escuro"
+      >
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+      </button>
+
+      <button
+        id="customizer-toggle"
+        class="customizer-toggle"
+        aria-label="Abrir personalizador"
+      >
+        <i class="fas fa-palette"></i>
+      </button>
+
+      <div class="customizer-panel">
+        <div class="customizer-header">
+          <h3>Personalizar Tema</h3>
+          <button class="close-button" aria-label="Fechar">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="customizer-content">
+          <div class="customizer-section">
+            <h4>Paleta de Cores</h4>
+            <div class="color-palettes">
+              <button class="palette-button active" data-palette="original">
+                <span style="background: #0f172a"></span>
+                <span style="background: #3b82f6"></span>
+                <span style="background: #10b981"></span>
+                <span style="background: #334155"></span>
+                <span style="background: #f8fafc"></span>
+              </button>
+              <button class="palette-button" data-palette="1">
+                <span style="background: #013a40"></span>
+                <span style="background: #025939"></span>
+                <span style="background: #038c4c"></span>
+                <span style="background: #05f26c"></span>
+                <span style="background: #04d960"></span>
+              </button>
+              <button class="palette-button" data-palette="1">
+                <span style="background: #013a40"></span>
+                <span style="background: #025939"></span>
+                <span style="background: #038c4c"></span>
+                <span style="background: #05f26c"></span>
+                <span style="background: #04d960"></span>
+              </button>
+              <button class="palette-button" data-palette="2">
+                <span style="background: #11091a"></span>
+                <span style="background: #2f2f4d"></span>
+                <span style="background: #626970"></span>
+                <span style="background: #bab195"></span>
+                <span style="background: #e8d18e"></span>
+              </button>
+              <button class="palette-button" data-palette="3">
+                <span style="background: #09403a"></span>
+                <span style="background: #072623"></span>
+                <span style="background: #f2f2f2"></span>
+                <span style="background: #8c8c8c"></span>
+                <span style="background: #0d0d0d"></span>
+              </button>
+              <button class="palette-button" data-palette="4">
+                <span style="background: #bdbf90"></span>
+                <span style="background: #35352b"></span>
+                <span style="background: #e7e9c4"></span>
+                <span style="background: #ec6c2b"></span>
+                <span style="background: #feae4b"></span>
+              </button>
+              <button class="palette-button" data-palette="5">
+                <span style="background: #466c82"></span>
+                <span style="background: #6f91a1"></span>
+                <span style="background: #98b5c1"></span>
+                <span style="background: #c1dae0"></span>
+                <span style="background: #eaffff"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="customizer-section">
+            <h4>Tipografia</h4>
+            <div class="font-options">
+              <button class="font-button" data-font="Inter">Inter</button>
+              <button class="font-button" data-font="Arial">Arial</button>
+              <button class="font-button" data-font="Montserrat">
+                Montserrat
+              </button>
+              <button class="font-button" data-font="Roboto">Roboto</button>
+              <button class="font-button" data-font="Poppins">Poppins</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Tema
+      const initializeTheme = () => {
+        // Verifica preferência do sistema
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        // Verifica localStorage
+        const savedTheme = localStorage.getItem("theme");
+        const theme = savedTheme || (prefersDark ? "dark" : "light");
+
+        document.documentElement.setAttribute("data-theme", theme);
+        return theme;
+      };
+
+      const toggleTheme = () => {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      };
+
+      // Paletas de cores
+      const palettes = {
+        original: {
+          primary: "#0f172a",
+          secondary: "#3b82f6",
+          accent: "#10b981",
+          text: "#334155",
+          light: "#f8fafc",
+        },
+        1: {
+          primary: "#013A40",
+          secondary: "#038C4C",
+          accent: "#05F26C",
+          text: "#025939",
+          light: "#04D960",
+        },
+        2: {
+          primary: "#11091A",
+          secondary: "#2F2F4D",
+          accent: "#E8D18E",
+          text: "#626970",
+          light: "#BAB195",
+        },
+        3: {
+          primary: "#09403A",
+          secondary: "#072623",
+          accent: "#8C8C8C",
+          text: "#0D0D0D",
+          light: "#F2F2F2",
+        },
+        4: {
+          primary: "#35352B",
+          secondary: "#EC6C2B",
+          accent: "#FEAE4B",
+          text: "#35352B",
+          light: "#E7E9C4",
+        },
+        5: {
+          primary: "#466C82",
+          secondary: "#6F91A1",
+          accent: "#C1DAE0",
+          text: "#98B5C1",
+          light: "#EAFFFF",
+        },
+      };
+
+      const fonts = ["Inter", "Arial", "Montserrat", "Roboto", "Poppins"];
+
+      // Carrega fontes do Google Fonts
+      const loadGoogleFonts = () => {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href =
+          "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap";
+        document.head.appendChild(link);
+      };
+
+      // Inicialização
+      document.addEventListener("DOMContentLoaded", () => {
+        loadGoogleFonts();
+
+        // Inicializa tema
+        const currentTheme = initializeTheme();
+
+        // Event Listeners
+        const themeToggle = document.getElementById("theme-toggle");
+        const customizerToggle = document.getElementById("customizer-toggle");
+        const customizerPanel = document.querySelector(".customizer-panel");
+        const closeButton = document.querySelector(".close-button");
+
+        // Toggle tema claro/escuro
+        themeToggle.addEventListener("click", toggleTheme);
+
+        // Abre/fecha painel de customização
+        customizerToggle.addEventListener("click", () => {
+          customizerPanel.classList.add("active");
+        });
+
+        closeButton.addEventListener("click", () => {
+          customizerPanel.classList.remove("active");
+        });
+
+        // Clique fora fecha o painel
+        document.addEventListener("click", (e) => {
+          if (
+            !customizerPanel.contains(e.target) &&
+            !customizerToggle.contains(e.target) &&
+            customizerPanel.classList.contains("active")
+          ) {
+            customizerPanel.classList.remove("active");
+          }
+        });
+
+        // Paletas de cores
+        const paletteButtons = document.querySelectorAll(".palette-button");
+        paletteButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const paletteId = button.dataset.palette;
+            const palette = palettes[paletteId];
+
+            // Remove active class de todos os botões
+            paletteButtons.forEach((btn) => btn.classList.remove("active"));
+            // Adiciona active class ao botão clicado
+            button.classList.add("active");
+
+            // Aplica a paleta
+            document.documentElement.style.setProperty(
+              "--primary",
+              palette.primary
+            );
+            document.documentElement.style.setProperty(
+              "--secondary",
+              palette.secondary
+            );
+            document.documentElement.style.setProperty(
+              "--accent",
+              palette.accent
+            );
+            document.documentElement.style.setProperty("--text", palette.text);
+            document.documentElement.style.setProperty(
+              "--light",
+              palette.light
+            );
+            document.documentElement.style.setProperty(
+              "--gradient",
+              `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`
+            );
+
+            // Salva a paleta selecionada
+            localStorage.setItem("selectedPalette", paletteId);
+          });
+        });
+
+        // Fontes
+        const fontButtons = document.querySelectorAll(".font-button");
+        fontButtons.forEach((button) => {
+          // Define o estilo do botão com a fonte correspondente
+          button.style.fontFamily = button.dataset.font;
+
+          button.addEventListener("click", () => {
+            const fontFamily = button.dataset.font;
+
+            // Remove active class de todos os botões
+            fontButtons.forEach((btn) => btn.classList.remove("active"));
+            // Adiciona active class ao botão clicado
+            button.classList.add("active");
+
+            // Aplica a fonte
+            document.body.style.setProperty("--font-family", fontFamily);
+            document.querySelectorAll("*").forEach((element) => {
+              if (
+                !element.classList.contains("fas") &&
+                !element.classList.contains("fab")
+              ) {
+                element.style.fontFamily = `${fontFamily}, system-ui, sans-serif`;
+              }
+            });
+
+            // Salva a fonte selecionada
+            localStorage.setItem("selectedFont", fontFamily);
+          });
+        });
+
+        // Carrega configurações salvas
+        const loadSavedSettings = () => {
+          // Carrega paleta
+          const savedPalette = localStorage.getItem("selectedPalette");
+          if (savedPalette) {
+            const paletteButton = document.querySelector(
+              `[data-palette="${savedPalette}"]`
+            );
+            if (paletteButton) {
+              paletteButton.click();
+            }
+          }
+
+          // Carrega fonte
+          const savedFont = localStorage.getItem("selectedFont");
+          if (savedFont) {
+            const fontButton = document.querySelector(
+              `[data-font="${savedFont}"]`
+            );
+            if (fontButton) {
+              fontButton.click();
+            }
+          }
+        };
+
+        // Adiciona listener para mudança de preferência de tema do sistema
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", (e) => {
+            if (!localStorage.getItem("theme")) {
+              document.documentElement.setAttribute(
+                "data-theme",
+                e.matches ? "dark" : "light"
+              );
+            }
+          });
+
+        // Inicializa configurações salvas
+        loadSavedSettings();
+
+        // Prevenção de flash de tema incorreto
+        document.documentElement.style.visibility = "visible";
+      });
+    </script>
 
     <script>
       // Configuração do Intersection Observer para animações de entrada

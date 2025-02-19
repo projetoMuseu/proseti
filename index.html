@@ -2158,13 +2158,10 @@
     <script>
       // Tema
       const initializeTheme = () => {
-        // Verifica preferência do sistema
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        // Verifica localStorage
+        // Verifica apenas o localStorage
         const savedTheme = localStorage.getItem("theme");
-        const theme = savedTheme || (prefersDark ? "dark" : "light");
+        // Se não houver tema salvo, usa 'light'
+        const theme = savedTheme || "light";
 
         document.documentElement.setAttribute("data-theme", theme);
         return theme;
@@ -2366,18 +2363,6 @@
             }
           }
         };
-
-        // Adiciona listener para mudança de preferência de tema do sistema
-        window
-          .matchMedia("(prefers-color-scheme: dark)")
-          .addEventListener("change", (e) => {
-            if (!localStorage.getItem("theme")) {
-              document.documentElement.setAttribute(
-                "data-theme",
-                e.matches ? "dark" : "light"
-              );
-            }
-          });
 
         // Inicializa configurações salvas
         loadSavedSettings();

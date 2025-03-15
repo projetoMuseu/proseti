@@ -3,16 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0f172a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="msapplication-navbutton-color" content="#0f172a">
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="msapplication-navbutton-color" content="#0f172a" />
     <title>Proseti - Consultoria em Processos e Soluções Digitais</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <style>
+      /* ESTILOS BASE */
       :root {
         --primary: #0f172a;
         --secondary: #3b82f6;
@@ -20,6 +24,7 @@
         --text: #334155;
         --light: #f8fafc;
         --gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        --theme-transition: background-color 0.3s ease, color 0.3s ease;
       }
 
       * {
@@ -570,60 +575,408 @@
         opacity: 0.9;
       }
 
-      .contact-form {
+      /* Container do formulário */
+      .contact-form-wrapper {
         background: white;
-        padding: 3rem;
         border-radius: 16px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        padding: 2.5rem;
       }
 
-      .form-group {
+      [data-theme="dark"] .contact-form-wrapper {
+        background: var(--dark-card, #1e293b);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Layout em grid para o formulário */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
         margin-bottom: 1.5rem;
       }
 
+      /* Ajustes responsivos mais graduais */
+      @media (max-width: 992px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+
+        .contact-form-wrapper {
+          max-width: 650px;
+          margin: 0 auto;
+        }
+      }
+
+      .form-column {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .full-width {
+        grid-column: 1 / -1;
+      }
+
+      /* Estilos dos grupos de formulário */
+      .form-group {
+        margin-bottom: 1.25rem;
+        position: relative;
+      }
+
       .form-group label {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
         margin-bottom: 0.5rem;
-        color: var(--text);
-        font-weight: 500;
+        font-weight: 600;
+        color: var(--primary);
+        font-size: 0.95rem;
+      }
+
+      .form-group label i {
+        color: var(--secondary);
+        font-size: 0.9rem;
       }
 
       .form-group input,
-      .form-group textarea {
+      .form-group textarea,
+      .form-group select {
         width: 100%;
-        padding: 1rem;
-        border: 2px solid #e2e8f0;
+        padding: 0.9rem 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         font-size: 1rem;
-        transition: all 0.3s;
+        transition: all 0.2s ease;
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+
+      [data-theme="dark"] .form-group input,
+      [data-theme="dark"] .form-group textarea,
+      [data-theme="dark"] .form-group select {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text);
       }
 
       .form-group input:focus,
-      .form-group textarea:focus {
+      .form-group textarea:focus,
+      .form-group select:focus {
         outline: none;
         border-color: var(--secondary);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        background-color: white;
       }
 
-      .form-group textarea {
-        height: 150px;
+      [data-theme="dark"] .form-group input:focus,
+      [data-theme="dark"] .form-group textarea:focus,
+      [data-theme="dark"] .form-group select:focus {
+        background-color: rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
       }
 
-      button[type="submit"] {
-        width: 100%;
-        padding: 1rem;
-        background: var(--gradient);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 1rem;
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: rgba(0, 0, 0, 0.3);
+      }
+
+      [data-theme="dark"] .form-group input::placeholder,
+      [data-theme="dark"] .form-group textarea::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Select com ícone customizado */
+      .form-group select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233b82f6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1rem;
+        padding-right: 2.5rem;
+      }
+
+      /* Estados de validação */
+      .form-group.error input,
+      .form-group.error textarea,
+      .form-group.error select {
+        border-color: #e11d48;
+        box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+      }
+
+      .form-group.success input,
+      .form-group.success textarea,
+      .form-group.success select {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+      }
+
+      /* Mensagem de erro CORRIGIDA */
+      .error-message {
+        display: none;
+        color: #e11d48;
+        font-size: 0.8rem;
+        margin-top: 0.4rem;
         font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s;
+        /* Posicionamento ajustado para ser sempre visível */
+        position: relative;
+        left: 0;
       }
 
-      button[type="submit"]:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      .form-group.error .error-message {
+        display: block !important;
+      }
+
+      /* Entrada de telefone com código de país separado CORRIGIDA */
+      .phone-input-group {
+        position: relative;
+      }
+
+      .phone-input-container {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .country-code {
+        flex: 0 0 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px 0 0 8px;
+        color: var(--text);
+        font-weight: 600;
+        text-align: center;
+      }
+
+      [data-theme="dark"] .country-code {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: var(--text);
+      }
+
+      .phone-input-container input {
+        flex: 1;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none;
+      }
+
+      /* Estados de validação do campo de telefone */
+      .form-group.error .country-code {
+        border-color: #e11d48;
+      }
+
+      .form-group.success .country-code {
+        border-color: #10b981;
+      }
+
+      /* Aviso de privacidade */
+      .privacy-notice {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.02);
+        margin-bottom: 1.5rem;
+      }
+
+      [data-theme="dark"] .privacy-notice {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      .privacy-notice i {
+        color: var(--secondary);
+        margin-top: 0.2rem;
+      }
+
+      .privacy-notice p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--text);
+        opacity: 0.8;
+      }
+
+      /* Feedback do formulário CORRIGIDO */
+      .form-feedback {
+        padding: 1rem 1.25rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background-color: #fef2f2;
+        border-left: 4px solid #e11d48;
+        animation: slideDown 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .form-feedback.success {
+        background-color: #ecfdf5;
+        border-left: 4px solid #10b981;
+      }
+
+      [data-theme="dark"] .form-feedback {
+        background-color: rgba(225, 29, 72, 0.2);
+      }
+
+      [data-theme="dark"] .form-feedback.success {
+        background-color: rgba(16, 185, 129, 0.2);
+      }
+
+      .feedback-icon {
+        color: #e11d48;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+      }
+
+      .form-feedback.success .feedback-icon {
+        color: #10b981;
+      }
+
+      .feedback-message {
+        font-weight: 500;
+        margin: 0;
+        color: #e11d48;
+        flex: 1;
+      }
+
+      .form-feedback.success .feedback-message {
+        color: #10b981;
+      }
+
+      /* Botão de envio CORRIGIDO */
+      .contact-form .cta-button {
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        text-transform: none;
+        font-size: 1rem;
+        letter-spacing: 0;
+        padding: 1rem 2rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .button-loader {
+        position: absolute;
+        font-size: 1.25rem;
+        display: none;
+        color: white;
+      }
+
+      .cta-button.loading {
+        background-color: var(--secondary);
+        opacity: 0.8;
+        cursor: not-allowed;
+      }
+
+      .cta-button.loading .button-text {
+        visibility: hidden;
+      }
+
+      .cta-button.loading .button-loader {
+        display: block;
+      }
+
+      /* Estado desabilitado do botão */
+      .cta-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none !important;
+      }
+
+      /* Mensagem de sucesso */
+      .success-message {
+        background: white;
+        border-radius: 16px;
+        text-align: center;
+        animation: fadeScale 0.5s ease;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        padding: 2.5rem;
+      }
+
+      [data-theme="dark"] .success-message {
+        background: var(--dark-card, #1e293b);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .success-content {
+        padding: 3rem 2rem;
+      }
+
+      .success-icon {
+        font-size: 4rem;
+        color: #10b981;
+        margin-bottom: 1.5rem;
+      }
+
+      .success-message h3 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .success-message p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: var(--text);
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .success-details {
+        background: rgba(0, 0, 0, 0.02);
+        padding: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      [data-theme="dark"] .success-details {
+        background: rgba(255, 255, 255, 0.05);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .success-detail-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+        justify-content: center;
+      }
+
+      .success-detail-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .success-detail-item i {
+        color: var(--secondary);
+        font-size: 1.1rem;
+        width: 20px;
+        text-align: center;
+      }
+
+      .success-detail-item p {
+        margin: 0;
+        font-size: 1rem;
       }
 
       /* Footer */
@@ -695,6 +1048,353 @@
         transform: translateY(-3px);
       }
 
+      /* Animações */
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeScale {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      /* Tema Escuro */
+      [data-theme="dark"] {
+        --primary: #f8fafc;
+        --secondary: #60a5fa;
+        --accent: #34d399;
+        --text: #e2e8f0;
+        --light: #0f172a;
+        --dark-surface: #1e293b;
+        --dark-background: #0f172a;
+        --dark-card: #1e293b;
+        --gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+
+      [data-theme="dark"] header {
+        background: rgba(0, 0, 0, 0.95);
+      }
+
+      [data-theme="dark"] body {
+        background-color: #000000;
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .cls-1 {
+        stroke: #ffffff !important;
+      }
+
+      [data-theme="dark"] .fas,
+      [data-theme="dark"] .fab {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .service-icon {
+        background: #000000;
+        border: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .value-card,
+      [data-theme="dark"] .service-card,
+      [data-theme="dark"] .case-card,
+      [data-theme="dark"] .testimonial-card,
+      [data-theme="dark"] .contact-form {
+        background-color: #000000;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] h1,
+      [data-theme="dark"] h2,
+      [data-theme="dark"] h3,
+      [data-theme="dark"] h4,
+      [data-theme="dark"] p,
+      [data-theme="dark"] a {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .section-header h2 {
+        color: var(--secondary);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] .about {
+        background: #000000;
+      }
+
+      [data-theme="dark"] .numbers {
+        background: #000000;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .services,
+      [data-theme="dark"] .cases,
+      [data-theme="dark"] .testimonials {
+        background-color: #000000;
+      }
+
+      [data-theme="dark"] .mission-vision {
+        background: #000000;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .mission-vision h3 {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .mission-vision p {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .mission-vision h3 i {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] .mobile-menu {
+        background: #000000;
+      }
+
+      [data-theme="dark"] .mobile-menu a {
+        color: #ffffff;
+        border-bottom: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .mobile-menu a:hover {
+        background-color: #ffffff;
+        color: #000000;
+      }
+
+      [data-theme="dark"] .menu-button {
+        color: #ffffff;
+      }
+
+      [data-theme="dark"] footer {
+        background: #000000;
+        border-top: 1px solid #ffffff;
+      }
+
+      /* Customizador de tema */
+      .theme-customizer {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .customizer-toggle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: var(--gradient);
+        color: var(--light);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .customizer-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      .theme-toggle {
+        position: fixed;
+        top: 95px;
+        right: 20px;
+        z-index: 99;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: var(--gradient);
+        color: var(--light);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      }
+
+      .theme-toggle i {
+        position: absolute;
+        transition: transform 0.5s ease;
+      }
+
+      .theme-toggle .fa-sun {
+        transform: rotate(0) scale(1);
+      }
+
+      .theme-toggle .fa-moon {
+        transform: rotate(100deg) scale(0);
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-sun {
+        transform: rotate(-100deg) scale(0);
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-moon {
+        transform: rotate(0) scale(1);
+      }
+
+      .customizer-panel {
+        position: fixed;
+        top: 0;
+        right: -360px;
+        width: 360px;
+        height: 100vh;
+        background: var(--light);
+        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      .customizer-panel.active {
+        transform: translateX(-360px);
+      }
+
+      .customizer-header {
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .customizer-header h3 {
+        margin: 0;
+        color: var(--primary);
+        font-size: 1.25rem;
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 1.25rem;
+        padding: 0.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .close-button:hover {
+        color: var(--primary);
+      }
+
+      .customizer-content {
+        padding: 1.5rem;
+      }
+
+      .customizer-section {
+        margin-bottom: 2rem;
+      }
+
+      .customizer-section h4 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      .color-palettes {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .palette-button {
+        display: flex;
+        gap: 4px;
+        padding: 0.5rem;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        background: none;
+        transition: border-color 0.3s ease;
+      }
+
+      .palette-button:hover {
+        border-color: var(--secondary);
+      }
+
+      .palette-button.active {
+        border-color: var(--accent);
+      }
+
+      .palette-button span {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+      }
+
+      .font-options {
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      .font-button {
+        padding: 0.75rem 1rem;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        background: var(--light);
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: left;
+        font-size: 1rem;
+      }
+
+      .font-button:hover {
+        border-color: var(--secondary);
+      }
+
+      .font-button.active {
+        border-color: var(--accent);
+        color: var(--primary);
+        background: var(--light);
+      }
+
       /* Estilos base para animações */
       .fade-up {
         opacity: 0;
@@ -730,38 +1430,6 @@
       .visible {
         opacity: 1;
         transform: translate(0) scale(1);
-      }
-
-      /* Otimização para dispositivos que preferem menos movimento */
-      @media (prefers-reduced-motion: reduce) {
-        .fade-up,
-        .fade-down,
-        .fade-left,
-        .fade-right,
-        .fade-scale {
-          transition: opacity 0.5s ease;
-          transform: none;
-        }
-
-        .visible {
-          transform: none;
-        }
-      }
-
-      /* Animations */
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .animate {
-        animation: fadeInUp 0.6s ease forwards;
       }
 
       /* Responsiveness */
@@ -818,7 +1486,6 @@
         }
 
         .carousel {
-          position: relative;
           overflow-x: auto;
           overflow-y: hidden;
           -webkit-overflow-scrolling: touch;
@@ -837,10 +1504,9 @@
         }
 
         .carousel-track {
-          display: flex;
           gap: 1rem;
-          transform: none !important; /* Previne conflito com o transform do desktop */
-          transition: none !important; /* Desativa transição em mobile */
+          transform: none !important;
+          transition: none !important;
         }
 
         .service-card {
@@ -866,6 +1532,25 @@
         .footer-info p {
           max-width: 100%;
         }
+
+        .customizer-panel {
+          width: 100%;
+          right: -100%;
+        }
+
+        .customizer-panel.active {
+          transform: translateX(-100%);
+        }
+
+        .menu-button {
+          position: relative;
+        }
+
+        .mobile-menu.active ~ .menu-button {
+          position: fixed;
+          right: 20px;
+          top: 20px;
+        }
       }
 
       @media (max-width: 480px) {
@@ -878,6 +1563,105 @@
           flex-wrap: wrap;
           justify-content: center;
         }
+      }
+
+      /* Otimização para dispositivos que preferem menos movimento */
+      @media (prefers-reduced-motion: reduce) {
+        .fade-up,
+        .fade-down,
+        .fade-left,
+        .fade-right,
+        .fade-scale {
+          transition: opacity 0.5s ease;
+          transform: none;
+        }
+
+        .visible {
+          transform: none;
+        }
+
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      /* Ajustes específicos para o campo de telefone */
+      .phone-input-container {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .country-code {
+        flex: 0 0 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px 0 0 8px;
+        color: var(--text);
+        font-weight: 600;
+        text-align: center;
+        height: auto;
+      }
+
+      .phone-input-container input {
+        flex: 1;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none;
+      }
+
+      /* Ajustes para estados de validação */
+      .form-group.error .phone-input-container .country-code {
+        border-color: #e11d48;
+      }
+
+      .form-group.success .phone-input-container .country-code {
+        border-color: #10b981;
+      }
+
+      .form-group.error .phone-input-container input {
+        border-color: #e11d48;
+      }
+
+      .form-group.success .phone-input-container input {
+        border-color: #10b981;
+      }
+
+      /* Ajuste para mensagens de erro */
+      .error-message {
+        display: none;
+        color: #e11d48;
+        font-size: 0.8rem;
+        margin-top: 0.4rem;
+        font-weight: 500;
+        position: static;
+      }
+
+      .form-group.error .error-message {
+        display: block;
+      }
+
+      /* Animação para o botão de envio */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .pulse {
+        animation: pulse 1.5s infinite;
       }
     </style>
     <style>
@@ -1978,6 +2762,7 @@
       </div>
     </section>
 
+    <!-- Seção de Contato Corrigida -->
     <section class="contact" id="contato">
       <div class="container">
         <div class="contact-grid">
@@ -1987,30 +2772,183 @@
               Estamos prontos para entender seus desafios e propor soluções
               customizadas para sua empresa.
             </p>
-            <!-- <div class="contact-methods">
-              <p><i class="fas fa-envelope"></i> contato@proseti.com.br</p>
-              <p><i class="fas fa-phone"></i> +55 (11) 99999-9999</p>
-            </div> -->
           </div>
-          <form class="contact-form animate">
-            <div class="form-group">
-              <label for="name">Nome</label>
-              <input type="text" id="name" required />
+
+          <!-- Formulário modernizado com layout em colunas e melhor UX -->
+          <div class="contact-form-wrapper animate">
+            <form class="contact-form">
+              <!-- Grid de 2 colunas para inputs -->
+              <div class="form-grid">
+                <!-- Coluna 1 -->
+                <div class="form-column">
+                  <div class="form-group">
+                    <label for="name">
+                      <i class="fas fa-user"></i>
+                      Nome
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      placeholder="Seu nome completo"
+                      required
+                    />
+                    <span class="error-message"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email">
+                      <i class="fas fa-envelope"></i>
+                      E-mail
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="seu.email@exemplo.com"
+                      required
+                    />
+                    <span class="error-message"></span>
+                  </div>
+
+                  <!-- Campo de telefone corrigido -->
+                  <div class="form-group phone-input-group">
+                    <label for="phone">
+                      <i class="fas fa-phone-alt"></i>
+                      Telefone
+                    </label>
+                    <div class="phone-input-container">
+                      <div class="country-code">+55</div>
+                      <input
+                        type="tel"
+                        id="phone"
+                        placeholder="(00) 00000-0000"
+                        required
+                      />
+                    </div>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+
+                <!-- Coluna 2 -->
+                <div class="form-column">
+                  <div class="form-group">
+                    <label for="company">
+                      <i class="fas fa-building"></i>
+                      Empresa
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      placeholder="Nome da sua empresa"
+                      required
+                    />
+                    <span class="error-message"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="sector">
+                      <i class="fas fa-briefcase"></i>
+                      Área de atuação
+                    </label>
+                    <select id="sector" required>
+                      <option value="">Selecione uma área</option>
+                      <option value="Tecnologia da Informação">
+                        Tecnologia da Informação
+                      </option>
+                      <option value="Saúde">Saúde</option>
+                      <option value="Educação">Educação</option>
+                      <option value="Finanças">Finanças</option>
+                      <option value="Varejo">Varejo</option>
+                      <option value="Indústria">Indústria</option>
+                      <option value="Logística">Logística</option>
+                      <option value="Serviços">Serviços</option>
+                      <option value="Outro">Outro</option>
+                    </select>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mensagem (largura completa) -->
+              <div class="form-group full-width">
+                <label for="message">
+                  <i class="fas fa-comment-alt"></i>
+                  Mensagem
+                </label>
+                <textarea
+                  id="message"
+                  placeholder="Como podemos ajudar você?"
+                  rows="4"
+                  required
+                ></textarea>
+                <span class="error-message"></span>
+              </div>
+
+              <!-- Alertas e Feedback -->
+              <div
+                class="form-feedback"
+                id="form-feedback"
+                style="display: none"
+              >
+                <div class="feedback-icon">
+                  <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <p class="feedback-message">Mensagem de feedback</p>
+              </div>
+
+              <!-- Aviso de privacidade -->
+              <div class="privacy-notice">
+                <i class="fas fa-shield-alt"></i>
+                <p>
+                  Seus dados estão seguros conosco. Não compartilhamos suas
+                  informações com terceiros.
+                </p>
+              </div>
+
+              <!-- Botão de envio com ícone -->
+              <button type="submit" id="submit-button" class="cta-button">
+                <span class="button-text">
+                  <i class="fas fa-paper-plane"></i>
+                  Enviar Mensagem
+                </span>
+                <span class="button-loader">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Componente de sucesso (inicialmente oculto) -->
+          <div
+            class="success-message animate"
+            id="success-message"
+            style="display: none"
+          >
+            <div class="success-content">
+              <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              <h3>Mensagem enviada com sucesso!</h3>
+              <p>
+                Agradecemos seu contato. Nossa equipe analisará sua mensagem e
+                entrará em contato em breve.
+              </p>
+
+              <div class="success-details">
+                <div class="success-detail-item">
+                  <i class="fas fa-user"></i>
+                  <p><span id="success-name"></span></p>
+                </div>
+                <div class="success-detail-item">
+                  <i class="fas fa-envelope"></i>
+                  <p><span id="success-email"></span></p>
+                </div>
+                <div class="success-detail-item">
+                  <i class="fas fa-phone-alt"></i>
+                  <p><span id="success-phone"></span></p>
+                </div>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="email">E-mail</label>
-              <input type="email" id="email" required />
-            </div>
-            <div class="form-group">
-              <label for="company">Empresa</label>
-              <input type="text" id="company" required />
-            </div>
-            <div class="form-group">
-              <label for="message">Mensagem</label>
-              <textarea id="message" required></textarea>
-            </div>
-            <button type="submit">Enviar Mensagem</button>
-          </form>
+          </div>
         </div>
       </div>
     </section>
@@ -2159,33 +3097,36 @@
         const savedTheme = localStorage.getItem("theme");
         // Se não houver tema salvo, usa 'light'
         const theme = savedTheme || "light";
-      
+
         document.documentElement.setAttribute("data-theme", theme);
         updateThemeColor(theme);
         return theme;
       };
-      
+
       const getThemeColor = (theme) => {
         // Obtém a cor atual da variável CSS
         const styles = getComputedStyle(document.documentElement);
-        if (theme === 'dark') {
-          return '#000000';
+        if (theme === "dark") {
+          return "#000000";
         }
-        return styles.getPropertyValue('--secondary').trim();
+        return styles.getPropertyValue("--secondary").trim();
       };
-      
+
       const updateThemeColor = (theme) => {
-        const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        const themeColorMeta = document.querySelector(
+          'meta[name="theme-color"]'
+        );
         if (themeColorMeta) {
           const color = getThemeColor(theme);
-          themeColorMeta.setAttribute('content', color);
+          themeColorMeta.setAttribute("content", color);
         }
       };
-      
+
       const toggleTheme = () => {
-        const currentTheme = document.documentElement.getAttribute("data-theme");
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
         const newTheme = currentTheme === "dark" ? "light" : "dark";
-      
+
         document.documentElement.setAttribute("data-theme", newTheme);
         localStorage.setItem("theme", newTheme);
         updateThemeColor(newTheme);
@@ -2290,12 +3231,12 @@
           button.addEventListener("click", () => {
             const paletteId = button.dataset.palette;
             const palette = palettes[paletteId];
-        
+
             // Remove active class de todos os botões
             paletteButtons.forEach((btn) => btn.classList.remove("active"));
             // Adiciona active class ao botão clicado
             button.classList.add("active");
-        
+
             // Aplica a paleta
             document.documentElement.style.setProperty(
               "--primary",
@@ -2318,11 +3259,12 @@
               "--gradient",
               `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`
             );
-        
+
             // Atualiza a cor do theme-color
-            const currentTheme = document.documentElement.getAttribute("data-theme");
+            const currentTheme =
+              document.documentElement.getAttribute("data-theme");
             updateThemeColor(currentTheme);
-        
+
             // Salva a paleta selecionada
             localStorage.setItem("selectedPalette", paletteId);
           });
@@ -2748,6 +3690,403 @@
             }
           });
         }, 100);
+      });
+    </script>
+    <script>
+      // Função de inicialização do formulário de contato corrigido
+      function initContactForm() {
+        const form = document.querySelector(".contact-form");
+        const successMessage = document.getElementById("success-message");
+        const submitButton = document.getElementById("submit-button");
+        const formFeedback = document.getElementById("form-feedback");
+
+        if (!form) return;
+
+        // Certifique-se de que todos os campos tenham elementos para mensagens de erro
+        const formGroups = form.querySelectorAll(".form-group");
+        formGroups.forEach((group) => {
+          // Verifica se já existe um elemento .error-message
+          if (!group.querySelector(".error-message")) {
+            const errorMsg = document.createElement("span");
+            errorMsg.className = "error-message";
+            group.appendChild(errorMsg);
+          }
+        });
+
+        // Função para validar e-mail
+        function isValidEmail(email) {
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return regex.test(email);
+        }
+
+        // Função para validar telefone brasileiro
+        function isValidPhone(phone) {
+          // Remove caracteres não numéricos
+          const numericPhone = phone.replace(/\D/g, "");
+          // Verifica se tem entre 10 e 11 dígitos (DDD + número)
+          return numericPhone.length >= 10 && numericPhone.length <= 11;
+        }
+
+        // Aplica máscara no campo de telefone - versão corrigida
+        const phoneInput = document.getElementById("phone");
+        phoneInput.addEventListener("input", function (e) {
+          // Armazena a posição do cursor
+          const start = this.selectionStart;
+          const end = this.selectionEnd;
+
+          // Salva o valor antes da formatação
+          const originalValue = this.value;
+
+          // Remove caracteres não numéricos
+          let value = this.value.replace(/\D/g, "");
+
+          // Limita para um total de 11 dígitos (DDD + número)
+          if (value.length > 11) {
+            value = value.substring(0, 11);
+          }
+
+          let formattedValue = "";
+
+          // Aplicar formatação
+          if (value.length > 0) {
+            // Formata DDD
+            formattedValue = `(${value.substring(
+              0,
+              Math.min(2, value.length)
+            )}`;
+
+            if (value.length > 2) {
+              // Adiciona fechamento do parêntesis e espaço
+              formattedValue += ") ";
+
+              // Formata número
+              if (value.length <= 7) {
+                // Para números com menos dígitos
+                formattedValue += value.substring(2);
+              } else {
+                // Para celulares (9 dígitos) ou telefones fixos (8 dígitos)
+                formattedValue +=
+                  value.substring(2, 7) + "-" + value.substring(7);
+              }
+            }
+          }
+
+          // Atualiza o valor
+          this.value = formattedValue;
+
+          // Ajusta a posição do cursor
+          if (this.value.length !== originalValue.length) {
+            // Se o formato mudou, ajusta a posição do cursor
+            const diff = this.value.length - originalValue.length;
+            this.setSelectionRange(
+              Math.max(0, start + diff),
+              Math.max(0, end + diff)
+            );
+          } else {
+            this.setSelectionRange(start, end);
+          }
+        });
+
+        // Função para validar um campo específico
+        function validateField(field, silent = false) {
+          const formGroup = field.closest(".form-group");
+          const errorElement = formGroup.querySelector(".error-message");
+          const fieldName = field.id;
+          const value = field.value.trim();
+
+          // Remover estados anteriores
+          formGroup.classList.remove("error", "success");
+          if (errorElement) {
+            errorElement.textContent = "";
+          }
+
+          // Se a validação estiver em modo silencioso, apenas retorna o resultado sem mostrar erros
+          if (value === "") {
+            if (!silent && errorElement) {
+              formGroup.classList.add("error");
+              errorElement.textContent = "Este campo é obrigatório";
+            }
+            return false;
+          }
+
+          // Validações específicas
+          if (fieldName === "email" && !isValidEmail(value)) {
+            if (!silent && errorElement) {
+              formGroup.classList.add("error");
+              errorElement.textContent = "Por favor, informe um e-mail válido";
+            }
+            return false;
+          }
+
+          if (fieldName === "phone" && !isValidPhone(value)) {
+            if (!silent && errorElement) {
+              formGroup.classList.add("error");
+              errorElement.textContent =
+                "Por favor, informe um telefone válido com DDD";
+            }
+            return false;
+          }
+
+          // Campo válido
+          if (!silent) {
+            formGroup.classList.add("success");
+          }
+          return true;
+        }
+
+        // Função para mostrar feedback
+        function showFeedback(message, isSuccess = false) {
+          formFeedback.classList.toggle("success", isSuccess);
+          formFeedback.querySelector(".feedback-message").textContent = message;
+
+          // Atualiza ícone
+          const iconEl = formFeedback.querySelector(".feedback-icon i");
+          iconEl.className = isSuccess
+            ? "fas fa-check-circle"
+            : "fas fa-exclamation-circle";
+
+          // Garante que o feedback seja visível
+          formFeedback.style.display = "flex";
+
+          // Se for erro, scroll suave para o feedback
+          if (!isSuccess) {
+            setTimeout(() => {
+              formFeedback.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            }, 100);
+          }
+
+          // Limpa qualquer timer existente para esconder o feedback
+          if (window.feedbackTimer) {
+            clearTimeout(window.feedbackTimer);
+          }
+
+          // Oculta automaticamente após 5 segundos se for sucesso
+          if (isSuccess && !message.toLowerCase().includes("enviando")) {
+            window.feedbackTimer = setTimeout(() => {
+              hideFeedback();
+            }, 5000);
+          }
+        }
+
+        // Função para esconder feedback
+        function hideFeedback() {
+          formFeedback.style.display = "none";
+        }
+
+        // Função para ativar estado de carregamento
+        function setLoadingState(isLoading) {
+          submitButton.classList.toggle("loading", isLoading);
+          submitButton.disabled = isLoading;
+
+          // Desabilita todos os campos durante o envio para evitar edições
+          const allInputs = form.querySelectorAll("input, textarea, select");
+          allInputs.forEach((input) => {
+            input.disabled = isLoading;
+          });
+
+          // Adicionar uma mensagem de feedback se estiver carregando
+          if (isLoading) {
+            showFeedback("Enviando mensagem, aguarde um momento...", true);
+          } else {
+            hideFeedback();
+          }
+        }
+
+        // Função para converter para formato da API
+        function formatFormDataForAPI(formData) {
+          return {
+            nome: formData.name,
+            email: formData.email,
+            telefone: "+55 " + formData.phone, // Adiciona o +55 ao enviar para a API
+            empresa: formData.company,
+            areaAtuacao: formData.sector,
+            mensagem: formData.message,
+          };
+        }
+
+        // Função para mostrar mensagem de sucesso
+        function showSuccessMessage(formData) {
+          // Preencher detalhes na mensagem de sucesso
+          document.getElementById("success-name").textContent = formData.name;
+          document.getElementById("success-email").textContent = formData.email;
+          document.getElementById("success-phone").textContent =
+            "+55 " + formData.phone; // Adiciona +55 na visualização
+
+          // Esconder formulário e mostrar mensagem de sucesso
+          form.closest(".contact-form-wrapper").style.display = "none";
+          successMessage.style.display = "block";
+
+          // Rolar para a mensagem
+          successMessage.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+
+        // Adiciona validação apenas na submissão e no foco perdido após tentativa de envio
+        let formSubmitted = false;
+
+        // Eventos para inputs
+        const allInputs = form.querySelectorAll("input, textarea, select");
+        allInputs.forEach((input) => {
+          // Limpa estado de erro ao focar em um campo
+          input.addEventListener("focus", () => {
+            // Removemos apenas o estado de erro, não o de sucesso
+            const formGroup = input.closest(".form-group");
+            if (formGroup.classList.contains("error")) {
+              formGroup.classList.remove("error");
+            }
+          });
+
+          // Valida apenas se o formulário já teve uma tentativa de envio
+          input.addEventListener("blur", () => {
+            if (formSubmitted) {
+              validateField(input);
+            }
+          });
+        });
+
+        // Variável para controlar se há um envio em andamento
+        let isSubmitting = false;
+
+        // Handler de envio do formulário
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          // Previne múltiplas submissões simultaneamente
+          if (isSubmitting) {
+            return;
+          }
+
+          hideFeedback();
+          formSubmitted = true;
+
+          // Validar todos os campos
+          const allInputs = form.querySelectorAll("input, textarea, select");
+          let formIsValid = true;
+
+          // Primeira passagem para validar todos os campos
+          allInputs.forEach((input) => {
+            if (!validateField(input, false)) {
+              formIsValid = false;
+            }
+          });
+
+          // Se houver campos inválidos, mostra feedback e foca no primeiro campo com erro
+          if (!formIsValid) {
+            showFeedback(
+              "Por favor, preencha corretamente todos os campos obrigatórios."
+            );
+
+            // Anima o botão de envio para indicar erro
+            submitButton.classList.add("shake");
+            setTimeout(() => {
+              submitButton.classList.remove("shake");
+            }, 600);
+
+            // Foca no primeiro campo com erro
+            const firstErrorField = form.querySelector(
+              ".form-group.error input, .form-group.error textarea, .form-group.error select"
+            );
+            if (firstErrorField) {
+              firstErrorField.focus();
+            }
+
+            return;
+          }
+
+          // Define que há um envio em andamento
+          isSubmitting = true;
+
+          // Coletar dados do formulário
+          const formData = {
+            name: document.getElementById("name").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            phone: document.getElementById("phone").value.trim(),
+            company: document.getElementById("company").value.trim(),
+            sector: document.getElementById("sector").value.trim(),
+            message: document.getElementById("message").value.trim(),
+          };
+
+          // Converter para o formato da API
+          const apiData = formatFormDataForAPI(formData);
+
+          try {
+            // Ativar estado de carregamento
+            setLoadingState(true);
+
+            // Tentativa de envio com timeout para simular latência de rede
+            const response = await Promise.race([
+              fetch("https://proseti-backend.onrender.com/api/contact", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(apiData),
+              }),
+              new Promise((_, reject) =>
+                setTimeout(() => reject(new Error("Timeout")), 10000)
+              ),
+            ]);
+
+            // Verificar resposta
+            if (response.ok) {
+              // Sucesso
+              showSuccessMessage(formData);
+            } else {
+              // Erro no servidor - extrair mensagem de erro da resposta
+              let errorMessage =
+                "Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.";
+
+              try {
+                // Tenta obter a mensagem de erro do JSON da resposta
+                const errorData = await response.json();
+                if (errorData && errorData.message) {
+                  errorMessage = errorData.message;
+                }
+              } catch (jsonError) {
+                // Se não conseguir extrair o JSON, usa a mensagem padrão
+                console.error("Erro ao processar resposta JSON:", jsonError);
+              }
+
+              // Exibe a mensagem de erro
+              showFeedback(errorMessage);
+            }
+          } catch (error) {
+            // Erro de rede ou timeout
+            console.error("Erro ao enviar formulário:", error);
+
+            const errorMessage =
+              error.message === "Timeout"
+                ? "O tempo de resposta do servidor expirou. Por favor, verifique sua conexão e tente novamente."
+                : "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.";
+
+            showFeedback(errorMessage);
+          } finally {
+            // Desativar estado de carregamento
+            setLoadingState(false);
+
+            // Libera o formulário para nova submissão
+            isSubmitting = false;
+          }
+        });
+
+        // Adiciona classe de animação para o botão de envio
+        submitButton.addEventListener("mouseenter", () => {
+          submitButton.classList.add("pulse");
+        });
+
+        submitButton.addEventListener("mouseleave", () => {
+          submitButton.classList.remove("pulse");
+        });
+      }
+
+      // Certifique-se de que a função seja chamada na inicialização
+      document.addEventListener("DOMContentLoaded", () => {
+        initContactForm();
       });
     </script>
   </body>

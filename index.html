@@ -585,11 +585,6 @@
         padding: 2.5rem;
       }
 
-      [data-theme="dark"] .contact-form-wrapper {
-        background: var(--dark-card, #1e293b);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
       /* Layout em grid para o formulário */
       .form-grid {
         display: grid;
@@ -659,14 +654,6 @@
         background-color: rgba(0, 0, 0, 0.02);
       }
 
-      [data-theme="dark"] .form-group input,
-      [data-theme="dark"] .form-group textarea,
-      [data-theme="dark"] .form-group select {
-        background-color: rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--text);
-      }
-
       .form-group input:focus,
       .form-group textarea:focus,
       .form-group select:focus {
@@ -676,21 +663,9 @@
         background-color: white;
       }
 
-      [data-theme="dark"] .form-group input:focus,
-      [data-theme="dark"] .form-group textarea:focus,
-      [data-theme="dark"] .form-group select:focus {
-        background-color: rgba(0, 0, 0, 0.3);
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-      }
-
       .form-group input::placeholder,
       .form-group textarea::placeholder {
         color: rgba(0, 0, 0, 0.3);
-      }
-
-      [data-theme="dark"] .form-group input::placeholder,
-      [data-theme="dark"] .form-group textarea::placeholder {
-        color: rgba(255, 255, 255, 0.3);
       }
 
       /* Select com ícone customizado */
@@ -718,23 +693,21 @@
         box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
       }
 
-      /* Mensagem de erro CORRIGIDA */
+      /* Mensagem de erro */
       .error-message {
         display: none;
         color: #e11d48;
         font-size: 0.8rem;
         margin-top: 0.4rem;
         font-weight: 500;
-        /* Posicionamento ajustado para ser sempre visível */
-        position: relative;
-        left: 0;
+        position: static;
       }
 
       .form-group.error .error-message {
         display: block !important;
       }
 
-      /* Entrada de telefone com código de país separado CORRIGIDA */
+      /* Entrada de telefone com código de país separado */
       .phone-input-group {
         position: relative;
       }
@@ -744,6 +717,8 @@
         flex-direction: row;
         align-items: stretch;
         width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
       }
 
       .country-code {
@@ -757,12 +732,7 @@
         color: var(--text);
         font-weight: 600;
         text-align: center;
-      }
-
-      [data-theme="dark"] .country-code {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: var(--text);
+        height: auto;
       }
 
       .phone-input-container input {
@@ -781,6 +751,14 @@
         border-color: #10b981;
       }
 
+      .form-group.error .phone-input-container input {
+        border-color: #e11d48;
+      }
+
+      .form-group.success .phone-input-container input {
+        border-color: #10b981;
+      }
+
       /* Aviso de privacidade */
       .privacy-notice {
         display: flex;
@@ -790,10 +768,6 @@
         border-radius: 8px;
         background-color: rgba(0, 0, 0, 0.02);
         margin-bottom: 1.5rem;
-      }
-
-      [data-theme="dark"] .privacy-notice {
-        background-color: rgba(255, 255, 255, 0.05);
       }
 
       .privacy-notice i {
@@ -808,7 +782,7 @@
         opacity: 0.8;
       }
 
-      /* Feedback do formulário CORRIGIDO */
+      /* Feedback do formulário */
       .form-feedback {
         padding: 1rem 1.25rem;
         border-radius: 8px;
@@ -825,14 +799,6 @@
       .form-feedback.success {
         background-color: #ecfdf5;
         border-left: 4px solid #10b981;
-      }
-
-      [data-theme="dark"] .form-feedback {
-        background-color: rgba(225, 29, 72, 0.2);
-      }
-
-      [data-theme="dark"] .form-feedback.success {
-        background-color: rgba(16, 185, 129, 0.2);
       }
 
       .feedback-icon {
@@ -856,7 +822,7 @@
         color: #10b981;
       }
 
-      /* Botão de envio CORRIGIDO */
+      /* Botão de envio */
       .contact-form .cta-button {
         width: 100%;
         position: relative;
@@ -913,11 +879,6 @@
         padding: 2.5rem;
       }
 
-      [data-theme="dark"] .success-message {
-        background: var(--dark-card, #1e293b);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
       .success-content {
         padding: 3rem 2rem;
       }
@@ -948,11 +909,6 @@
         padding: 2rem;
         margin-top: 2rem;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
-      }
-
-      [data-theme="dark"] .success-details {
-        background: rgba(255, 255, 255, 0.05);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       .success-detail-item {
@@ -1084,6 +1040,23 @@
         }
       }
 
+      /* Animação para o botão de envio */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .pulse {
+        animation: pulse 1.5s infinite;
+      }
+
       /* Tema Escuro */
       [data-theme="dark"] {
         --primary: #f8fafc;
@@ -1123,11 +1096,15 @@
       [data-theme="dark"] .value-card,
       [data-theme="dark"] .service-card,
       [data-theme="dark"] .case-card,
-      [data-theme="dark"] .testimonial-card,
-      [data-theme="dark"] .contact-form {
+      [data-theme="dark"] .testimonial-card {
         background-color: #000000;
         color: #ffffff;
         border: 1px solid #ffffff;
+      }
+
+      [data-theme="dark"] .contact-form {
+        background-color: #000000;
+        color: #ffffff;
       }
 
       [data-theme="dark"] h1,
@@ -1585,585 +1562,271 @@
         }
       }
 
-      /* Ajustes específicos para o campo de telefone */
-      .phone-input-container {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-        width: 100%;
-        border-radius: 8px;
-        overflow: hidden;
+      /* Melhorias para o Modo Escuro do Formulário */
+
+      /* Container do formulário em modo escuro */
+      [data-theme="dark"] .contact-form-wrapper {
+        background-color: #1e293b; /* Fundo mais claro que o corpo para contraste */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       }
 
-      .country-code {
-        flex: 0 0 56px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 8px 0 0 8px;
-        color: var(--text);
-        font-weight: 600;
-        text-align: center;
-        height: auto;
-      }
-
-      .phone-input-container input {
-        flex: 1;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-left: none;
-      }
-
-      /* Ajustes para estados de validação */
-      .form-group.error .phone-input-container .country-code {
-        border-color: #e11d48;
-      }
-
-      .form-group.success .phone-input-container .country-code {
-        border-color: #10b981;
-      }
-
-      .form-group.error .phone-input-container input {
-        border-color: #e11d48;
-      }
-
-      .form-group.success .phone-input-container input {
-        border-color: #10b981;
-      }
-
-      /* Ajuste para mensagens de erro */
-      .error-message {
-        display: none;
-        color: #e11d48;
-        font-size: 0.8rem;
-        margin-top: 0.4rem;
-        font-weight: 500;
-        position: static;
-      }
-
-      .form-group.error .error-message {
-        display: block;
-      }
-
-      /* Animação para o botão de envio */
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-
-      .pulse {
-        animation: pulse 1.5s infinite;
-      }
-    </style>
-    <style>
-      /* Variáveis de tema - serão atualizadas via JavaScript */
-      :root {
-        /* Tema claro - padrão (usando a paleta original) */
-        --primary: #0f172a;
-        --secondary: #3b82f6;
-        --accent: #10b981;
-        --text: #334155;
-        --light: #f8fafc;
-        --gradient: linear-gradient(135deg, #0f172a 0%, #3b82f6 100%);
-        --theme-transition: background-color 0.3s ease, color 0.3s ease;
-      }
-
-      /* Ajuste do header */
-      header {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 100;
-        transition: all 0.3s ease;
-      }
-
-      [data-theme="dark"] header {
-        background: rgba(0, 0, 0, 0.95);
-      }
-
-      /* Tema escuro simplificado - Apenas preto e branco */
-      [data-theme="dark"] {
-        --primary: #ffffff;
-        --secondary: #ffffff;
-        --accent: #ffffff;
-        --text: #ffffff;
-        --light: #000000;
-        --dark-surface: #000000;
-        --dark-background: #000000;
-        --dark-card: #000000;
-        --gradient: linear-gradient(135deg, #000000 0%, #000000 100%);
-      }
-
-      .header-content {
-        position: relative;
-        z-index: 2;
-      }
-
-      header::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: inherit;
-        z-index: 1;
-      }
-
-      /* Posicionamento dos botões de tema */
-      .theme-toggle {
-        position: fixed;
-        top: 95px;
-        right: 20px;
-        z-index: 99;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        border: none;
-        background: var(--gradient);
-        color: var(--light);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-      }
-
-      .theme-toggle:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-      }
-
-      /* Esconder botões quando menu mobile está ativo */
-      .mobile-menu.active ~ .theme-customizer,
-      .mobile-menu.active ~ .theme-toggle {
-        display: none;
-      }
-
-      /* Melhorias no tema escuro - Base */
-      [data-theme="dark"] {
-        --primary: #f8fafc;
-        --secondary: #60a5fa;
-        --accent: #34d399;
-        --text: #e2e8f0;
-        --light: #0f172a;
-        --dark-surface: #1e293b;
-        --dark-background: #0f172a;
-        --dark-card: #1e293b;
-        --gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      }
-
-      /* Melhorias nas paletas de cores para o tema escuro com melhor contraste */
-      [data-theme="dark"][data-palette="ocean"] {
-        --primary: #ffffff;
-        --secondary: #38bdf8;
-        --accent: #0ea5e9;
-        --text: #f0f9ff;
-        --dark-background: #082f49;
-        --dark-surface: #0c4a6e;
-        --dark-card: #075985;
-        --gradient: linear-gradient(135deg, #082f49 0%, #0c4a6e 100%);
-      }
-
-      [data-theme="dark"][data-palette="forest"] {
-        --primary: #ffffff;
-        --secondary: #4ade80;
-        --accent: #22c55e;
-        --text: #f0fdf4;
-        --dark-background: #052e16;
-        --dark-surface: #064e3b;
-        --dark-card: #065f46;
-        --gradient: linear-gradient(135deg, #052e16 0%, #064e3b 100%);
-      }
-
-      [data-theme="dark"][data-palette="amethyst"] {
-        --primary: #ffffff;
-        --secondary: #a78bfa;
-        --accent: #8b5cf6;
-        --text: #f5f3ff;
-        --dark-background: #2e1065;
-        --dark-surface: #4c1d95;
-        --dark-card: #5b21b6;
-        --gradient: linear-gradient(135deg, #2e1065 0%, #4c1d95 100%);
-      }
-
-      [data-theme="dark"] body {
-        background-color: #000000;
-        color: #ffffff;
-      }
-
-      /* Ajustes para SVGs e ícones no tema escuro */
-      [data-theme="dark"] .cls-1 {
-        stroke: #ffffff !important;
-      }
-
-      [data-theme="dark"] .fas,
-      [data-theme="dark"] .fab {
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .service-icon {
-        background: #000000;
-        border: 1px solid #ffffff;
-      }
-
-      [data-theme="dark"] .value-card,
-      [data-theme="dark"] .service-card,
-      [data-theme="dark"] .case-card,
-      [data-theme="dark"] .testimonial-card,
-      [data-theme="dark"] .contact-form {
-        background-color: #000000;
-        color: #ffffff;
-        border: 1px solid #ffffff;
-      }
-
+      /* Campos do formulário em modo escuro */
       [data-theme="dark"] .form-group input,
-      [data-theme="dark"] .form-group textarea {
-        background-color: #000000;
-        border: 1px solid #ffffff;
-        color: #ffffff;
+      [data-theme="dark"] .form-group textarea,
+      [data-theme="dark"] .form-group select {
+        background-color: #0f172a; /* Fundo mais escuro para os campos */
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #f8fafc; /* Texto bem claro para legibilidade */
       }
 
+      [data-theme="dark"] .form-group input::placeholder,
+      [data-theme="dark"] .form-group textarea::placeholder {
+        color: rgba(255, 255, 255, 0.4); /* Placeholder mais visível */
+      }
+
+      /* Campo de telefone em modo escuro */
+      [data-theme="dark"] .country-code {
+        background-color: #0f172a; /* Mesmo fundo do input */
+        border-color: rgba(255, 255, 255, 0.15);
+        color: #f8fafc;
+      }
+
+      /* Estados de foco dos campos em modo escuro */
       [data-theme="dark"] .form-group input:focus,
-      [data-theme="dark"] .form-group textarea:focus {
-        border-color: #ffffff;
-        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+      [data-theme="dark"] .form-group textarea:focus,
+      [data-theme="dark"] .form-group select:focus {
+        background-color: #1e293b; /* Contraste quando em foco */
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
       }
 
-      [data-theme="dark"] .form-group label {
-        color: #ffffff;
+      /* Estados de validação em modo escuro */
+      [data-theme="dark"] .form-group.error input,
+      [data-theme="dark"] .form-group.error textarea,
+      [data-theme="dark"] .form-group.error select,
+      [data-theme="dark"] .form-group.error .country-code {
+        border-color: #f43f5e; /* Vermelho mais vibrante para erro */
+        box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2);
       }
 
-      [data-theme="dark"] .theme-toggle,
-      [data-theme="dark"] .customizer-toggle {
-        background: #000000;
-        border: 1px solid #ffffff;
+      [data-theme="dark"] .form-group.success input,
+      [data-theme="dark"] .form-group.success textarea,
+      [data-theme="dark"] .form-group.success select,
+      [data-theme="dark"] .form-group.success .country-code {
+        border-color: #10b981; /* Verde mais vibrante para sucesso */
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
       }
 
-      [data-theme="dark"] .theme-toggle i,
-      [data-theme="dark"] .customizer-toggle i {
-        color: #ffffff;
+      /* Mensagens de erro em modo escuro */
+      [data-theme="dark"] .error-message {
+        color: #f43f5e; /* Vermelho mais vibrante */
       }
 
-      [data-theme="dark"] .customizer-panel {
-        background-color: #000000;
-        border-left: 1px solid #ffffff;
+      /* Aviso de privacidade em modo escuro */
+      [data-theme="dark"] .privacy-notice {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
 
-      [data-theme="dark"] .customizer-header {
-        border-bottom: 1px solid #ffffff;
-      }
-
-      [data-theme="dark"] .font-button {
-        background-color: #000000;
-        color: #ffffff;
-        border: 1px solid #ffffff;
-      }
-
-      [data-theme="dark"] .font-button:hover {
-        background-color: var(--dark-card);
-      }
-
-      [data-theme="dark"] .about {
-        background: #000000;
-      }
-
-      [data-theme="dark"] .numbers {
-        background: #000000;
-        border-top: 1px solid #ffffff;
-        border-bottom: 1px solid #ffffff;
-      }
-
-      [data-theme="dark"] .services,
-      [data-theme="dark"] .cases,
-      [data-theme="dark"] .testimonials {
-        background-color: #000000;
-      }
-
-      /* Ajuste das cores dos textos no tema escuro */
-      [data-theme="dark"] h1,
-      [data-theme="dark"] h2,
-      [data-theme="dark"] h3,
-      [data-theme="dark"] h4,
-      [data-theme="dark"] p,
-      [data-theme="dark"] a {
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .section-header h2 {
+      [data-theme="dark"] .privacy-notice i {
         color: var(--secondary);
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
       }
 
-      [data-theme="dark"] .section-header p {
-        opacity: 0.95;
+      [data-theme="dark"] .privacy-notice p {
+        color: rgba(255, 255, 255, 0.8);
       }
 
-      /* Ajuste dos botões no tema escuro */
-      [data-theme="dark"] .cta-button,
-      [data-theme="dark"] button[type="submit"] {
-        background: #000000;
-        color: #ffffff;
-        border: 1px solid #ffffff;
+      /* Feedback em modo escuro */
+      [data-theme="dark"] .form-feedback {
+        background-color: rgba(15, 23, 42, 0.8);
+        border-left: 4px solid #f43f5e;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       }
 
-      [data-theme="dark"] .cta-button:hover,
-      [data-theme="dark"] button[type="submit"]:hover {
-        background: #ffffff;
-        color: #000000;
+      [data-theme="dark"] .form-feedback.success {
+        background-color: rgba(15, 23, 42, 0.8);
+        border-left: 4px solid #10b981;
       }
 
-      [data-theme="dark"] button[type="submit"] {
-        background: var(--gradient);
-        color: var(--light);
+      [data-theme="dark"] .feedback-icon {
+        color: #f43f5e;
       }
 
-      /* Ajustes para missão, visão e valores no tema escuro */
-      [data-theme="dark"] .mission-vision {
-        background: #000000;
-        border: 1px solid #ffffff;
-        color: #ffffff;
+      [data-theme="dark"] .form-feedback.success .feedback-icon {
+        color: #10b981;
       }
 
-      [data-theme="dark"] .mission-vision h3 {
-        color: #ffffff;
+      [data-theme="dark"] .feedback-message {
+        color: #f8fafc;
       }
 
-      [data-theme="dark"] .mission-vision p {
-        color: #ffffff;
+      /* Botão de envio em modo escuro */
+      [data-theme="dark"] .contact-form .cta-button {
+        background: #60a5fa; /* Azul mais vibrante */
+        color: #0f172a; /* Texto escuro para contraste */
+        font-weight: 600;
       }
 
-      [data-theme="dark"] .mission-vision h3 i {
-        color: #ffffff;
+      [data-theme="dark"] .contact-form .cta-button:hover {
+        background: #93c5fd; /* Azul mais claro ao passar o mouse */
+        box-shadow: 0 10px 20px rgba(96, 165, 250, 0.4);
       }
 
-      /* Ajuste do menu mobile no tema escuro */
-      [data-theme="dark"] .mobile-menu {
-        background: #000000;
+      [data-theme="dark"] .contact-form .cta-button:disabled,
+      [data-theme="dark"] .contact-form .cta-button.loading {
+        background: #60a5fa;
+        opacity: 0.7;
       }
 
-      [data-theme="dark"] .mobile-menu a {
-        color: #ffffff;
-        border-bottom: 1px solid #ffffff;
+      [data-theme="dark"] .contact-form .cta-button .button-loader {
+        color: #0f172a;
       }
 
-      [data-theme="dark"] .mobile-menu a:hover {
-        background-color: #ffffff;
-        color: #000000;
+      /* Componente de sucesso em modo escuro */
+      [data-theme="dark"] .success-message {
+        background-color: #1e293b;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
       }
 
-      [data-theme="dark"] .menu-button {
-        color: #ffffff;
+      [data-theme="dark"] .success-message h3 {
+        color: #f8fafc;
       }
 
-      /* Footer no tema escuro */
-      [data-theme="dark"] footer {
-        background: #000000;
-        border-top: 1px solid #ffffff;
+      [data-theme="dark"] .success-message p {
+        color: rgba(255, 255, 255, 0.8);
       }
 
-      /* Customizador de tema */
-      .theme-customizer {
+      [data-theme="dark"] .success-details {
+        background-color: rgba(15, 23, 42, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      [data-theme="dark"] .success-detail-item i {
+        color: #60a5fa;
+      }
+
+      /* Sistema de Toast para notificações */
+      .toast-container {
         position: fixed;
+        top: 20px;
         right: 20px;
-        bottom: 20px;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        max-width: 350px;
+        z-index: 9999;
       }
 
-      .customizer-toggle {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        border: none;
-        background: var(--gradient);
-        color: var(--light);
-        cursor: pointer;
+      .toast {
+        background-color: #fff;
+        color: #333;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 12px;
+        animation: toastSlideIn 0.3s ease forwards;
+        max-width: 100%;
+        overflow: hidden;
+        border-left: 4px solid #3b82f6;
+      }
+
+      .toast.error {
+        border-left-color: #e11d48;
+      }
+
+      .toast.success {
+        border-left-color: #10b981;
+      }
+
+      .toast-icon {
+        flex-shrink: 0;
         font-size: 1.25rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        color: #3b82f6;
       }
 
-      .customizer-toggle:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      .toast.error .toast-icon {
+        color: #e11d48;
       }
 
-      .theme-toggle i {
-        position: absolute;
-        transition: transform 0.5s ease;
+      .toast.success .toast-icon {
+        color: #10b981;
       }
 
-      .theme-toggle .fa-sun {
-        transform: rotate(0) scale(1);
+      .toast-content {
+        flex: 1;
       }
 
-      .theme-toggle .fa-moon {
-        transform: rotate(100deg) scale(0);
+      .toast-title {
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+        font-size: 0.95rem;
       }
 
-      [data-theme="dark"] .theme-toggle .fa-sun {
-        transform: rotate(-100deg) scale(0);
+      .toast-message {
+        font-size: 0.85rem;
+        color: #666;
       }
 
-      [data-theme="dark"] .theme-toggle .fa-moon {
-        transform: rotate(0) scale(1);
-      }
-
-      .customizer-panel {
-        position: fixed;
-        top: 0;
-        right: -360px;
-        width: 360px;
-        height: 100vh;
-        background: var(--light);
-        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-        z-index: 1000;
-        overflow-y: auto;
-      }
-
-      .customizer-panel.active {
-        transform: translateX(-360px);
-      }
-
-      .customizer-header {
-        padding: 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      }
-
-      .customizer-header h3 {
-        margin: 0;
-        color: var(--primary);
-        font-size: 1.25rem;
-      }
-
-      .close-button {
+      .toast-close {
         background: none;
         border: none;
-        color: var(--text);
         cursor: pointer;
-        font-size: 1.25rem;
-        padding: 0.5rem;
-        transition: color 0.3s ease;
-      }
-
-      .close-button:hover {
-        color: var(--primary);
-      }
-
-      .customizer-content {
-        padding: 1.5rem;
-      }
-
-      .customizer-section {
-        margin-bottom: 2rem;
-      }
-
-      .customizer-section h4 {
-        color: var(--primary);
-        margin-bottom: 1rem;
         font-size: 1rem;
+        color: #999;
+        padding: 0.25rem;
+        margin-left: auto;
+        flex-shrink: 0;
       }
 
-      .color-palettes {
-        display: grid;
-        gap: 1rem;
+      .toast-close:hover {
+        color: #333;
       }
 
-      .palette-button {
-        display: flex;
-        gap: 4px;
-        padding: 0.5rem;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        cursor: pointer;
-        background: none;
-        transition: border-color 0.3s ease;
+      /* Dark mode para toasts */
+      [data-theme="dark"] .toast {
+        background-color: #1e293b;
+        color: #f8fafc;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       }
 
-      .palette-button:hover {
-        border-color: var(--secondary);
+      [data-theme="dark"] .toast-message {
+        color: #cbd5e1;
       }
 
-      .palette-button.active {
-        border-color: var(--accent);
+      [data-theme="dark"] .toast-close {
+        color: #94a3b8;
       }
 
-      .palette-button span {
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
+      [data-theme="dark"] .toast-close:hover {
+        color: #f8fafc;
       }
 
-      .font-options {
-        display: grid;
-        gap: 0.5rem;
-      }
-
-      .font-button {
-        padding: 0.75rem 1rem;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        background: var(--light);
-        color: var(--text);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: left;
-        font-size: 1rem;
-      }
-
-      .font-button:hover {
-        border-color: var(--secondary);
-      }
-
-      .font-button.active {
-        border-color: var(--accent);
-        color: var(--primary);
-        background: var(--light);
-      }
-
-      @media (max-width: 768px) {
-        .customizer-panel {
-          width: 100%;
-          right: -100%;
+      @keyframes toastSlideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
         }
-
-        .customizer-panel.active {
-          transform: translateX(-100%);
+        to {
+          transform: translateX(0);
+          opacity: 1;
         }
+      }
 
-        .menu-button {
-          display: block;
-          position: relative;
+      @keyframes toastSlideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
         }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
 
-        .mobile-menu.active ~ .menu-button {
-          position: fixed;
-          right: 20px;
-          top: 20px;
-        }
+      .toast.hiding {
+        animation: toastSlideOut 0.3s ease forwards;
       }
     </style>
   </head>
@@ -2762,7 +2425,7 @@
       </div>
     </section>
 
-    <!-- Seção de Contato Corrigida -->
+    <!-- Seção de Contato Completa -->
     <section class="contact" id="contato">
       <div class="container">
         <div class="contact-grid">
@@ -3090,610 +2753,96 @@
       </div>
     </div>
 
-    <script>
-      // Tema
-      const initializeTheme = () => {
-        // Verifica apenas o localStorage
-        const savedTheme = localStorage.getItem("theme");
-        // Se não houver tema salvo, usa 'light'
-        const theme = savedTheme || "light";
-
-        document.documentElement.setAttribute("data-theme", theme);
-        updateThemeColor(theme);
-        return theme;
-      };
-
-      const getThemeColor = (theme) => {
-        // Obtém a cor atual da variável CSS
-        const styles = getComputedStyle(document.documentElement);
-        if (theme === "dark") {
-          return "#000000";
-        }
-        return styles.getPropertyValue("--secondary").trim();
-      };
-
-      const updateThemeColor = (theme) => {
-        const themeColorMeta = document.querySelector(
-          'meta[name="theme-color"]'
-        );
-        if (themeColorMeta) {
-          const color = getThemeColor(theme);
-          themeColorMeta.setAttribute("content", color);
-        }
-      };
-
-      const toggleTheme = () => {
-        const currentTheme =
-          document.documentElement.getAttribute("data-theme");
-        const newTheme = currentTheme === "dark" ? "light" : "dark";
-
-        document.documentElement.setAttribute("data-theme", newTheme);
-        localStorage.setItem("theme", newTheme);
-        updateThemeColor(newTheme);
-      };
-
-      // Paletas de cores
-      const palettes = {
-        original: {
-          primary: "#0f172a",
-          secondary: "#3b82f6",
-          accent: "#10b981",
-          text: "#334155",
-          light: "#f8fafc",
-        },
-        1: {
-          primary: "#013A40",
-          secondary: "#038C4C",
-          accent: "#05F26C",
-          text: "#025939",
-          light: "#04D960",
-        },
-        2: {
-          primary: "#11091A",
-          secondary: "#2F2F4D",
-          accent: "#E8D18E",
-          text: "#626970",
-          light: "#BAB195",
-        },
-        3: {
-          primary: "#09403A",
-          secondary: "#072623",
-          accent: "#8C8C8C",
-          text: "#0D0D0D",
-          light: "#F2F2F2",
-        },
-        4: {
-          primary: "#35352B",
-          secondary: "#EC6C2B",
-          accent: "#FEAE4B",
-          text: "#35352B",
-          light: "#E7E9C4",
-        },
-        5: {
-          primary: "#466C82",
-          secondary: "#6F91A1",
-          accent: "#C1DAE0",
-          text: "#98B5C1",
-          light: "#EAFFFF",
-        },
-      };
-
-      const fonts = ["Inter", "Arial", "Montserrat", "Roboto", "Poppins"];
-
-      // Carrega fontes do Google Fonts
-      const loadGoogleFonts = () => {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href =
-          "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap";
-        document.head.appendChild(link);
-      };
-
-      // Inicialização
-      document.addEventListener("DOMContentLoaded", () => {
-        loadGoogleFonts();
-
-        // Inicializa tema
-        const currentTheme = initializeTheme();
-
-        // Event Listeners
-        const themeToggle = document.getElementById("theme-toggle");
-        const customizerToggle = document.getElementById("customizer-toggle");
-        const customizerPanel = document.querySelector(".customizer-panel");
-        const closeButton = document.querySelector(".close-button");
-
-        // Toggle tema claro/escuro
-        themeToggle.addEventListener("click", toggleTheme);
-
-        // Abre/fecha painel de customização
-        customizerToggle.addEventListener("click", () => {
-          customizerPanel.classList.add("active");
-        });
-
-        closeButton.addEventListener("click", () => {
-          customizerPanel.classList.remove("active");
-        });
-
-        // Clique fora fecha o painel
-        document.addEventListener("click", (e) => {
-          if (
-            !customizerPanel.contains(e.target) &&
-            !customizerToggle.contains(e.target) &&
-            customizerPanel.classList.contains("active")
-          ) {
-            customizerPanel.classList.remove("active");
-          }
-        });
-
-        // Paletas de cores
-        const paletteButtons = document.querySelectorAll(".palette-button");
-        paletteButtons.forEach((button) => {
-          button.addEventListener("click", () => {
-            const paletteId = button.dataset.palette;
-            const palette = palettes[paletteId];
-
-            // Remove active class de todos os botões
-            paletteButtons.forEach((btn) => btn.classList.remove("active"));
-            // Adiciona active class ao botão clicado
-            button.classList.add("active");
-
-            // Aplica a paleta
-            document.documentElement.style.setProperty(
-              "--primary",
-              palette.primary
-            );
-            document.documentElement.style.setProperty(
-              "--secondary",
-              palette.secondary
-            );
-            document.documentElement.style.setProperty(
-              "--accent",
-              palette.accent
-            );
-            document.documentElement.style.setProperty("--text", palette.text);
-            document.documentElement.style.setProperty(
-              "--light",
-              palette.light
-            );
-            document.documentElement.style.setProperty(
-              "--gradient",
-              `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`
-            );
-
-            // Atualiza a cor do theme-color
-            const currentTheme =
-              document.documentElement.getAttribute("data-theme");
-            updateThemeColor(currentTheme);
-
-            // Salva a paleta selecionada
-            localStorage.setItem("selectedPalette", paletteId);
-          });
-        });
-
-        // Fontes
-        const fontButtons = document.querySelectorAll(".font-button");
-        fontButtons.forEach((button) => {
-          // Define o estilo do botão com a fonte correspondente
-          button.style.fontFamily = button.dataset.font;
-
-          button.addEventListener("click", () => {
-            const fontFamily = button.dataset.font;
-
-            // Remove active class de todos os botões
-            fontButtons.forEach((btn) => btn.classList.remove("active"));
-            // Adiciona active class ao botão clicado
-            button.classList.add("active");
-
-            // Aplica a fonte
-            document.body.style.setProperty("--font-family", fontFamily);
-            document.querySelectorAll("*").forEach((element) => {
-              if (
-                !element.classList.contains("fas") &&
-                !element.classList.contains("fab")
-              ) {
-                element.style.fontFamily = `${fontFamily}, system-ui, sans-serif`;
-              }
-            });
-
-            // Salva a fonte selecionada
-            localStorage.setItem("selectedFont", fontFamily);
-          });
-        });
-
-        // Carrega configurações salvas
-        const loadSavedSettings = () => {
-          // Carrega paleta
-          const savedPalette = localStorage.getItem("selectedPalette");
-          if (savedPalette) {
-            const paletteButton = document.querySelector(
-              `[data-palette="${savedPalette}"]`
-            );
-            if (paletteButton) {
-              paletteButton.click();
-            }
-          }
-
-          // Carrega fonte
-          const savedFont = localStorage.getItem("selectedFont");
-          if (savedFont) {
-            const fontButton = document.querySelector(
-              `[data-font="${savedFont}"]`
-            );
-            if (fontButton) {
-              fontButton.click();
-            }
-          }
-        };
-
-        // Inicializa configurações salvas
-        loadSavedSettings();
-
-        // Prevenção de flash de tema incorreto
-        document.documentElement.style.visibility = "visible";
-      });
-    </script>
+    <!-- Container para notificações toast -->
+    <div class="toast-container"></div>
 
     <script>
-      // Configuração do Intersection Observer para animações de entrada
-      const observerOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -10% 0px",
+      // Sistema de Toast para alertas
+      const ToastSystem = {
+        container: null,
+        toasts: {},
+        toastCounter: 0,
+
+        init() {
+          // Cria o container de toasts se ainda não existir
+          if (!this.container) {
+            this.container = document.querySelector(".toast-container");
+            if (!this.container) {
+              this.container = document.createElement("div");
+              this.container.className = "toast-container";
+              document.body.appendChild(this.container);
+            }
+          }
+        },
+
+        show(options) {
+          this.init();
+
+          const { title, message, type = "info", duration = 5000 } = options;
+          const toastId = "toast-" + ++this.toastCounter;
+
+          // Cria elemento toast
+          const toast = document.createElement("div");
+          toast.className = `toast ${type}`;
+          toast.id = toastId;
+
+          // Ícone com base no tipo
+          let icon = "info-circle";
+          if (type === "error") icon = "exclamation-circle";
+          if (type === "success") icon = "check-circle";
+
+          // Conteúdo do toast
+          toast.innerHTML = `
+      <div class="toast-icon">
+        <i class="fas fa-${icon}"></i>
+      </div>
+      <div class="toast-content">
+        ${title ? `<div class="toast-title">${title}</div>` : ""}
+        ${message ? `<div class="toast-message">${message}</div>` : ""}
+      </div>
+      <button class="toast-close" aria-label="Fechar">
+        <i class="fas fa-times"></i>
+      </button>
+    `;
+
+          // Adiciona ao container
+          this.container.appendChild(toast);
+
+          // Configura botão de fechar
+          const closeBtn = toast.querySelector(".toast-close");
+          closeBtn.addEventListener("click", () => this.hide(toastId));
+
+          // Auto-esconder após o tempo definido
+          if (duration > 0) {
+            this.toasts[toastId] = setTimeout(() => {
+              this.hide(toastId);
+            }, duration);
+          }
+
+          return toastId;
+        },
+
+        hide(toastId) {
+          const toast = document.getElementById(toastId);
+          if (!toast) return;
+
+          // Limpa timeout se existir
+          if (this.toasts[toastId]) {
+            clearTimeout(this.toasts[toastId]);
+            delete this.toasts[toastId];
+          }
+
+          // Animação de saída
+          toast.classList.add("hiding");
+          toast.addEventListener("animationend", () => {
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
+          });
+        },
       };
 
-      // Função para definir classes de animação iniciais
-      function setInitialAnimations() {
-        // Hero section - Animação diferente para cada lado
-        document
-          .querySelector(".hero .hero-content > div:first-child")
-          .classList.add("fade-left");
-        document
-          .querySelector(".hero .hero-content > div:last-child")
-          .classList.add("fade-right");
-
-        // About section
-        document
-          .querySelectorAll(".about-cards .mission-vision")
-          .forEach((el, index) => {
-            el.classList.add("fade-up");
-            el.style.transitionDelay = `${index * 0.2}s`;
-          });
-
-        // Value cards com efeito escala
-        document.querySelectorAll(".value-card").forEach((el, index) => {
-          el.classList.add("fade-scale");
-          el.style.transitionDelay = `${index * 0.1}s`;
-        });
-
-        // Services cards entrando pelos lados alternadamente
-        document.querySelectorAll(".service-card").forEach((el, index) => {
-          el.classList.add(index % 2 === 0 ? "fade-left" : "fade-right");
-          el.style.transitionDelay = `${index * 0.2}s`;
-        });
-
-        // Numbers com fade up sequencial
-        document.querySelectorAll(".number-item").forEach((el, index) => {
-          el.classList.add("fade-up");
-          el.style.transitionDelay = `${index * 0.2}s`;
-        });
-
-        // Cases cards com fade up
-        document.querySelectorAll(".case-card").forEach((el, index) => {
-          el.classList.add("fade-up");
-          el.style.transitionDelay = `${index * 0.2}s`;
-        });
-
-        // Testimonial com fade scale
-        document.querySelectorAll(".testimonial-card").forEach((el) => {
-          el.classList.add("fade-scale");
-        });
-
-        // Contact form e info
-        document.querySelector(".contact-info").classList.add("fade-left");
-        document.querySelector(".contact-form").classList.add("fade-right");
-      }
-
-      // Observer simplificado apenas para entrada dos elementos
-      const appearOnScroll = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          entry.target.classList.add("visible");
-          // Removemos o observer após a animação para melhor performance
-          observer.unobserve(entry.target);
-        });
-      }, observerOptions);
-
-      // Carousel de serviços
-      function initCarousel() {
-        const track = document.querySelector(".carousel-track");
-        const carousel = document.querySelector(".carousel");
-        const cards = document.querySelectorAll(".service-card");
-        let currentIndex = 0;
-        let indicators;
-        let autoScrollInterval;
-
-        // Função para verificar se todo o conteúdo está visível
-        function isAllContentVisible() {
-          if (window.innerWidth <= 768) {
-            return carousel.scrollWidth <= carousel.clientWidth;
-          } else {
-            // Para desktop, verifica se todos os cards cabem na visualização
-            const cardWidth = cards[0].offsetWidth + 32; // largura + margem
-            const totalWidth = cardWidth * cards.length;
-            return totalWidth <= carousel.clientWidth;
-          }
-        }
-
-        // Cria e atualiza indicadores apenas se necessário
-        function setupIndicators() {
-          // Remove indicadores existentes
-          const existingIndicators = document.querySelector(
-            ".carousel-indicators"
-          );
-          if (existingIndicators) {
-            existingIndicators.remove();
-          }
-
-          // Só cria novos indicadores se houver conteúdo não visível
-          if (!isAllContentVisible()) {
-            indicators = document.createElement("div");
-            indicators.className = "carousel-indicators visible";
-
-            cards.forEach((_, index) => {
-              const indicator = document.createElement("div");
-              indicator.className = `carousel-indicator ${
-                index === 0 ? "active" : ""
-              }`;
-
-              // Adiciona evento de click para cada indicador
-              indicator.addEventListener("click", () => {
-                currentIndex = index;
-                if (window.innerWidth <= 768) {
-                  // No mobile, rola para o card correspondente
-                  const cardWidth = cards[index].offsetWidth;
-                  carousel.scrollTo({
-                    left: index * (cardWidth + 16), // width + gap
-                    behavior: "smooth",
-                  });
-                } else {
-                  // No desktop, atualiza a posição
-                  updateDesktopCarousel();
-                }
-                updateIndicators();
-              });
-
-              indicators.appendChild(indicator);
-            });
-
-            carousel.parentNode.insertBefore(indicators, carousel.nextSibling);
-          }
-        }
-
-        // Atualiza indicadores baseado na posição atual
-        function updateIndicators() {
-          if (indicators) {
-            const allIndicators = indicators.querySelectorAll(
-              ".carousel-indicator"
-            );
-            allIndicators.forEach((indicator, index) => {
-              indicator.classList.toggle("active", index === currentIndex);
-            });
-          }
-        }
-
-        // Função para rolagem desktop
-        function updateDesktopCarousel() {
-          if (window.innerWidth > 768) {
-            const cardWidth = cards[0].offsetWidth + 32; // Inclui margem
-            track.style.transform = `translateX(-${
-              currentIndex * cardWidth
-            }px)`;
-            updateIndicators();
-          }
-        }
-
-        // Event listeners
-        function handleScroll() {
-          if (window.innerWidth <= 768) {
-            const totalWidth = track.scrollWidth - carousel.clientWidth;
-            const progress = carousel.scrollLeft / totalWidth;
-            const numberOfCards = cards.length;
-            currentIndex = Math.round(progress * (numberOfCards - 1));
-            requestAnimationFrame(updateIndicators);
-          }
-        }
-
-        carousel.addEventListener("scroll", handleScroll);
-
-        // Listener para redimensionamento
-        window.addEventListener("resize", () => {
-          // Limpa o autoscroll existente
-          if (autoScrollInterval) {
-            clearInterval(autoScrollInterval);
-            autoScrollInterval = null;
-          }
-
-          setupIndicators();
-
-          if (window.innerWidth > 768) {
-            // Reset para desktop
-            track.style.removeProperty("transform");
-            updateDesktopCarousel();
-
-            // Só inicia autoscroll se houver conteúdo não visível
-            if (!isAllContentVisible()) {
-              autoScrollInterval = setInterval(() => {
-                currentIndex = (currentIndex + 1) % cards.length;
-                updateDesktopCarousel();
-              }, 5000);
-            }
-          } else {
-            // Reset para mobile
-            track.style.transform = "none";
-          }
-        });
-
-        // Configuração inicial
-        setupIndicators();
-
-        // Inicia auto-scroll apenas se estiver em desktop e houver conteúdo não visível
-        if (window.innerWidth > 768 && !isAllContentVisible()) {
-          autoScrollInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % cards.length;
-            updateDesktopCarousel();
-          }, 5000);
-        }
-
-        // Pausa o autoScroll quando o mouse está sobre o carousel
-        carousel.addEventListener("mouseenter", () => {
-          if (autoScrollInterval) {
-            clearInterval(autoScrollInterval);
-            autoScrollInterval = null;
-          }
-        });
-
-        // Reinicia o autoScroll quando o mouse sai do carousel
-        carousel.addEventListener("mouseleave", () => {
-          if (
-            window.innerWidth > 768 &&
-            !isAllContentVisible() &&
-            !autoScrollInterval
-          ) {
-            autoScrollInterval = setInterval(() => {
-              currentIndex = (currentIndex + 1) % cards.length;
-              updateDesktopCarousel();
-            }, 5000);
-          }
-        });
-      }
-
-      // Header scroll effect
-      function initHeaderScroll() {
-        let lastScroll = 0;
-        const header = document.querySelector("header");
-
-        window.addEventListener("scroll", () => {
-          const currentScroll = window.pageYOffset;
-
-          if (currentScroll <= 0) {
-            header.style.boxShadow = "none";
-            return;
-          }
-
-          if (currentScroll > lastScroll) {
-            header.style.transform = "translateY(-100%)";
-          } else {
-            header.style.transform = "translateY(0)";
-            header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
-          }
-
-          lastScroll = currentScroll;
-        });
-      }
-
-      // Smooth scroll para links de navegação
-      function initSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-          anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute("href"));
-            if (target) {
-              target.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }
-          });
-        });
-      }
-
-      // Formulário de contato
-      function initContactForm() {
-        const form = document.querySelector(".contact-form");
-        if (!form) return;
-
-        form.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const formData = {
-            name: document.querySelector("#name").value,
-            email: document.querySelector("#email").value,
-            company: document.querySelector("#company").value,
-            message: document.querySelector("#message").value,
-          };
-
-          console.log("Dados do formulário:", formData);
-          alert("Obrigado pelo contato! Retornaremos em breve.");
-          form.reset();
-        });
-      }
-
-      // Menu Mobile
-      function initMobileMenu() {
-        const menuButton = document.querySelector(".menu-button");
-        const mobileMenu = document.querySelector(".mobile-menu");
-        const menuLinks = document.querySelectorAll(".mobile-menu a");
-
-        function toggleMenu() {
-          const isOpen = mobileMenu.classList.contains("active");
-          mobileMenu.classList.toggle("active");
-          menuButton.setAttribute("aria-expanded", !isOpen);
-          document.body.style.overflow = isOpen ? "" : "hidden";
-        }
-
-        menuButton.addEventListener("click", toggleMenu);
-
-        // Fecha o menu ao clicar em um link
-        menuLinks.forEach((link) => {
-          link.addEventListener("click", () => {
-            toggleMenu();
-          });
-        });
-
-        // Fecha o menu ao clicar fora
-        document.addEventListener("click", (e) => {
-          if (
-            mobileMenu.classList.contains("active") &&
-            !mobileMenu.contains(e.target) &&
-            !menuButton.contains(e.target)
-          ) {
-            toggleMenu();
-          }
-        });
-      }
-
-      // Função de inicialização principal
-      document.addEventListener("DOMContentLoaded", () => {
-        // Inicializa as animações
-        setInitialAnimations();
-
-        // Observa elementos para animações
-        const animatedElements = document.querySelectorAll(
-          ".fade-up, .fade-down, .fade-left, .fade-right, .fade-scale"
-        );
-        animatedElements.forEach((el) => {
-          appearOnScroll.observe(el);
-        });
-
-        // Inicializa todas as funcionalidades
-        initMobileMenu();
-        initCarousel();
-        initHeaderScroll();
-        initSmoothScroll();
-        initContactForm();
-
-        // Revela os elementos inicialmente visíveis
-        setTimeout(() => {
-          const visibleElements = document.querySelectorAll('[class*="fade-"]');
-          visibleElements.forEach((el) => {
-            if (el.getBoundingClientRect().top < window.innerHeight) {
-              el.classList.add("visible");
-            }
-          });
-        }, 100);
-      });
-    </script>
-    <script>
-      // Função de inicialização do formulário de contato corrigido
+      // Função de inicialização do formulário de contato
       function initContactForm() {
         const form = document.querySelector(".contact-form");
         const successMessage = document.getElementById("success-message");
@@ -3713,6 +2862,9 @@
           }
         });
 
+        // Inicializa o sistema de toast
+        ToastSystem.init();
+
         // Função para validar e-mail
         function isValidEmail(email) {
           const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -3729,63 +2881,65 @@
 
         // Aplica máscara no campo de telefone - versão corrigida
         const phoneInput = document.getElementById("phone");
-        phoneInput.addEventListener("input", function (e) {
-          // Armazena a posição do cursor
-          const start = this.selectionStart;
-          const end = this.selectionEnd;
+        if (phoneInput) {
+          phoneInput.addEventListener("input", function (e) {
+            // Armazena a posição do cursor
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
 
-          // Salva o valor antes da formatação
-          const originalValue = this.value;
+            // Salva o valor antes da formatação
+            const originalValue = this.value;
 
-          // Remove caracteres não numéricos
-          let value = this.value.replace(/\D/g, "");
+            // Remove caracteres não numéricos
+            let value = this.value.replace(/\D/g, "");
 
-          // Limita para um total de 11 dígitos (DDD + número)
-          if (value.length > 11) {
-            value = value.substring(0, 11);
-          }
+            // Limita para um total de 11 dígitos (DDD + número)
+            if (value.length > 11) {
+              value = value.substring(0, 11);
+            }
 
-          let formattedValue = "";
+            let formattedValue = "";
 
-          // Aplicar formatação
-          if (value.length > 0) {
-            // Formata DDD
-            formattedValue = `(${value.substring(
-              0,
-              Math.min(2, value.length)
-            )}`;
+            // Aplicar formatação
+            if (value.length > 0) {
+              // Formata DDD
+              formattedValue = `(${value.substring(
+                0,
+                Math.min(2, value.length)
+              )}`;
 
-            if (value.length > 2) {
-              // Adiciona fechamento do parêntesis e espaço
-              formattedValue += ") ";
+              if (value.length > 2) {
+                // Adiciona fechamento do parêntesis e espaço
+                formattedValue += ") ";
 
-              // Formata número
-              if (value.length <= 7) {
-                // Para números com menos dígitos
-                formattedValue += value.substring(2);
-              } else {
-                // Para celulares (9 dígitos) ou telefones fixos (8 dígitos)
-                formattedValue +=
-                  value.substring(2, 7) + "-" + value.substring(7);
+                // Formata número
+                if (value.length <= 7) {
+                  // Para números com menos dígitos
+                  formattedValue += value.substring(2);
+                } else {
+                  // Para celulares (9 dígitos) ou telefones fixos (8 dígitos)
+                  formattedValue +=
+                    value.substring(2, 7) + "-" + value.substring(7);
+                }
               }
             }
-          }
 
-          // Atualiza o valor
-          this.value = formattedValue;
+            // Atualiza o valor
+            this.value = formattedValue;
 
-          // Ajusta a posição do cursor
-          if (this.value.length !== originalValue.length) {
-            // Se o formato mudou, ajusta a posição do cursor
-            const diff = this.value.length - originalValue.length;
-            this.setSelectionRange(
-              Math.max(0, start + diff),
-              Math.max(0, end + diff)
-            );
-          } else {
-            this.setSelectionRange(start, end);
-          }
-        });
+            // Ajusta a posição do cursor
+            if (this.value.length !== originalValue.length) {
+              // Se o formato mudou, ajusta a posição do cursor
+              const diff = this.value.length - originalValue.length;
+              this.setSelectionRange(
+                Math.max(0, start + diff),
+                Math.max(0, end + diff)
+              );
+            } else {
+              this.setSelectionRange(start, end);
+            }
+          });
+        }
 
         // Função para validar um campo específico
         function validateField(field, silent = false) {
@@ -3834,8 +2988,9 @@
           return true;
         }
 
-        // Função para mostrar feedback
-        function showFeedback(message, isSuccess = false) {
+        // Função para mostrar feedback no formulário e em toast
+        function showFeedback(message, isSuccess = false, showToast = true) {
+          // Mostrar no formulário
           formFeedback.classList.toggle("success", isSuccess);
           formFeedback.querySelector(".feedback-message").textContent = message;
 
@@ -3856,6 +3011,19 @@
                 block: "center",
               });
             }, 100);
+          }
+
+          // Mostrar toast se solicitado
+          if (showToast) {
+            const toastType = isSuccess ? "success" : "error";
+            const toastTitle = isSuccess ? "Sucesso" : "Erro";
+
+            ToastSystem.show({
+              title: toastTitle,
+              message: message,
+              type: toastType,
+              duration: isSuccess ? 5000 : 8000, // Erro fica mais tempo
+            });
           }
 
           // Limpa qualquer timer existente para esconder o feedback
@@ -3889,7 +3057,11 @@
 
           // Adicionar uma mensagem de feedback se estiver carregando
           if (isLoading) {
-            showFeedback("Enviando mensagem, aguarde um momento...", true);
+            showFeedback(
+              "Enviando mensagem, aguarde um momento...",
+              true,
+              false
+            );
           } else {
             hideFeedback();
           }
@@ -3923,6 +3095,13 @@
           successMessage.scrollIntoView({
             behavior: "smooth",
             block: "center",
+          });
+
+          // Mostrar também um toast de sucesso
+          ToastSystem.show({
+            title: "Mensagem enviada!",
+            message: "Entraremos em contato em breve.",
+            type: "success",
           });
         }
 
@@ -3958,6 +3137,11 @@
 
           // Previne múltiplas submissões simultaneamente
           if (isSubmitting) {
+            ToastSystem.show({
+              title: "Por favor, aguarde",
+              message: "Sua mensagem já está sendo enviada",
+              type: "info",
+            });
             return;
           }
 
@@ -4064,7 +3248,8 @@
                 ? "O tempo de resposta do servidor expirou. Por favor, verifique sua conexão e tente novamente."
                 : "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.";
 
-            showFeedback(errorMessage);
+            // Garantir que o erro seja visível tanto no formulário quanto em um toast
+            showFeedback(errorMessage, false, true);
           } finally {
             // Desativar estado de carregamento
             setLoadingState(false);
@@ -4084,9 +3269,376 @@
         });
       }
 
-      // Certifique-se de que a função seja chamada na inicialização
+      // Tema
+      const initializeTheme = () => {
+        // Verifica apenas o localStorage
+        const savedTheme = localStorage.getItem("theme");
+        // Se não houver tema salvo, usa 'light'
+        const theme = savedTheme || "light";
+
+        document.documentElement.setAttribute("data-theme", theme);
+        updateThemeColor(theme);
+        return theme;
+      };
+
+      const getThemeColor = (theme) => {
+        // Obtém a cor atual da variável CSS
+        const styles = getComputedStyle(document.documentElement);
+        if (theme === "dark") {
+          return "#000000";
+        }
+        return styles.getPropertyValue("--secondary").trim();
+      };
+
+      const updateThemeColor = (theme) => {
+        const themeColorMeta = document.querySelector(
+          'meta[name="theme-color"]'
+        );
+        if (themeColorMeta) {
+          const color = getThemeColor(theme);
+          themeColorMeta.setAttribute("content", color);
+        }
+      };
+
+      const toggleTheme = () => {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        updateThemeColor(newTheme);
+      };
+
+      // Paletas de cores
+      const palettes = {
+        original: {
+          primary: "#0f172a",
+          secondary: "#3b82f6",
+          accent: "#10b981",
+          text: "#334155",
+          light: "#f8fafc",
+        },
+        1: {
+          primary: "#013A40",
+          secondary: "#038C4C",
+          accent: "#05F26C",
+          text: "#025939",
+          light: "#04D960",
+        },
+        2: {
+          primary: "#11091A",
+          secondary: "#2F2F4D",
+          accent: "#E8D18E",
+          text: "#626970",
+          light: "#BAB195",
+        },
+        3: {
+          primary: "#09403A",
+          secondary: "#072623",
+          accent: "#8C8C8C",
+          text: "#0D0D0D",
+          light: "#F2F2F2",
+        },
+        4: {
+          primary: "#35352B",
+          secondary: "#EC6C2B",
+          accent: "#FEAE4B",
+          text: "#35352B",
+          light: "#E7E9C4",
+        },
+        5: {
+          primary: "#466C82",
+          secondary: "#6F91A1",
+          accent: "#C1DAE0",
+          text: "#98B5C1",
+          light: "#EAFFFF",
+        },
+      };
+
+      // Carrega fontes do Google Fonts
+      const loadGoogleFonts = () => {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href =
+          "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap";
+        document.head.appendChild(link);
+      };
+
+      // Inicialização
       document.addEventListener("DOMContentLoaded", () => {
+        loadGoogleFonts();
+
+        // Inicializa tema
+        const currentTheme = initializeTheme();
+
+        // Event Listeners
+        const themeToggle = document.getElementById("theme-toggle");
+        const customizerToggle = document.getElementById("customizer-toggle");
+        const customizerPanel = document.querySelector(".customizer-panel");
+        const closeButton = document.querySelector(".close-button");
+
+        // Toggle tema claro/escuro
+        if (themeToggle) {
+          themeToggle.addEventListener("click", toggleTheme);
+        }
+
+        // Abre/fecha painel de customização
+        if (customizerToggle && customizerPanel) {
+          customizerToggle.addEventListener("click", () => {
+            customizerPanel.classList.add("active");
+          });
+
+          if (closeButton) {
+            closeButton.addEventListener("click", () => {
+              customizerPanel.classList.remove("active");
+            });
+          }
+
+          // Clique fora fecha o painel
+          document.addEventListener("click", (e) => {
+            if (
+              customizerPanel &&
+              !customizerPanel.contains(e.target) &&
+              customizerToggle &&
+              !customizerToggle.contains(e.target) &&
+              customizerPanel.classList.contains("active")
+            ) {
+              customizerPanel.classList.remove("active");
+            }
+          });
+        }
+
+        // Paletas de cores
+        const paletteButtons = document.querySelectorAll(".palette-button");
+        paletteButtons.forEach((button) => {
+          if (button) {
+            button.addEventListener("click", () => {
+              const paletteId = button.dataset.palette;
+              const palette = palettes[paletteId];
+
+              // Remove active class de todos os botões
+              paletteButtons.forEach((btn) => btn.classList.remove("active"));
+              // Adiciona active class ao botão clicado
+              button.classList.add("active");
+
+              // Aplica a paleta
+              document.documentElement.style.setProperty(
+                "--primary",
+                palette.primary
+              );
+              document.documentElement.style.setProperty(
+                "--secondary",
+                palette.secondary
+              );
+              document.documentElement.style.setProperty(
+                "--accent",
+                palette.accent
+              );
+              document.documentElement.style.setProperty(
+                "--text",
+                palette.text
+              );
+              document.documentElement.style.setProperty(
+                "--light",
+                palette.light
+              );
+              document.documentElement.style.setProperty(
+                "--gradient",
+                `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`
+              );
+
+              // Atualiza a cor do theme-color
+              const currentTheme =
+                document.documentElement.getAttribute("data-theme");
+              updateThemeColor(currentTheme);
+
+              // Salva a paleta selecionada
+              localStorage.setItem("selectedPalette", paletteId);
+            });
+          }
+        });
+
+        // Fontes
+        const fontButtons = document.querySelectorAll(".font-button");
+        fontButtons.forEach((button) => {
+          if (button) {
+            // Define o estilo do botão com a fonte correspondente
+            button.style.fontFamily = button.dataset.font;
+
+            button.addEventListener("click", () => {
+              const fontFamily = button.dataset.font;
+
+              // Remove active class de todos os botões
+              fontButtons.forEach((btn) => btn.classList.remove("active"));
+              // Adiciona active class ao botão clicado
+              button.classList.add("active");
+
+              // Aplica a fonte
+              document.body.style.setProperty("--font-family", fontFamily);
+              document.querySelectorAll("*").forEach((element) => {
+                if (
+                  !element.classList.contains("fas") &&
+                  !element.classList.contains("fab")
+                ) {
+                  element.style.fontFamily = `${fontFamily}, system-ui, sans-serif`;
+                }
+              });
+
+              // Salva a fonte selecionada
+              localStorage.setItem("selectedFont", fontFamily);
+            });
+          }
+        });
+
+        // Carrega configurações salvas
+        const loadSavedSettings = () => {
+          // Carrega paleta
+          const savedPalette = localStorage.getItem("selectedPalette");
+          if (savedPalette) {
+            const paletteButton = document.querySelector(
+              `[data-palette="${savedPalette}"]`
+            );
+            if (paletteButton) {
+              paletteButton.click();
+            }
+          }
+
+          // Carrega fonte
+          const savedFont = localStorage.getItem("selectedFont");
+          if (savedFont) {
+            const fontButton = document.querySelector(
+              `[data-font="${savedFont}"]`
+            );
+            if (fontButton) {
+              fontButton.click();
+            }
+          }
+        };
+
+        // Inicializa configurações salvas
+        loadSavedSettings();
+
+        // Prevenção de flash de tema incorreto
+        document.documentElement.style.visibility = "visible";
+
+        // Configuração do Intersection Observer para animações de entrada
+        const observerOptions = {
+          threshold: 0.15,
+          rootMargin: "0px 0px -10% 0px",
+        };
+
+        // Observer simplificado apenas para entrada dos elementos
+        const appearOnScroll = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            entry.target.classList.add("visible");
+            // Removemos o observer após a animação para melhor performance
+            observer.unobserve(entry.target);
+          });
+        }, observerOptions);
+
+        // Observa elementos para animações
+        const animatedElements = document.querySelectorAll(
+          ".fade-up, .fade-down, .fade-left, .fade-right, .fade-scale"
+        );
+        animatedElements.forEach((el) => {
+          appearOnScroll.observe(el);
+        });
+
+        // Header scroll effect
+        function initHeaderScroll() {
+          let lastScroll = 0;
+          const header = document.querySelector("header");
+          if (!header) return;
+
+          window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll <= 0) {
+              header.style.boxShadow = "none";
+              return;
+            }
+
+            if (currentScroll > lastScroll) {
+              header.style.transform = "translateY(-100%)";
+            } else {
+              header.style.transform = "translateY(0)";
+              header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+            }
+
+            lastScroll = currentScroll;
+          });
+        }
+
+        // Smooth scroll para links de navegação
+        function initSmoothScroll() {
+          document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+              e.preventDefault();
+              const target = document.querySelector(this.getAttribute("href"));
+              if (target) {
+                target.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            });
+          });
+        }
+
+        // Menu Mobile
+        function initMobileMenu() {
+          const menuButton = document.querySelector(".menu-button");
+          const mobileMenu = document.querySelector(".mobile-menu");
+          if (!menuButton || !mobileMenu) return;
+
+          const menuLinks = document.querySelectorAll(".mobile-menu a");
+
+          function toggleMenu() {
+            const isOpen = mobileMenu.classList.contains("active");
+            mobileMenu.classList.toggle("active");
+            menuButton.setAttribute("aria-expanded", !isOpen);
+            document.body.style.overflow = isOpen ? "" : "hidden";
+          }
+
+          menuButton.addEventListener("click", toggleMenu);
+
+          // Fecha o menu ao clicar em um link
+          menuLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+              toggleMenu();
+            });
+          });
+
+          // Fecha o menu ao clicar fora
+          document.addEventListener("click", (e) => {
+            if (
+              mobileMenu.classList.contains("active") &&
+              !mobileMenu.contains(e.target) &&
+              !menuButton.contains(e.target)
+            ) {
+              toggleMenu();
+            }
+          });
+        }
+
+        // Inicializa todas as funcionalidades
+        initMobileMenu();
+        initHeaderScroll();
+        initSmoothScroll();
         initContactForm();
+
+        // Revela os elementos inicialmente visíveis
+        setTimeout(() => {
+          const visibleElements = document.querySelectorAll('[class*="fade-"]');
+          visibleElements.forEach((el) => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+              el.classList.add("visible");
+            }
+          });
+        }, 100);
       });
     </script>
   </body>

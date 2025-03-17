@@ -3,35 +3,909 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#466C82" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
-    <meta name="msapplication-navbutton-color" content="#0f172a" />
+    <meta name="msapplication-navbutton-color" content="#466C82" />
     <title>Proseti - Consultoria em Processos e Soluções Digitais</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&display=swap"
+    />
     <style>
       /* ESTILOS BASE */
       :root {
-        --primary: #0f172a;
-        --secondary: #3b82f6;
-        --accent: #10b981;
+        --primary: #466c82;
+        --secondary: #6f91a1;
+        --accent: #c1dae0;
         --text: #334155;
-        --light: #f8fafc;
-        --gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        --light: #eaffff;
+        --card-bg: #334155;
+        --dark-text: #eaffff;
+        --gradient: linear-gradient(135deg, #466c82 0%, #6f91a1 100%);
         --theme-transition: background-color 0.3s ease, color 0.3s ease;
+
+        /* Estilos dos grupos de formulário */
+        .form-group {
+          margin-bottom: 1.25rem;
+          position: relative;
+        }
+
+        .form-group label {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+          color: var(--primary);
+          font-size: 0.95rem;
+        }
+
+        .form-group label i {
+          color: var(--secondary);
+          font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+          width: 100%;
+          padding: 0.9rem 1rem;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          font-size: 1rem;
+          transition: all 0.2s ease;
+          background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+          outline: none;
+          border-color: var(--secondary);
+          box-shadow: 0 0 0 3px rgba(111, 145, 161, 0.15);
+          background-color: white;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+          color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Select com ícone customizado */
+        .form-group select {
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236F91A1'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 1rem center;
+          background-size: 1rem;
+          padding-right: 2.5rem;
+        }
+
+        /* Estados de validação */
+        .form-group.error input,
+        .form-group.error textarea,
+        .form-group.error select {
+          border-color: #e11d48;
+          box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+        }
+
+        .form-group.success input,
+        .form-group.success textarea,
+        .form-group.success select {
+          border-color: #10b981;
+          box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        /* Mensagem de erro */
+        .error-message {
+          display: none;
+          color: #e11d48;
+          font-size: 0.8rem;
+          margin-top: 0.4rem;
+          font-weight: 500;
+          position: static;
+        }
+
+        .form-group.error .error-message {
+          display: block !important;
+        }
+
+        /* Entrada de telefone com código de país separado */
+        .phone-input-group {
+          position: relative;
+        }
+
+        .phone-input-container {
+          display: flex;
+          flex-direction: row;
+          align-items: stretch;
+          width: 100%;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        .country-code {
+          flex: 0 0 56px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: rgba(0, 0, 0, 0.05);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 8px 0 0 8px;
+          color: var(--text);
+          font-weight: 600;
+          text-align: center;
+          height: auto;
+        }
+
+        .phone-input-container input {
+          flex: 1;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-left: none;
+        }
+
+        /* Estados de validação do campo de telefone */
+        .form-group.error .country-code {
+          border-color: #e11d48;
+        }
+
+        .form-group.success .country-code {
+          border-color: #10b981;
+        }
+
+        .form-group.error .phone-input-container input {
+          border-color: #e11d48;
+        }
+
+        .form-group.success .phone-input-container input {
+          border-color: #10b981;
+        }
+
+        /* Aviso de privacidade */
+        .privacy-notice {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+          padding: 1rem;
+          border-radius: 8px;
+          background-color: rgba(0, 0, 0, 0.02);
+          margin-bottom: 1.5rem;
+        }
+
+        .privacy-notice i {
+          color: var(--secondary);
+          margin-top: 0.2rem;
+        }
+
+        .privacy-notice p {
+          margin: 0;
+          font-size: 0.85rem;
+          color: var(--text);
+          opacity: 0.8;
+        }
+
+        /* Feedback do formulário */
+        .form-feedback {
+          padding: 1rem 1.25rem;
+          border-radius: 8px;
+          margin-bottom: 1.5rem;
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          background-color: #fef2f2;
+          border-left: 4px solid #e11d48;
+          animation: slideDown 0.3s ease;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-feedback.success {
+          background-color: #ecfdf5;
+          border-left: 4px solid #10b981;
+        }
+
+        .feedback-icon {
+          color: #e11d48;
+          font-size: 1.25rem;
+          flex-shrink: 0;
+        }
+
+        .form-feedback.success .feedback-icon {
+          color: #10b981;
+        }
+
+        .feedback-message {
+          font-weight: 500;
+          margin: 0;
+          color: #e11d48;
+          flex: 1;
+        }
+
+        .form-feedback.success .feedback-message {
+          color: #10b981;
+        }
+
+        /* Botão de envio */
+        .contact-form .cta-button {
+          width: 100%;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          text-transform: none;
+          font-size: 1rem;
+          letter-spacing: 0;
+          padding: 1rem 2rem;
+          transition: all 0.3s ease;
+          border: none;
+          cursor: pointer;
+        }
+
+        .button-loader {
+          position: absolute;
+          font-size: 1.25rem;
+          display: none;
+          color: white;
+        }
+
+        .cta-button.loading {
+          background-color: var(--secondary);
+          opacity: 0.8;
+          cursor: not-allowed;
+        }
+
+        .cta-button.loading .button-text {
+          visibility: hidden;
+        }
+
+        .cta-button.loading .button-loader {
+          display: block;
+        }
+
+        /* Estado desabilitado do botão */
+        .cta-button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          box-shadow: none;
+          transform: none !important;
+        }
+
+        /* Mensagem de sucesso */
+        .success-message {
+          background: white;
+          border-radius: 16px;
+          text-align: center;
+          animation: fadeScale 0.5s ease;
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          padding: 2.5rem;
+        }
+
+        .success-content {
+          padding: 3rem 2rem;
+        }
+
+        .success-icon {
+          font-size: 4rem;
+          color: #10b981;
+          margin-bottom: 1.5rem;
+        }
+
+        .success-message h3 {
+          font-size: 1.75rem;
+          margin-bottom: 1rem;
+          color: var(--primary);
+        }
+
+        .success-message p {
+          font-size: 1.1rem;
+          margin-bottom: 2rem;
+          color: var(--text);
+          max-width: 500px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .success-details {
+          background: rgba(0, 0, 0, 0.02);
+          padding: 2rem;
+          margin-top: 2rem;
+          border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .success-detail-item {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 0.75rem;
+          justify-content: center;
+        }
+
+        .success-detail-item:last-child {
+          margin-bottom: 0;
+        }
+
+        .success-detail-item i {
+          color: var(--secondary);
+          font-size: 1.1rem;
+          width: 20px;
+          text-align: center;
+        }
+
+        .success-detail-item p {
+          margin: 0;
+          font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+          background: var(--card-bg);
+          color: white;
+          padding: 6rem 0 2rem;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: 2fr repeat(3, 1fr);
+          gap: 4rem;
+          margin-bottom: 4rem;
+        }
+
+        .footer-info h4 {
+          font-size: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .footer-info p {
+          opacity: 0.8;
+          margin-bottom: 1rem;
+        }
+
+        .footer-links h4 {
+          font-size: 1.25rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+          color: white;
+          opacity: 0.8;
+          text-decoration: none;
+          display: block;
+          margin-bottom: 1rem;
+          transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+          opacity: 1;
+        }
+
+        .footer-bottom {
+          padding-top: 2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          text-align: center;
+          opacity: 0.8;
+          font-size: 0.875rem;
+        }
+
+        /* Social Icons */
+        .social-icons {
+          display: flex;
+          gap: 1.5rem;
+          margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+          color: white;
+          font-size: 1.5rem;
+          opacity: 0.8;
+          transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .social-icons a:hover {
+          opacity: 1;
+          transform: translateY(-3px);
+        }
+
+        /* Animações */
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fadeScale {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes shake {
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          25% {
+            transform: translateX(-5px);
+          }
+          75% {
+            transform: translateX(5px);
+          }
+        }
+
+        /* Animação para o botão de envio */
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.05);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        .pulse {
+          animation: pulse 1.5s infinite;
+        }
+
+        /* Tema Escuro */
+        [data-theme="dark"] {
+          --primary: #6f91a1;
+          --secondary: #466c82;
+          --accent: #eaffff;
+          --text: #c1dae0;
+          --light: #1e293b;
+          --card-bg: #334155;
+          --dark-text: #eaffff;
+          --gradient: linear-gradient(135deg, #334155 0%, #466c82 100%);
+        }
+
+        [data-theme="dark"] header {
+          background: rgba(30, 41, 59, 0.95);
+        }
+
+        [data-theme="dark"] body {
+          background-color: #1e293b;
+          color: #eaffff;
+        }
+
+        [data-theme="dark"] .cls-1 {
+          stroke: #ffffff !important;
+        }
+
+        [data-theme="dark"] .fas,
+        [data-theme="dark"] .fab {
+          color: #ffffff;
+        }
+
+        [data-theme="dark"] .mission-vision,
+        [data-theme="dark"] .value-card,
+        [data-theme="dark"] .service-card {
+          background-color: #1e293b;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] .service-icon {
+          background: #466c82;
+        }
+
+        [data-theme="dark"] .service-icon i {
+          color: #eaffff;
+        }
+
+        [data-theme="dark"] .services {
+          background-color: #1e293b;
+        }
+
+        [data-theme="dark"] .contact-form-wrapper {
+          background-color: #1e293b;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Melhorando a visibilidade dos campos de formulário no modo escuro */
+        [data-theme="dark"] .form-group input,
+        [data-theme="dark"] .form-group textarea,
+        [data-theme="dark"] .form-group select {
+          background-color: #2d3748;
+          border-color: rgba(255, 255, 255, 0.2);
+          color: #eaffff;
+        }
+
+        [data-theme="dark"] .form-group input::placeholder,
+        [data-theme="dark"] .form-group textarea::placeholder {
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+        [data-theme="dark"] .form-group input:focus,
+        [data-theme="dark"] .form-group textarea:focus,
+        [data-theme="dark"] .form-group select:focus {
+          background-color: #3a4a63;
+          border-color: #6f91a1;
+          box-shadow: 0 0 0 3px rgba(111, 145, 161, 0.25);
+        }
+
+        [data-theme="dark"] .country-code {
+          background-color: #2d3748;
+          border-color: rgba(255, 255, 255, 0.2);
+          color: #eaffff;
+        }
+
+        [data-theme="dark"] .form-group label {
+          color: #eaffff;
+        }
+
+        [data-theme="dark"] .privacy-notice {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        [data-theme="dark"] .section-header h2 {
+          color: var(--accent);
+        }
+
+        [data-theme="dark"] footer {
+          background: #334155;
+        }
+
+        .theme-toggle {
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--primary);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-left: 20px;
+        }
+
+        .theme-toggle:hover {
+          background: rgba(255, 255, 255, 0.2);
+          transform: translateY(-2px);
+        }
+
+        .theme-toggle i {
+          position: absolute;
+          transition: transform 0.5s ease;
+          font-size: 1.25rem;
+        }
+
+        .theme-toggle .fa-moon {
+          transform: rotate(0) scale(1);
+        }
+
+        .theme-toggle .fa-sun {
+          transform: rotate(100deg) scale(0);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon {
+          transform: rotate(-100deg) scale(0);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun {
+          transform: rotate(0) scale(1);
+        }
+
+        /* Estilos base para animações */
+        .fade-up {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .fade-down {
+          opacity: 0;
+          transform: translateY(-30px);
+          transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .fade-left {
+          opacity: 0;
+          transform: translateX(-30px);
+          transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .fade-right {
+          opacity: 0;
+          transform: translateX(30px);
+          transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .fade-scale {
+          opacity: 0;
+          transform: scale(0.9);
+          transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        /* Classe para elementos visíveis */
+        .visible {
+          opacity: 1;
+          transform: translate(0) scale(1);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 1200px) {
+          .services-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+          }
+        }
+
+        @media (max-width: 1024px) {
+          .about-cards {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .header-content {
+            position: relative;
+          }
+
+          nav {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          nav ul {
+            display: none;
+          }
+
+          .menu-button {
+            display: block;
+            position: absolute;
+            right: 0;
+          }
+
+          .theme-toggle {
+            position: absolute;
+            right: 60px;
+            top: 0;
+            display: block;
+          }
+
+          .hero-content,
+          .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+          }
+
+          .hero h1 {
+            font-size: 3rem;
+          }
+
+          .about-cards {
+            grid-template-columns: 1fr;
+          }
+
+          .services-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+
+          .footer-content {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            text-align: center;
+          }
+
+          .footer-links {
+            text-align: center;
+          }
+
+          .social-icons {
+            justify-content: center;
+          }
+
+          .footer-info p {
+            max-width: 100%;
+          }
+
+          .menu-button {
+            position: relative;
+          }
+
+          .mobile-menu.active ~ .menu-button {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+          }
+        }
+
+        @media (max-width: 480px) {
+            .about::after {
+    /* Reduzir ainda mais o tamanho para telas muito pequenas */
+    background-size: 300px, 250px, 220px, 330px;
+    
+    /* Espaçamento vertical ainda maior */
+    background-position: 
+      10% 5%,
+      90% 95%,
+      50% 40%,
+      15% 75%;
+  }
+
+          .footer-bottom {
+            padding: 1.5rem 0;
+            font-size: 0.75rem;
+          }
+
+          .social-icons {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+        }
+
+        /* Otimização para dispositivos que preferem menos movimento */
+        @media (prefers-reduced-motion: reduce) {
+          .fade-up,
+          .fade-down,
+          .fade-left,
+          .fade-right,
+          .fade-scale {
+            transition: opacity 0.5s ease;
+            transform: none;
+          }
+
+          .visible {
+            transform: none;
+          }
+
+          html {
+            scroll-behavior: auto;
+          }
+        }
+
+        /* Toast container para notificações */
+        .toast-container {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          max-width: 350px;
+          z-index: 9999;
+        }
+
+        .toast {
+          background-color: #fff;
+          color: #333;
+          border-radius: 8px;
+          padding: 1rem 1.25rem;
+          margin-bottom: 10px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          animation: toastSlideIn 0.3s ease forwards;
+          max-width: 100%;
+          overflow: hidden;
+          border-left: 4px solid var(--secondary);
+        }
+
+        .toast.error {
+          border-left-color: #e11d48;
+        }
+
+        .toast.success {
+          border-left-color: #10b981;
+        }
+
+        .toast-icon {
+          flex-shrink: 0;
+          font-size: 1.25rem;
+          color: var(--secondary);
+        }
+
+        .toast.error .toast-icon {
+          color: #e11d48;
+        }
+
+        .toast.success .toast-icon {
+          color: #10b981;
+        }
+
+        .toast-content {
+          flex: 1;
+        }
+
+        .toast-title {
+          font-weight: 600;
+          margin-bottom: 0.2rem;
+          font-size: 0.95rem;
+        }
+
+        .toast-message {
+          font-size: 0.85rem;
+          color: #666;
+        }
+
+        .toast-close {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 1rem;
+          color: #999;
+          padding: 0.25rem;
+          margin-left: auto;
+          flex-shrink: 0;
+        }
+
+        .toast-close:hover {
+          color: #333;
+        }
+
+        /* Dark mode para toasts */
+        [data-theme="dark"] .toast {
+          background-color: #1e293b;
+          color: #f8fafc;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .toast-message {
+          color: #cbd5e1;
+        }
+
+        [data-theme="dark"] .toast-close {
+          color: #94a3b8;
+        }
+
+        [data-theme="dark"] .toast-close:hover {
+          color: #f8fafc;
+        }
+
+        @keyframes toastSlideIn {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        @keyframes toastSlideOut {
+          from {
+            transform: translateX(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+        }
+
+        .toast.hiding {
+          animation: toastSlideOut 0.3s ease forwards;
+        }
       }
 
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Inter", system-ui, sans-serif;
+        font-family: "Roboto", system-ui, sans-serif;
         text-decoration: none;
         list-style: none;
       }
@@ -49,7 +923,7 @@
       .container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 1rem;
       }
 
       /* Header & Navigation */
@@ -70,6 +944,12 @@
         height: 80px;
       }
 
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
       .logo {
         display: flex;
         align-items: center;
@@ -84,6 +964,7 @@
         display: flex;
         gap: 3rem;
         list-style: none;
+        align-items: center;
       }
 
       nav a {
@@ -112,7 +993,11 @@
       /* Hero Section */
       .hero {
         padding: 180px 0 100px;
-        background: var(--gradient);
+        background: linear-gradient(
+          135deg,
+          var(--card-bg) 0%,
+          var(--primary) 100%
+        );
         color: white;
         position: relative;
         overflow: hidden;
@@ -206,26 +1091,61 @@
         opacity: 0.9;
       }
 
+      /* Seção Sobre - ATUALIZADA */
       .about {
-        padding: 120px 0;
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        padding: 120px 0 0;
+        background: #f8fafc;
         position: relative;
         overflow: hidden;
       }
 
+      [data-theme="dark"] .about {
+        background-color: #1a2234;
+      }
+
+      [data-theme="dark"] .about::before {
+        background: linear-gradient(to bottom, rgba(26, 34, 52, 0) 0%, rgba(26, 34, 52, 1) 100%);
+        }
+
+      /* Remove o background específico da seção anterior */
       .about::before {
         content: "";
         position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 150px; /* Altura do gradiente de fade */
+        background: linear-gradient(to bottom, rgba(248, 250, 252, 0) 0%, rgba(248, 250, 252, 1) 100%);
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      /* Adiciona um novo background com padrão orgânico e coeso para toda a seção */
+      .about::after {
+        content: "";
+        position: absolute; /* Para que o background se mova com o scroll */
         top: 0;
-        right: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%230f172a" fill-opacity="0.03" d="M39.7,-44.1C51.9,-33.9,62.4,-21.1,64.4,-6.8C66.3,7.5,59.8,23.3,49.2,35.7C38.6,48.1,24,57.1,7.2,61.3C-9.6,65.5,-28.5,64.8,-41.5,55.2C-54.5,45.6,-61.5,27,-63.7,7.9C-65.9,-11.2,-63.3,-30.9,-52.2,-42.1C-41.1,-53.3,-21.5,-56.1,-3.8,-52.8C13.9,-49.4,27.5,-54.3,39.7,-44.1Z" transform="translate(100 100)" /></svg>')
-          no-repeat center center;
-        background-size: 800px;
-        opacity: 0.5;
+        background: 
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><path fill="%23466C82" fill-opacity="0.03" d="M783.3,328.2c-19.8-118.2-95.5-142.8-180.6-126.4c-85.1,16.3-217.7,132.5-273.4,153.5c-55.7,21-174.9-77.5-229.2-54.2C45.7,324.5,0,408.4,0,479.9c0,71.5,31.9,130.9,98.5,197.8c66.7,67,126.7,103.9,216.1,114.1c89.3,10.2,131.2-16.9,210.3-63.7c79.1-46.8,167.7-74.3,227.8-143c60.1-68.7,50.3-138.7,30.5-256.9Z"/></svg>') 50% 30% no-repeat,
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><path fill="%236F91A1" fill-opacity="0.04" d="M640.7,723.1c71.3-93.1,34.1-183-33.7-240.3c-67.9-57.3-226.3-73.9-271-115.5c-44.7-41.5,21.3-175.7-31.7-211.7C249.3,119.6,148.1,145.1,82.7,188.6c-65.3,43.4-96.2,108.6-76.3,204.9c19.9,96.2,72.4,150.4,147.4,209.9c75,59.5,120.8,69.6,195,92.6c74.2,23,157.3,72,223.8,65.9C638.9,755.9,569.4,816.2,640.7,723.1Z"/></svg>') 100% 100% no-repeat,
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><path fill="%23C1DAE0" fill-opacity="0.03" d="M834.2,303.9c-17.7-105.9-85.6-128-161.9-113.3C590.1,205.4,470.5,309.3,420.9,328.1c-49.7,18.8-156.8-69.4-205.4-48.6C166.9,300.3,126,375.5,126,439.7s28.6,117.3,88.2,177.2c59.6,60,113.5,93.1,193.8,102.3c80,9.1,117.6-15.1,188.4-57.1c70.8-42,150.3-66.5,204.2-128.2C855.4,472.2,846.7,409.7,834.2,303.9Z"/></svg>') 50% 55% no-repeat,
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><path fill="%23466C82" fill-opacity="0.02" d="M334.2,115.8c-95.8-46.5-158.1,17.8-187.5,104.1C117.3,306.3,176.2,451.2,172.7,505.6c-3.5,54.4-135.3,106.2-127.3,166.9c7.9,60.7,83.5,104.5,151.5,114.9c68,10.5,137.6-7.7,211.1-58.5c73.6-50.8,107.9-115.7,144.7-201c36.8-85.3,27.4-129.5,36.5-209.6s30.9-177.7-53.4-207C389.6,79.9,430,162.3,334.2,115.8Z"/></svg>') 10% 75% no-repeat;
+        background-size: 800px, 700px, 600px, 900px;
+        pointer-events: none;
         z-index: 0;
       }
+
+      [data-theme="dark"] .about::after {
+        background: 
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><path fill="%23FFFFFF" fill-opacity="0.015" d="M783.3,328.2c-19.8-118.2-95.5-142.8-180.6-126.4c-85.1,16.3-217.7,132.5-273.4,153.5c-55.7,21-174.9-77.5-229.2-54.2C45.7,324.5,0,408.4,0,479.9c0,71.5,31.9,130.9,98.5,197.8c66.7,67,126.7,103.9,216.1,114.1c89.3,10.2,131.2-16.9,210.3-63.7c79.1-46.8,167.7-74.3,227.8-143c60.1-68.7,50.3-138.7,30.5-256.9Z"/></svg>') 15% 20% no-repeat,
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><path fill="%23FFFFFF" fill-opacity="0.02" d="M640.7,723.1c71.3-93.1,34.1-183-33.7-240.3c-67.9-57.3-226.3-73.9-271-115.5c-44.7-41.5,21.3-175.7-31.7-211.7C249.3,119.6,148.1,145.1,82.7,188.6c-65.3,43.4-96.2,108.6-76.3,204.9c19.9,96.2,72.4,150.4,147.4,209.9c75,59.5,120.8,69.6,195,92.6c74.2,23,157.3,72,223.8,65.9C638.9,755.9,569.4,816.2,640.7,723.1Z"/></svg>') 85% 100% no-repeat,
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><path fill="%23FFFFFF" fill-opacity="0.017" d="M834.2,303.9c-17.7-105.9-85.6-128-161.9-113.3C590.1,205.4,470.5,309.3,420.9,328.1c-49.7,18.8-156.8-69.4-205.4-48.6C166.9,300.3,126,375.5,126,439.7s28.6,117.3,88.2,177.2c59.6,60,113.5,93.1,193.8,102.3c80,9.1,117.6-15.1,188.4-57.1c70.8-42,150.3-66.5,204.2-128.2C855.4,472.2,846.7,409.7,834.2,303.9Z"/></svg>') 50% 55% no-repeat,
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><path fill="%23FFFFFF" fill-opacity="0.01" d="M334.2,115.8c-95.8-46.5-158.1,17.8-187.5,104.1C117.3,306.3,176.2,451.2,172.7,505.6c-3.5,54.4-135.3,106.2-127.3,166.9c7.9,60.7,83.5,104.5,151.5,114.9c68,10.5,137.6-7.7,211.1-58.5c73.6-50.8,107.9-115.7,144.7-201c36.8-85.3,27.4-129.5,36.5-209.6s30.9-177.7-53.4-207C389.6,79.9,430,162.3,334.2,115.8Z"/></svg>') 10% 75% no-repeat;
+        background-size: 800px, 700px, 600px, 900px;
+        }
 
       .about-grid {
         display: flex;
@@ -248,14 +1168,21 @@
       }
 
       .mission-vision {
-        background: white;
+        background: var(--card-bg);
         border-radius: 16px;
         padding: 3rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        color: var(--dark-text);
+        transition: all 0.3s ease;
+      }
+
+      .mission-vision:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
       }
 
       .mission-vision h3 {
-        color: var(--secondary);
+        color: var(--accent);
         font-size: 1.5rem;
         margin-bottom: 1rem;
         display: flex;
@@ -268,48 +1195,284 @@
       }
 
       .mission-vision p {
-        color: var(--text);
+        color: var(--dark-text);
         font-size: 1.1rem;
         line-height: 1.7;
       }
 
-      .values-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
+      /* Metodologia PROSETI - Seção Atualizada */
+      .methodology-section {
+        margin-top: 5rem;
+        position: relative;
+        background: transparent;
       }
 
-      .value-card {
+      [data-theme="dark"] .methodology-section {
+        background-color: transparent;
+      }
+
+      /* Remover o background específico da seção de metodologia */
+      .methodology-section::before {
+        content: none;
+      }
+
+      .methodology-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+        font-size: 2rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+      }
+
+      .methodology-subtitle {
+        text-align: center;
+        margin-bottom: 4rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        color: var(--text);
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .timeline-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        padding-bottom: 50px; /* Espaço para o final suave da linha */
+      }
+
+      /* Linha central da timeline com fade no início e fim */
+      .timeline-container::after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        background: linear-gradient(
+          to bottom,
+          rgba(70, 108, 130, 0),
+          rgba(70, 108, 130, 0.5) 10%,
+          rgba(70, 108, 130, 0.5) 90%,
+          rgba(70, 108, 130, 0)
+        );
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -3px;
+        border-radius: 3px;
+        z-index: -1;
+      }
+
+      /* Container para cada item da timeline */
+      .timeline-item {
+        position: relative;
+        margin-bottom: 4rem;
+      }
+
+      /* Conteúdo dos items alternando lados */
+      .timeline-item:nth-child(odd) .timeline-content {
+        margin-left: auto;
+        text-align: left;
+      }
+
+      .timeline-item:nth-child(even) .timeline-content {
+        margin-right: auto;
+        text-align: right;
+      }
+
+      /* Conteúdo do item */
+      .timeline-content {
+        position: relative;
+        width: 45%;
+        padding: 20px 30px;
         background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         transition: all 0.3s ease;
       }
 
-      .value-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      .timeline-content:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
       }
 
-      .value-card h4 {
-        color: var(--primary);
-        font-size: 1.25rem;
-        margin-bottom: 1rem;
+      [data-theme="dark"] .timeline-content {
+        background: var(--card-bg);
+      }
+
+      /* Círculo central com letra - com animação hover */
+      .timeline-circle {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 10px;
+        border-radius: 50%;
+        background: var(--card-bg);
+        color: var(--accent);
+        border: 4px solid var(--accent);
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        justify-content: center;
+        font-size: 1.75rem;
+        font-weight: 800;
+        z-index: 2;
+        box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.7);
+        transition: all 0.3s ease;
       }
 
-      .value-card h4 i {
-        color: var(--secondary);
-        font-size: 1rem;
+      .timeline-circle:hover {
+        transform: translateX(-50%) scale(1.1);
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.9),
+          0 5px 15px rgba(0, 0, 0, 0.2);
       }
 
-      .value-card p {
+      [data-theme="dark"] .timeline-circle {
+        box-shadow: 0 0 0 6px rgba(30, 41, 59, 0.7);
+      }
+
+      [data-theme="dark"] .timeline-circle:hover {
+        box-shadow: 0 0 0 8px rgba(30, 41, 59, 0.9),
+          0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Número de passo no círculo */
+      .timeline-step {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 30px;
+        height: 30px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        font-weight: 700;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .timeline-circle:hover .timeline-step {
+        transform: scale(1.1);
+        background: var(--accent);
+        color: var(--primary);
+      }
+
+      /* Ícone relacionado à metodologia */
+      .timeline-icon {
+        position: absolute;
+        top: 20px;
+        font-size: 2rem;
+        color: var(--primary);
+      }
+
+      .timeline-item:nth-child(odd) .timeline-icon {
+        right: 30px;
+      }
+
+      .timeline-item:nth-child(even) .timeline-icon {
+        left: 30px;
+      }
+
+      /* Título e descrição */
+      .timeline-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-title {
+        padding-right: 50px; /* Espaço para o ícone */
+      }
+
+      .timeline-item:nth-child(even) .timeline-title {
+        padding-left: 50px; /* Espaço para o ícone */
+      }
+
+      .timeline-description {
         color: var(--text);
-        font-size: 1rem;
         line-height: 1.6;
+      }
+
+      [data-theme="dark"] .timeline-description {
+        color: var(--dark-text);
+      }
+
+      /* Seta indicando direção - sem sombra */
+      .timeline-content::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 30px;
+        background-color: inherit;
+        transform: rotate(45deg);
+        box-shadow: none;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content::after {
+        left: -10px;
+      }
+
+      .timeline-item:nth-child(even) .timeline-content::after {
+        right: -10px;
+      }
+
+      /* Responsividade para a metodologia */
+      @media (max-width: 768px) {
+        .timeline-container::after {
+          left: 30px;
+        }
+
+        .timeline-content {
+          width: calc(100% - 70px);
+          margin-left: 70px !important;
+          text-align: left !important;
+        }
+
+        .timeline-circle {
+          left: 30px;
+          transform: none;
+        }
+
+        .timeline-circle:hover {
+          transform: scale(1.1);
+        }
+
+        .timeline-content::after {
+          left: -10px !important;
+          right: auto !important;
+        }
+
+        .timeline-icon {
+          left: 30px !important;
+          right: auto !important;
+        }
+
+        .timeline-title {
+          padding-left: 50px !important;
+          padding-right: 0 !important;
+        }
+
+        /* Ajuste para o background em dispositivos móveis */
+        .about::after {
+            background-size: 400px, 350px, 300px, 450px;
+            background-position: 
+                15% 10%, /* Primeira forma mais no topo */
+                85% 95%, /* Segunda forma mais para baixo */
+                50% 45%, /* Terceira forma mais para o meio */
+                10% 70%; /* Quarta forma ajustada */
+        }
       }
 
       .cta-button {
@@ -329,7 +1492,7 @@
 
       .cta-button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 10px 20px rgba(111, 145, 161, 0.3);
       }
 
       /* Services Carousel */
@@ -344,6 +1507,8 @@
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
+        position: relative;
+        z-index: 1;
       }
 
       .section-header h2 {
@@ -359,60 +1524,30 @@
         opacity: 0.8;
       }
 
-      .carousel {
-        position: relative;
-        overflow: hidden;
-        padding: 2rem 0;
-      }
-
-      .carousel-track {
-        display: flex;
-        transition: transform 0.5s ease;
-      }
-
-      /* Indicadores de scroll para o carousel */
-      .carousel-indicators {
-        display: none; /* Esconde por padrão */
-        justify-content: center;
-        gap: 0.5rem;
-        margin-top: 2rem;
-      }
-
-      .carousel-indicators.visible {
-        display: flex;
-      }
-
-      .carousel-indicator {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: var(--secondary);
-        opacity: 0.3;
-        transition: opacity 0.3s;
-      }
-
-      .carousel-indicator.active {
-        opacity: 1;
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
       }
 
       .service-card {
-        flex: 0 0 calc(33.333% - 2rem);
-        margin: 0 1rem;
+        background: var(--card-bg);
         padding: 3rem;
-        background: var(--light);
         border-radius: 16px;
         transition: all 0.3s;
+        color: var(--dark-text);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       }
 
       .service-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
       }
 
       .service-icon {
         width: 80px;
         height: 80px;
-        background: var(--gradient);
+        background: var(--accent);
         border-radius: 20px;
         display: flex;
         align-items: center;
@@ -422,131 +1557,13 @@
 
       .service-icon i {
         font-size: 2rem;
-        color: white;
+        color: var(--card-bg);
       }
 
       .service-card h3 {
         font-size: 1.5rem;
         margin-bottom: 1rem;
-        color: var(--primary);
-      }
-
-      /* Numbers Section */
-      .numbers {
-        padding: 120px 0;
-        background: var(--gradient);
-        color: white;
-      }
-
-      .numbers-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 4rem;
-        text-align: center;
-      }
-
-      .number-item h3 {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        font-weight: 800;
-      }
-
-      .number-item p {
-        font-size: 1.25rem;
-        opacity: 0.9;
-      }
-
-      /* Cases Section */
-      .cases {
-        padding: 120px 0;
-        background: white;
-      }
-
-      .cases-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 3rem;
-      }
-
-      .case-card {
-        background: var(--light);
-        border-radius: 16px;
-        overflow: hidden;
-        transition: all 0.3s;
-      }
-
-      .case-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      }
-
-      .case-image {
-        height: 250px;
-        background-size: cover;
-        background-position: center;
-      }
-
-      .case-content {
-        padding: 2rem;
-      }
-
-      .case-content h3 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        color: var(--primary);
-      }
-
-      /* Testimonials */
-      .testimonials {
-        padding: 120px 0;
-        background: var(--light);
-      }
-
-      .testimonial-card {
-        background: white;
-        padding: 3rem;
-        border-radius: 16px;
-        margin: 0 1rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      }
-
-      .testimonial-content {
-        font-size: 1.25rem;
-        margin-bottom: 2rem;
-        position: relative;
-      }
-
-      .testimonial-content::before {
-        content: '"';
-        font-size: 4rem;
-        color: var(--secondary);
-        opacity: 0.2;
-        position: absolute;
-        top: -1rem;
-        left: -1rem;
-      }
-
-      .testimonial-author {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .author-image {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background-size: cover;
-      }
-
-      .author-info h4 {
-        font-size: 1.25rem;
-        color: var(--primary);
-      }
-
-      .author-info p {
-        color: var(--text);
-        opacity: 0.8;
+        color: var(--accent);
       }
 
       /* Contact Section */
@@ -620,1214 +1637,6 @@
       .full-width {
         grid-column: 1 / -1;
       }
-
-      /* Estilos dos grupos de formulário */
-      .form-group {
-        margin-bottom: 1.25rem;
-        position: relative;
-      }
-
-      .form-group label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-        color: var(--primary);
-        font-size: 0.95rem;
-      }
-
-      .form-group label i {
-        color: var(--secondary);
-        font-size: 0.9rem;
-      }
-
-      .form-group input,
-      .form-group textarea,
-      .form-group select {
-        width: 100%;
-        padding: 0.9rem 1rem;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: all 0.2s ease;
-        background-color: rgba(0, 0, 0, 0.02);
-      }
-
-      .form-group input:focus,
-      .form-group textarea:focus,
-      .form-group select:focus {
-        outline: none;
-        border-color: var(--secondary);
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        background-color: white;
-      }
-
-      .form-group input::placeholder,
-      .form-group textarea::placeholder {
-        color: rgba(0, 0, 0, 0.3);
-      }
-
-      /* Select com ícone customizado */
-      .form-group select {
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233b82f6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        background-size: 1rem;
-        padding-right: 2.5rem;
-      }
-
-      /* Estados de validação */
-      .form-group.error input,
-      .form-group.error textarea,
-      .form-group.error select {
-        border-color: #e11d48;
-        box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
-      }
-
-      .form-group.success input,
-      .form-group.success textarea,
-      .form-group.success select {
-        border-color: #10b981;
-        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-      }
-
-      /* Mensagem de erro */
-      .error-message {
-        display: none;
-        color: #e11d48;
-        font-size: 0.8rem;
-        margin-top: 0.4rem;
-        font-weight: 500;
-        position: static;
-      }
-
-      .form-group.error .error-message {
-        display: block !important;
-      }
-
-      /* Entrada de telefone com código de país separado */
-      .phone-input-group {
-        position: relative;
-      }
-
-      .phone-input-container {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-        width: 100%;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-
-      .country-code {
-        flex: 0 0 56px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 8px 0 0 8px;
-        color: var(--text);
-        font-weight: 600;
-        text-align: center;
-        height: auto;
-      }
-
-      .phone-input-container input {
-        flex: 1;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-left: none;
-      }
-
-      /* Estados de validação do campo de telefone */
-      .form-group.error .country-code {
-        border-color: #e11d48;
-      }
-
-      .form-group.success .country-code {
-        border-color: #10b981;
-      }
-
-      .form-group.error .phone-input-container input {
-        border-color: #e11d48;
-      }
-
-      .form-group.success .phone-input-container input {
-        border-color: #10b981;
-      }
-
-      /* Aviso de privacidade */
-      .privacy-notice {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
-        padding: 1rem;
-        border-radius: 8px;
-        background-color: rgba(0, 0, 0, 0.02);
-        margin-bottom: 1.5rem;
-      }
-
-      .privacy-notice i {
-        color: var(--secondary);
-        margin-top: 0.2rem;
-      }
-
-      .privacy-notice p {
-        margin: 0;
-        font-size: 0.85rem;
-        color: var(--text);
-        opacity: 0.8;
-      }
-
-      /* Feedback do formulário */
-      .form-feedback {
-        padding: 1rem 1.25rem;
-        border-radius: 8px;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        background-color: #fef2f2;
-        border-left: 4px solid #e11d48;
-        animation: slideDown 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      }
-
-      .form-feedback.success {
-        background-color: #ecfdf5;
-        border-left: 4px solid #10b981;
-      }
-
-      .feedback-icon {
-        color: #e11d48;
-        font-size: 1.25rem;
-        flex-shrink: 0;
-      }
-
-      .form-feedback.success .feedback-icon {
-        color: #10b981;
-      }
-
-      .feedback-message {
-        font-weight: 500;
-        margin: 0;
-        color: #e11d48;
-        flex: 1;
-      }
-
-      .form-feedback.success .feedback-message {
-        color: #10b981;
-      }
-
-      /* Botão de envio */
-      .contact-form .cta-button {
-        width: 100%;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        text-transform: none;
-        font-size: 1rem;
-        letter-spacing: 0;
-        padding: 1rem 2rem;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-      }
-
-      .button-loader {
-        position: absolute;
-        font-size: 1.25rem;
-        display: none;
-        color: white;
-      }
-
-      .cta-button.loading {
-        background-color: var(--secondary);
-        opacity: 0.8;
-        cursor: not-allowed;
-      }
-
-      .cta-button.loading .button-text {
-        visibility: hidden;
-      }
-
-      .cta-button.loading .button-loader {
-        display: block;
-      }
-
-      /* Estado desabilitado do botão */
-      .cta-button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        box-shadow: none;
-        transform: none !important;
-      }
-
-      /* Mensagem de sucesso */
-      .success-message {
-        background: white;
-        border-radius: 16px;
-        text-align: center;
-        animation: fadeScale 0.5s ease;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        padding: 2.5rem;
-      }
-
-      .success-content {
-        padding: 3rem 2rem;
-      }
-
-      .success-icon {
-        font-size: 4rem;
-        color: #10b981;
-        margin-bottom: 1.5rem;
-      }
-
-      .success-message h3 {
-        font-size: 1.75rem;
-        margin-bottom: 1rem;
-        color: var(--primary);
-      }
-
-      .success-message p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-        color: var(--text);
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .success-details {
-        background: rgba(0, 0, 0, 0.02);
-        padding: 2rem;
-        margin-top: 2rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-      }
-
-      .success-detail-item {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 0.75rem;
-        justify-content: center;
-      }
-
-      .success-detail-item:last-child {
-        margin-bottom: 0;
-      }
-
-      .success-detail-item i {
-        color: var(--secondary);
-        font-size: 1.1rem;
-        width: 20px;
-        text-align: center;
-      }
-
-      .success-detail-item p {
-        margin: 0;
-        font-size: 1rem;
-      }
-
-      /* Footer */
-      footer {
-        background: var(--primary);
-        color: white;
-        padding: 6rem 0 2rem;
-      }
-
-      .footer-content {
-        display: grid;
-        grid-template-columns: 2fr repeat(3, 1fr);
-        gap: 4rem;
-        margin-bottom: 4rem;
-      }
-
-      .footer-info h4 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .footer-info p {
-        opacity: 0.8;
-        margin-bottom: 1rem;
-      }
-
-      .footer-links h4 {
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .footer-links a {
-        color: white;
-        opacity: 0.8;
-        text-decoration: none;
-        display: block;
-        margin-bottom: 1rem;
-        transition: opacity 0.3s;
-      }
-
-      .footer-links a:hover {
-        opacity: 1;
-      }
-
-      .footer-bottom {
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        text-align: center;
-        opacity: 0.8;
-        font-size: 0.875rem;
-      }
-
-      /* Social Icons */
-      .social-icons {
-        display: flex;
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-      }
-
-      .social-icons a {
-        color: white;
-        font-size: 1.5rem;
-        opacity: 0.8;
-        transition: opacity 0.3s, transform 0.3s;
-      }
-
-      .social-icons a:hover {
-        opacity: 1;
-        transform: translateY(-3px);
-      }
-
-      /* Animações */
-      @keyframes slideDown {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes fadeScale {
-        from {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      @keyframes shake {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        25% {
-          transform: translateX(-5px);
-        }
-        75% {
-          transform: translateX(5px);
-        }
-      }
-
-      /* Animação para o botão de envio */
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-
-      .pulse {
-        animation: pulse 1.5s infinite;
-      }
-
-      /* Tema Escuro */
-      [data-theme="dark"] {
-        --primary: #f8fafc;
-        --secondary: #60a5fa;
-        --accent: #34d399;
-        --text: #e2e8f0;
-        --light: #0f172a;
-        --dark-surface: #1e293b;
-        --dark-background: #0f172a;
-        --dark-card: #1e293b;
-        --gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      }
-
-      [data-theme="dark"] header {
-        background: rgba(0, 0, 0, 0.95);
-      }
-
-      [data-theme="dark"] body {
-        background-color: #000000;
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .cls-1 {
-        stroke: #ffffff !important;
-      }
-
-      [data-theme="dark"] .fas,
-      [data-theme="dark"] .fab {
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .service-icon {
-        background: #000000;
-        border: 1px solid #ffffff;
-      }
-
-      [data-theme="dark"] .value-card,
-      [data-theme="dark"] .service-card,
-      [data-theme="dark"] .case-card,
-      [data-theme="dark"] .testimonial-card {
-        background-color: #000000;
-        color: #ffffff;
-        border: 1px solid #ffffff;
-      }
-
-      [data-theme="dark"] .contact-form {
-        background-color: #000000;
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] h1,
-      [data-theme="dark"] h2,
-      [data-theme="dark"] h3,
-      [data-theme="dark"] h4,
-      [data-theme="dark"] p,
-      [data-theme="dark"] a {
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .section-header h2 {
-        color: var(--secondary);
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-      }
-
-      [data-theme="dark"] .about {
-        background: #000000;
-      }
-
-      [data-theme="dark"] .numbers {
-        background: #000000;
-        border-top: 1px solid #ffffff;
-        border-bottom: 1px solid #ffffff;
-      }
-
-      [data-theme="dark"] .services,
-      [data-theme="dark"] .cases,
-      [data-theme="dark"] .testimonials {
-        background-color: #000000;
-      }
-
-      [data-theme="dark"] .mission-vision {
-        background: #000000;
-        border: 1px solid #ffffff;
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .mission-vision h3 {
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .mission-vision p {
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .mission-vision h3 i {
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] .mobile-menu {
-        background: #000000;
-      }
-
-      [data-theme="dark"] .mobile-menu a {
-        color: #ffffff;
-        border-bottom: 1px solid #ffffff;
-      }
-
-      [data-theme="dark"] .mobile-menu a:hover {
-        background-color: #ffffff;
-        color: #000000;
-      }
-
-      [data-theme="dark"] .menu-button {
-        color: #ffffff;
-      }
-
-      [data-theme="dark"] footer {
-        background: #000000;
-        border-top: 1px solid #ffffff;
-      }
-
-      /* Customizador de tema */
-      .theme-customizer {
-        position: fixed;
-        right: 20px;
-        bottom: 20px;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .customizer-toggle {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        border: none;
-        background: var(--gradient);
-        color: var(--light);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .customizer-toggle:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-      }
-
-      .theme-toggle {
-        position: fixed;
-        top: 95px;
-        right: 20px;
-        z-index: 99;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        border: none;
-        background: var(--gradient);
-        color: var(--light);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-      }
-
-      .theme-toggle:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-      }
-
-      .theme-toggle i {
-        position: absolute;
-        transition: transform 0.5s ease;
-      }
-
-      .theme-toggle .fa-sun {
-        transform: rotate(0) scale(1);
-      }
-
-      .theme-toggle .fa-moon {
-        transform: rotate(100deg) scale(0);
-      }
-
-      [data-theme="dark"] .theme-toggle .fa-sun {
-        transform: rotate(-100deg) scale(0);
-      }
-
-      [data-theme="dark"] .theme-toggle .fa-moon {
-        transform: rotate(0) scale(1);
-      }
-
-      .customizer-panel {
-        position: fixed;
-        top: 0;
-        right: -360px;
-        width: 360px;
-        height: 100vh;
-        background: var(--light);
-        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-        z-index: 1000;
-        overflow-y: auto;
-      }
-
-      .customizer-panel.active {
-        transform: translateX(-360px);
-      }
-
-      .customizer-header {
-        padding: 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      }
-
-      .customizer-header h3 {
-        margin: 0;
-        color: var(--primary);
-        font-size: 1.25rem;
-      }
-
-      .close-button {
-        background: none;
-        border: none;
-        color: var(--text);
-        cursor: pointer;
-        font-size: 1.25rem;
-        padding: 0.5rem;
-        transition: color 0.3s ease;
-      }
-
-      .close-button:hover {
-        color: var(--primary);
-      }
-
-      .customizer-content {
-        padding: 1.5rem;
-      }
-
-      .customizer-section {
-        margin-bottom: 2rem;
-      }
-
-      .customizer-section h4 {
-        color: var(--primary);
-        margin-bottom: 1rem;
-        font-size: 1rem;
-      }
-
-      .color-palettes {
-        display: grid;
-        gap: 1rem;
-      }
-
-      .palette-button {
-        display: flex;
-        gap: 4px;
-        padding: 0.5rem;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        cursor: pointer;
-        background: none;
-        transition: border-color 0.3s ease;
-      }
-
-      .palette-button:hover {
-        border-color: var(--secondary);
-      }
-
-      .palette-button.active {
-        border-color: var(--accent);
-      }
-
-      .palette-button span {
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
-      }
-
-      .font-options {
-        display: grid;
-        gap: 0.5rem;
-      }
-
-      .font-button {
-        padding: 0.75rem 1rem;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        background: var(--light);
-        color: var(--text);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: left;
-        font-size: 1rem;
-      }
-
-      .font-button:hover {
-        border-color: var(--secondary);
-      }
-
-      .font-button.active {
-        border-color: var(--accent);
-        color: var(--primary);
-        background: var(--light);
-      }
-
-      /* Estilos base para animações */
-      .fade-up {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-      }
-
-      .fade-down {
-        opacity: 0;
-        transform: translateY(-30px);
-        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-      }
-
-      .fade-left {
-        opacity: 0;
-        transform: translateX(-30px);
-        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-      }
-
-      .fade-right {
-        opacity: 0;
-        transform: translateX(30px);
-        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-      }
-
-      .fade-scale {
-        opacity: 0;
-        transform: scale(0.9);
-        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-      }
-
-      /* Classe para elementos visíveis */
-      .visible {
-        opacity: 1;
-        transform: translate(0) scale(1);
-      }
-
-      /* Responsiveness */
-      @media (max-width: 1200px) {
-        .numbers-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 3rem;
-        }
-
-        .service-card {
-          flex: 0 0 calc(50% - 2rem);
-        }
-      }
-
-      @media (max-width: 1024px) {
-        .about-cards {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (max-width: 768px) {
-        .hero-content,
-        .contact-grid {
-          grid-template-columns: 1fr;
-          gap: 3rem;
-        }
-
-        .hero h1 {
-          font-size: 3rem;
-        }
-
-        .about-cards {
-          grid-template-columns: 1fr;
-        }
-
-        .values-grid {
-          grid-template-columns: 1fr;
-        }
-
-        nav ul {
-          display: none;
-        }
-
-        .numbers-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .menu-button {
-          display: block;
-        }
-
-        nav ul {
-          display: none;
-        }
-
-        .carousel {
-          overflow-x: auto;
-          overflow-y: hidden;
-          -webkit-overflow-scrolling: touch;
-          scroll-snap-type: x mandatory;
-          padding: 0.5rem;
-          margin: -0.5rem;
-        }
-
-        .carousel::-webkit-scrollbar {
-          display: none;
-        }
-
-        .carousel {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-
-        .carousel-track {
-          gap: 1rem;
-          transform: none !important;
-          transition: none !important;
-        }
-
-        .service-card {
-          flex: 0 0 85%;
-          scroll-snap-align: center;
-          margin: 0;
-        }
-
-        .footer-content {
-          grid-template-columns: 1fr;
-          gap: 3rem;
-          text-align: center;
-        }
-
-        .footer-links {
-          text-align: center;
-        }
-
-        .social-icons {
-          justify-content: center;
-        }
-
-        .footer-info p {
-          max-width: 100%;
-        }
-
-        .customizer-panel {
-          width: 100%;
-          right: -100%;
-        }
-
-        .customizer-panel.active {
-          transform: translateX(-100%);
-        }
-
-        .menu-button {
-          position: relative;
-        }
-
-        .mobile-menu.active ~ .menu-button {
-          position: fixed;
-          right: 20px;
-          top: 20px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .footer-bottom {
-          padding: 1.5rem 0;
-          font-size: 0.75rem;
-        }
-
-        .social-icons {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-      }
-
-      /* Otimização para dispositivos que preferem menos movimento */
-      @media (prefers-reduced-motion: reduce) {
-        .fade-up,
-        .fade-down,
-        .fade-left,
-        .fade-right,
-        .fade-scale {
-          transition: opacity 0.5s ease;
-          transform: none;
-        }
-
-        .visible {
-          transform: none;
-        }
-
-        html {
-          scroll-behavior: auto;
-        }
-      }
-
-      /* Melhorias para o Modo Escuro do Formulário */
-
-      /* Container do formulário em modo escuro */
-      [data-theme="dark"] .contact-form-wrapper {
-        background-color: #1e293b; /* Fundo mais claro que o corpo para contraste */
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      }
-
-      /* Campos do formulário em modo escuro */
-      [data-theme="dark"] .form-group input,
-      [data-theme="dark"] .form-group textarea,
-      [data-theme="dark"] .form-group select {
-        background-color: #0f172a; /* Fundo mais escuro para os campos */
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        color: #f8fafc; /* Texto bem claro para legibilidade */
-      }
-
-      [data-theme="dark"] .form-group input::placeholder,
-      [data-theme="dark"] .form-group textarea::placeholder {
-        color: rgba(255, 255, 255, 0.4); /* Placeholder mais visível */
-      }
-
-      /* Campo de telefone em modo escuro */
-      [data-theme="dark"] .country-code {
-        background-color: #0f172a; /* Mesmo fundo do input */
-        border-color: rgba(255, 255, 255, 0.15);
-        color: #f8fafc;
-      }
-
-      /* Estados de foco dos campos em modo escuro */
-      [data-theme="dark"] .form-group input:focus,
-      [data-theme="dark"] .form-group textarea:focus,
-      [data-theme="dark"] .form-group select:focus {
-        background-color: #1e293b; /* Contraste quando em foco */
-        border-color: var(--secondary);
-        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
-      }
-
-      /* Estados de validação em modo escuro */
-      [data-theme="dark"] .form-group.error input,
-      [data-theme="dark"] .form-group.error textarea,
-      [data-theme="dark"] .form-group.error select,
-      [data-theme="dark"] .form-group.error .country-code {
-        border-color: #f43f5e; /* Vermelho mais vibrante para erro */
-        box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2);
-      }
-
-      [data-theme="dark"] .form-group.success input,
-      [data-theme="dark"] .form-group.success textarea,
-      [data-theme="dark"] .form-group.success select,
-      [data-theme="dark"] .form-group.success .country-code {
-        border-color: #10b981; /* Verde mais vibrante para sucesso */
-        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-      }
-
-      /* Mensagens de erro em modo escuro */
-      [data-theme="dark"] .error-message {
-        color: #f43f5e; /* Vermelho mais vibrante */
-      }
-
-      /* Aviso de privacidade em modo escuro */
-      [data-theme="dark"] .privacy-notice {
-        background-color: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      [data-theme="dark"] .privacy-notice i {
-        color: var(--secondary);
-      }
-
-      [data-theme="dark"] .privacy-notice p {
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      /* Feedback em modo escuro */
-      [data-theme="dark"] .form-feedback {
-        background-color: rgba(15, 23, 42, 0.8);
-        border-left: 4px solid #f43f5e;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-
-      [data-theme="dark"] .form-feedback.success {
-        background-color: rgba(15, 23, 42, 0.8);
-        border-left: 4px solid #10b981;
-      }
-
-      [data-theme="dark"] .feedback-icon {
-        color: #f43f5e;
-      }
-
-      [data-theme="dark"] .form-feedback.success .feedback-icon {
-        color: #10b981;
-      }
-
-      [data-theme="dark"] .feedback-message {
-        color: #f8fafc;
-      }
-
-      /* Botão de envio em modo escuro */
-      [data-theme="dark"] .contact-form .cta-button {
-        background: #60a5fa; /* Azul mais vibrante */
-        color: #0f172a; /* Texto escuro para contraste */
-        font-weight: 600;
-      }
-
-      [data-theme="dark"] .contact-form .cta-button:hover {
-        background: #93c5fd; /* Azul mais claro ao passar o mouse */
-        box-shadow: 0 10px 20px rgba(96, 165, 250, 0.4);
-      }
-
-      [data-theme="dark"] .contact-form .cta-button:disabled,
-      [data-theme="dark"] .contact-form .cta-button.loading {
-        background: #60a5fa;
-        opacity: 0.7;
-      }
-
-      [data-theme="dark"] .contact-form .cta-button .button-loader {
-        color: #0f172a;
-      }
-
-      /* Componente de sucesso em modo escuro */
-      [data-theme="dark"] .success-message {
-        background-color: #1e293b;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-      }
-
-      [data-theme="dark"] .success-message h3 {
-        color: #f8fafc;
-      }
-
-      [data-theme="dark"] .success-message p {
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      [data-theme="dark"] .success-details {
-        background-color: rgba(15, 23, 42, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      [data-theme="dark"] .success-detail-item i {
-        color: #60a5fa;
-      }
-
-      /* Sistema de Toast para notificações */
-      .toast-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        max-width: 350px;
-        z-index: 9999;
-      }
-
-      .toast {
-        background-color: #fff;
-        color: #333;
-        border-radius: 8px;
-        padding: 1rem 1.25rem;
-        margin-bottom: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        animation: toastSlideIn 0.3s ease forwards;
-        max-width: 100%;
-        overflow: hidden;
-        border-left: 4px solid #3b82f6;
-      }
-
-      .toast.error {
-        border-left-color: #e11d48;
-      }
-
-      .toast.success {
-        border-left-color: #10b981;
-      }
-
-      .toast-icon {
-        flex-shrink: 0;
-        font-size: 1.25rem;
-        color: #3b82f6;
-      }
-
-      .toast.error .toast-icon {
-        color: #e11d48;
-      }
-
-      .toast.success .toast-icon {
-        color: #10b981;
-      }
-
-      .toast-content {
-        flex: 1;
-      }
-
-      .toast-title {
-        font-weight: 600;
-        margin-bottom: 0.2rem;
-        font-size: 0.95rem;
-      }
-
-      .toast-message {
-        font-size: 0.85rem;
-        color: #666;
-      }
-
-      .toast-close {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        color: #999;
-        padding: 0.25rem;
-        margin-left: auto;
-        flex-shrink: 0;
-      }
-
-      .toast-close:hover {
-        color: #333;
-      }
-
-      /* Dark mode para toasts */
-      [data-theme="dark"] .toast {
-        background-color: #1e293b;
-        color: #f8fafc;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      }
-
-      [data-theme="dark"] .toast-message {
-        color: #cbd5e1;
-      }
-
-      [data-theme="dark"] .toast-close {
-        color: #94a3b8;
-      }
-
-      [data-theme="dark"] .toast-close:hover {
-        color: #f8fafc;
-      }
-
-      @keyframes toastSlideIn {
-        from {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(0);
-          opacity: 1;
-        }
-      }
-
-      @keyframes toastSlideOut {
-        from {
-          transform: translateX(0);
-          opacity: 1;
-        }
-        to {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-      }
-
-      .toast.hiding {
-        animation: toastSlideOut 0.3s ease forwards;
-      }
     </style>
   </head>
   <body>
@@ -1843,7 +1652,7 @@
               <style>
                 .cls-1 {
                   fill: none;
-                  stroke: #0a192f;
+                  stroke: #466c82;
                   stroke-miterlimit: 10;
                   stroke-width: 5px;
                 }
@@ -1865,26 +1674,34 @@
           </svg>
           Proseti
         </a>
-        <nav>
-          <ul>
-            <li><a href="#inicio">Início</a></li>
-            <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#cases">Cases</a></li>
-            <li><a href="#depoimentos">Depoimentos</a></li>
-            <li><a href="#contato">Contato</a></li>
-          </ul>
-        </nav>
-        <button class="menu-button" aria-label="Menu" aria-expanded="false">
-          <i class="fas fa-bars"></i>
-        </button>
+        <div class="header-right">
+          <nav>
+            <ul>
+              <li><a href="#inicio">Início</a></li>
+              <li><a href="#sobre">Sobre</a></li>
+              <li><a href="#servicos">Serviços</a></li>
+              <li><a href="#contato">Contato</a></li>
+              <!-- <li>
+                <button
+                  id="theme-toggle"
+                  class="theme-toggle"
+                  aria-label="Alternar modo claro/escuro"
+                >
+                  <i class="fas fa-moon"></i>
+                  <i class="fas fa-sun"></i>
+                </button>
+              </li> -->
+            </ul>
+          </nav>
+          <button class="menu-button" aria-label="Menu" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
         <div class="mobile-menu">
           <ul>
             <li><a href="#inicio">Início</a></li>
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#cases">Cases</a></li>
-            <li><a href="#depoimentos">Depoimentos</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>
         </div>
@@ -1893,7 +1710,7 @@
 
     <section class="hero" id="inicio">
       <div class="container hero-content">
-        <div class="animate">
+        <div class="animate fade-right">
           <h1>Transforme seus processos empresariais</h1>
           <p>
             Soluções digitais e consultoria especializada para otimizar
@@ -1904,7 +1721,7 @@
             <i class="fas fa-arrow-right"></i>
           </a>
         </div>
-        <div class="animate">
+        <div class="animate fade-left">
           <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <!-- Gradientes -->
@@ -1915,8 +1732,8 @@
                 x2="100%"
                 y2="100%"
               >
-                <stop offset="0%" style="stop-color: #3b82f6" />
-                <stop offset="100%" style="stop-color: #60a5fa" />
+                <stop offset="0%" style="stop-color: #6f91a1" />
+                <stop offset="100%" style="stop-color: #466c82" />
               </linearGradient>
 
               <linearGradient
@@ -1926,8 +1743,8 @@
                 x2="100%"
                 y2="100%"
               >
-                <stop offset="0%" style="stop-color: #10b981" />
-                <stop offset="100%" style="stop-color: #34d399" />
+                <stop offset="0%" style="stop-color: #c1dae0" />
+                <stop offset="100%" style="stop-color: #eaffff" />
               </linearGradient>
 
               <linearGradient
@@ -2180,7 +1997,7 @@
 
     <section class="about" id="sobre">
       <div class="container">
-        <div class="section-header animate">
+        <div class="section-header animate fade-up">
           <h2>Nossa Essência</h2>
           <p>
             Conheça os princípios que direcionam nossa atuação e compromisso com
@@ -2189,7 +2006,7 @@
         </div>
 
         <div class="about-grid">
-          <div class="about-cards animate">
+          <div class="about-cards animate fade-up">
             <div class="mission-vision">
               <h3><i class="fas fa-bullseye"></i> Nossa Missão</h3>
               <p>
@@ -2220,60 +2037,135 @@
             </div>
           </div>
 
-          <div class="values-grid animate">
-            <div class="value-card">
-              <h4><i class="fas fa-star"></i> Excelência Técnica</h4>
-              <p>
-                Buscamos constantemente o aprimoramento técnico e a qualidade
-                superior em nossas entregas, mantendo-nos atualizados com as
-                melhores práticas do mercado.
-              </p>
-            </div>
+          <div class="methodology-section">
+            <h3 class="methodology-title animate fade-up">
+              Metodologia PROSETI
+            </h3>
+            <p class="methodology-subtitle animate fade-up">
+              Desenvolvemos uma abordagem estruturada representada pelas letras
+              do nome PROSETI, guiando nossos clientes desde a identificação de
+              oportunidades até a implementação de soluções inovadoras.
+            </p>
 
-            <div class="value-card">
-              <h4><i class="fas fa-lightbulb"></i> Inovação Pragmática</h4>
-              <p>
-                Desenvolvemos soluções inovadoras que são práticas e viáveis,
-                sempre considerando o contexto e as necessidades específicas de
-                cada cliente.
-              </p>
-            </div>
+            <div class="timeline-container animate fade-up">
+              <!-- Item 1: P -->
+              <div class="timeline-item">
+                <div class="timeline-circle">
+                  P
+                  <span class="timeline-step">1</span>
+                </div>
+                <div class="timeline-content">
+                  <i class="timeline-icon fas fa-search"></i>
+                  <h4 class="timeline-title">Prospecção</h4>
+                  <p class="timeline-description">
+                    Identificamos oportunidades e áreas de melhoria através de
+                    uma análise estratégica do negócio, estabelecendo as bases
+                    para a transformação digital.
+                  </p>
+                </div>
+              </div>
 
-            <div class="value-card">
-              <h4><i class="fas fa-handshake"></i> Transparência</h4>
-              <p>
-                Mantemos uma comunicação clara e honesta em todas as interações,
-                estabelecendo relacionamentos baseados na confiança e no
-                profissionalismo.
-              </p>
-            </div>
+              <!-- Item 2: R -->
+              <div class="timeline-item">
+                <div class="timeline-circle">
+                  R
+                  <span class="timeline-step">2</span>
+                </div>
+                <div class="timeline-content">
+                  <i class="timeline-icon fas fa-clipboard-list"></i>
+                  <h4 class="timeline-title">Reconhecimento</h4>
+                  <p class="timeline-description">
+                    Realizamos um diagnóstico aprofundado dos processos e fluxos
+                    de trabalho existentes, identificando gargalos e
+                    oportunidades de otimização.
+                  </p>
+                </div>
+              </div>
 
-            <div class="value-card">
-              <h4>
-                <i class="fas fa-chart-line"></i> Compromisso com Resultados
-              </h4>
-              <p>
-                Focamos em entregar valor mensurável e tangível, alinhando
-                nossas soluções aos objetivos estratégicos dos clientes.
-              </p>
-            </div>
+              <!-- Item 3: O -->
+              <div class="timeline-item">
+                <div class="timeline-circle">
+                  O
+                  <span class="timeline-step">3</span>
+                </div>
+                <div class="timeline-content">
+                  <i class="timeline-icon fas fa-sitemap"></i>
+                  <h4 class="timeline-title">Organização</h4>
+                  <p class="timeline-description">
+                    Estruturamos e documentamos os processos, criando uma base
+                    sólida para implementação de melhorias e eliminando
+                    redundâncias.
+                  </p>
+                </div>
+              </div>
 
-            <div class="value-card">
-              <h4><i class="fas fa-users"></i> Parceria Colaborativa</h4>
-              <p>
-                Trabalhamos em estreita colaboração com nossos clientes,
-                construindo relacionamentos duradouros e compartilhando
-                conhecimento para alcançar os melhores resultados.
-              </p>
-            </div>
+              <!-- Item 4: S -->
+              <div class="timeline-item">
+                <div class="timeline-circle">
+                  S
+                  <span class="timeline-step">4</span>
+                </div>
+                <div class="timeline-content">
+                  <i class="timeline-icon fas fa-project-diagram"></i>
+                  <h4 class="timeline-title">Simplificação</h4>
+                  <p class="timeline-description">
+                    Simplificamos fluxos complexos e eliminamos etapas
+                    desnecessárias para criar operações mais ágeis, intuitivas e
+                    eficientes.
+                  </p>
+                </div>
+              </div>
 
-            <div class="value-card">
-              <h4><i class="fas fa-sync-alt"></i> Adaptabilidade</h4>
-              <p>
-                Mantemos a flexibilidade para adequar nossas soluções às
-                mudanças do mercado e às necessidades específicas de cada
-                organização.
-              </p>
+              <!-- Item 5: E -->
+              <div class="timeline-item">
+                <div class="timeline-circle">
+                  E
+                  <span class="timeline-step">5</span>
+                </div>
+                <div class="timeline-content">
+                  <i class="timeline-icon fas fa-cogs"></i>
+                  <h4 class="timeline-title">Estruturação</h4>
+                  <p class="timeline-description">
+                    Desenvolvemos soluções tecnológicas e frameworks
+                    customizados alinhados aos processos otimizados e objetivos
+                    estratégicos.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Item 6: T -->
+              <div class="timeline-item">
+                <div class="timeline-circle">
+                  T
+                  <span class="timeline-step">6</span>
+                </div>
+                <div class="timeline-content">
+                  <i class="timeline-icon fas fa-sync-alt"></i>
+                  <h4 class="timeline-title">Transformação</h4>
+                  <p class="timeline-description">
+                    Implementamos as mudanças com monitoramento contínuo e
+                    ajustes em tempo real, garantindo uma transição suave e
+                    mínimo impacto operacional.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Item 7: I -->
+              <div class="timeline-item">
+                <div class="timeline-circle">
+                  I
+                  <span class="timeline-step">7</span>
+                </div>
+                <div class="timeline-content">
+                  <i class="timeline-icon fas fa-lightbulb"></i>
+                  <h4 class="timeline-title">Inovação</h4>
+                  <p class="timeline-description">
+                    Aplicamos melhorias contínuas e inovações tecnológicas para
+                    manter a competitividade e promover o crescimento
+                    sustentável do negócio.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2282,154 +2174,53 @@
 
     <section class="services" id="servicos">
       <div class="container">
-        <div class="section-header animate">
+        <div class="section-header animate fade-up">
           <h2>Nossas Soluções</h2>
           <p>
             Combinamos expertise em processos e tecnologia para entregar
             resultados excepcionais
           </p>
         </div>
-        <div class="carousel">
-          <div class="carousel-track">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <h3>Consultoria em Processos</h3>
-              <p>
-                Análise, redesenho e otimização de processos para maior
-                eficiência operacional e redução de custos.
-              </p>
+        <div class="services-grid animate fade-up">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-chart-line"></i>
             </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="fas fa-code"></i>
-              </div>
-              <h3>Desenvolvimento Web</h3>
-              <p>
-                Criação de sistemas web personalizados e intuitivos para
-                automatizar e simplificar operações.
-              </p>
+            <h3>Consultoria em Processos</h3>
+            <p>
+              Análise, redesenho e otimização de processos para maior eficiência
+              operacional e redução de custos.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-code"></i>
             </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="fas fa-robot"></i>
-              </div>
-              <h3>Automação de Processos</h3>
-              <p>
-                Implementação de soluções para automatizar tarefas repetitivas e
-                aumentar a produtividade.
-              </p>
+            <h3>Desenvolvimento Web</h3>
+            <p>
+              Criação de sistemas web personalizados e intuitivos para
+              automatizar e simplificar operações.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-robot"></i>
             </div>
+            <h3>Automação de Processos</h3>
+            <p>
+              Implementação de soluções para automatizar tarefas repetitivas e
+              aumentar a produtividade.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="numbers">
-      <div class="container">
-        <div class="numbers-grid">
-          <div class="number-item animate">
-            <h3>98%</h3>
-            <p>Satisfação dos clientes</p>
-          </div>
-          <div class="number-item animate">
-            <h3>150+</h3>
-            <p>Projetos entregues</p>
-          </div>
-          <div class="number-item animate">
-            <h3>45%</h3>
-            <p>Aumento médio em eficiência</p>
-          </div>
-          <div class="number-item animate">
-            <h3>12+</h3>
-            <p>Anos de experiência</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="cases" id="cases">
-      <div class="container">
-        <div class="section-header animate">
-          <h2>Cases de Sucesso</h2>
-          <p>Conheça algumas das transformações que ajudamos a realizar</p>
-        </div>
-        <div class="cases-grid">
-          <div class="case-card animate">
-            <div
-              class="case-image"
-              style="background-image: url('/api/placeholder/400/250')"
-            ></div>
-            <div class="case-content">
-              <h3>Indústria Manufatureira</h3>
-              <p>
-                Redução de 40% no tempo de processamento de pedidos através da
-                automação de processos.
-              </p>
-            </div>
-          </div>
-          <div class="case-card animate">
-            <div
-              class="case-image"
-              style="background-image: url('/api/placeholder/400/250')"
-            ></div>
-            <div class="case-content">
-              <h3>Empresa de Logística</h3>
-              <p>
-                Sistema integrado de gestão que aumentou a eficiência
-                operacional em 60%.
-              </p>
-            </div>
-          </div>
-          <div class="case-card animate">
-            <div
-              class="case-image"
-              style="background-image: url('/api/placeholder/400/250')"
-            ></div>
-            <div class="case-content">
-              <h3>Varejo</h3>
-              <p>
-                Implementação de dashboard em tempo real resultando em decisões
-                mais ágeis.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="testimonials" id="depoimentos">
-      <div class="container">
-        <div class="section-header animate">
-          <h2>O que dizem nossos clientes</h2>
-          <p>A opinião de quem já transformou seus processos com a Proseti</p>
-        </div>
-        <div class="testimonial-card animate">
-          <div class="testimonial-content">
-            "A Proseti não apenas modernizou nossos processos, mas também nos
-            ajudou a criar uma cultura de melhoria contínua. Os resultados
-            superaram nossas expectativas."
-          </div>
-          <div class="testimonial-author">
-            <div
-              class="author-image"
-              style="background-image: url('/api/placeholder/60/60')"
-            ></div>
-            <div class="author-info">
-              <h4>Maria Silva</h4>
-              <p>Diretora de Operações - Tech Solutions</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção de Contato Completa -->
+    <!-- Seção de Contato -->
     <section class="contact" id="contato">
       <div class="container">
         <div class="contact-grid">
-          <div class="contact-info animate">
+          <div class="contact-info animate fade-right">
             <h2>Vamos conversar?</h2>
             <p>
               Estamos prontos para entender seus desafios e propor soluções
@@ -2437,8 +2228,8 @@
             </p>
           </div>
 
-          <!-- Formulário modernizado com layout em colunas e melhor UX -->
-          <div class="contact-form-wrapper animate">
+          <!-- Formulário de contato -->
+          <div class="contact-form-wrapper animate fade-left">
             <form class="contact-form">
               <!-- Grid de 2 colunas para inputs -->
               <div class="form-grid">
@@ -2472,7 +2263,7 @@
                     <span class="error-message"></span>
                   </div>
 
-                  <!-- Campo de telefone corrigido -->
+                  <!-- Campo de telefone -->
                   <div class="form-group phone-input-group">
                     <label for="phone">
                       <i class="fas fa-phone-alt"></i>
@@ -2629,9 +2420,9 @@
           <div class="footer-links">
             <h4>Navegação</h4>
             <a href="#inicio">Início</a>
+            <a href="#sobre">Sobre</a>
             <a href="#servicos">Serviços</a>
-            <a href="#cases">Cases</a>
-            <a href="#depoimentos">Depoimentos</a>
+            <a href="#contato">Contato</a>
           </div>
           <div class="footer-links">
             <h4>Serviços</h4>
@@ -2662,96 +2453,7 @@
       </div>
     </footer>
 
-    <div id="theme-customizer" class="theme-customizer">
-      <button
-        id="theme-toggle"
-        class="theme-toggle"
-        aria-label="Alternar modo claro/escuro"
-      >
-        <i class="fas fa-sun"></i>
-        <i class="fas fa-moon"></i>
-      </button>
-
-      <button
-        id="customizer-toggle"
-        class="customizer-toggle"
-        aria-label="Abrir personalizador"
-      >
-        <i class="fas fa-palette"></i>
-      </button>
-
-      <div class="customizer-panel">
-        <div class="customizer-header">
-          <h3>Personalizar Tema</h3>
-          <button class="close-button" aria-label="Fechar">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-
-        <div class="customizer-content">
-          <div class="customizer-section">
-            <h4>Paleta de Cores</h4>
-            <div class="color-palettes">
-              <button class="palette-button active" data-palette="original">
-                <span style="background: #0f172a"></span>
-                <span style="background: #3b82f6"></span>
-                <span style="background: #10b981"></span>
-                <span style="background: #334155"></span>
-                <span style="background: #f8fafc"></span>
-              </button>
-              <button class="palette-button" data-palette="1">
-                <span style="background: #013a40"></span>
-                <span style="background: #025939"></span>
-                <span style="background: #038c4c"></span>
-                <span style="background: #05f26c"></span>
-                <span style="background: #04d960"></span>
-              </button>
-              <button class="palette-button" data-palette="2">
-                <span style="background: #11091a"></span>
-                <span style="background: #2f2f4d"></span>
-                <span style="background: #626970"></span>
-                <span style="background: #bab195"></span>
-                <span style="background: #e8d18e"></span>
-              </button>
-              <button class="palette-button" data-palette="3">
-                <span style="background: #09403a"></span>
-                <span style="background: #072623"></span>
-                <span style="background: #f2f2f2"></span>
-                <span style="background: #8c8c8c"></span>
-                <span style="background: #0d0d0d"></span>
-              </button>
-              <button class="palette-button" data-palette="4">
-                <span style="background: #bdbf90"></span>
-                <span style="background: #35352b"></span>
-                <span style="background: #e7e9c4"></span>
-                <span style="background: #ec6c2b"></span>
-                <span style="background: #feae4b"></span>
-              </button>
-              <button class="palette-button" data-palette="5">
-                <span style="background: #466c82"></span>
-                <span style="background: #6f91a1"></span>
-                <span style="background: #98b5c1"></span>
-                <span style="background: #c1dae0"></span>
-                <span style="background: #eaffff"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="customizer-section">
-            <h4>Tipografia</h4>
-            <div class="font-options">
-              <button class="font-button" data-font="Inter">Inter</button>
-              <button class="font-button" data-font="Arial">Arial</button>
-              <button class="font-button" data-font="Montserrat">
-                Montserrat
-              </button>
-              <button class="font-button" data-font="Roboto">Roboto</button>
-              <button class="font-button" data-font="Poppins">Poppins</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Botão de alternância de tema removido daqui, agora está no header -->
 
     <!-- Container para notificações toast -->
     <div class="toast-container"></div>
@@ -3285,9 +2987,9 @@
         // Obtém a cor atual da variável CSS
         const styles = getComputedStyle(document.documentElement);
         if (theme === "dark") {
-          return "#000000";
+          return "#1E293B";
         }
-        return styles.getPropertyValue("--secondary").trim();
+        return styles.getPropertyValue("--primary").trim();
       };
 
       const updateThemeColor = (theme) => {
@@ -3310,242 +3012,18 @@
         updateThemeColor(newTheme);
       };
 
-      // Paletas de cores
-      const palettes = {
-        original: {
-          primary: "#0f172a",
-          secondary: "#3b82f6",
-          accent: "#10b981",
-          text: "#334155",
-          light: "#f8fafc",
-        },
-        1: {
-          primary: "#013A40",
-          secondary: "#038C4C",
-          accent: "#05F26C",
-          text: "#025939",
-          light: "#04D960",
-        },
-        2: {
-          primary: "#11091A",
-          secondary: "#2F2F4D",
-          accent: "#E8D18E",
-          text: "#626970",
-          light: "#BAB195",
-        },
-        3: {
-          primary: "#09403A",
-          secondary: "#072623",
-          accent: "#8C8C8C",
-          text: "#0D0D0D",
-          light: "#F2F2F2",
-        },
-        4: {
-          primary: "#35352B",
-          secondary: "#EC6C2B",
-          accent: "#FEAE4B",
-          text: "#35352B",
-          light: "#E7E9C4",
-        },
-        5: {
-          primary: "#466C82",
-          secondary: "#6F91A1",
-          accent: "#C1DAE0",
-          text: "#98B5C1",
-          light: "#EAFFFF",
-        },
-      };
-
-      // Carrega fontes do Google Fonts
-      const loadGoogleFonts = () => {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href =
-          "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap";
-        document.head.appendChild(link);
-      };
-
       // Inicialização
       document.addEventListener("DOMContentLoaded", () => {
-        loadGoogleFonts();
-
         // Inicializa tema
         const currentTheme = initializeTheme();
 
         // Event Listeners
         const themeToggle = document.getElementById("theme-toggle");
-        const customizerToggle = document.getElementById("customizer-toggle");
-        const customizerPanel = document.querySelector(".customizer-panel");
-        const closeButton = document.querySelector(".close-button");
 
         // Toggle tema claro/escuro
         if (themeToggle) {
           themeToggle.addEventListener("click", toggleTheme);
         }
-
-        // Abre/fecha painel de customização
-        if (customizerToggle && customizerPanel) {
-          customizerToggle.addEventListener("click", () => {
-            customizerPanel.classList.add("active");
-          });
-
-          if (closeButton) {
-            closeButton.addEventListener("click", () => {
-              customizerPanel.classList.remove("active");
-            });
-          }
-
-          // Clique fora fecha o painel
-          document.addEventListener("click", (e) => {
-            if (
-              customizerPanel &&
-              !customizerPanel.contains(e.target) &&
-              customizerToggle &&
-              !customizerToggle.contains(e.target) &&
-              customizerPanel.classList.contains("active")
-            ) {
-              customizerPanel.classList.remove("active");
-            }
-          });
-        }
-
-        // Paletas de cores
-        const paletteButtons = document.querySelectorAll(".palette-button");
-        paletteButtons.forEach((button) => {
-          if (button) {
-            button.addEventListener("click", () => {
-              const paletteId = button.dataset.palette;
-              const palette = palettes[paletteId];
-
-              // Remove active class de todos os botões
-              paletteButtons.forEach((btn) => btn.classList.remove("active"));
-              // Adiciona active class ao botão clicado
-              button.classList.add("active");
-
-              // Aplica a paleta
-              document.documentElement.style.setProperty(
-                "--primary",
-                palette.primary
-              );
-              document.documentElement.style.setProperty(
-                "--secondary",
-                palette.secondary
-              );
-              document.documentElement.style.setProperty(
-                "--accent",
-                palette.accent
-              );
-              document.documentElement.style.setProperty(
-                "--text",
-                palette.text
-              );
-              document.documentElement.style.setProperty(
-                "--light",
-                palette.light
-              );
-              document.documentElement.style.setProperty(
-                "--gradient",
-                `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`
-              );
-
-              // Atualiza a cor do theme-color
-              const currentTheme =
-                document.documentElement.getAttribute("data-theme");
-              updateThemeColor(currentTheme);
-
-              // Salva a paleta selecionada
-              localStorage.setItem("selectedPalette", paletteId);
-            });
-          }
-        });
-
-        // Fontes
-        const fontButtons = document.querySelectorAll(".font-button");
-        fontButtons.forEach((button) => {
-          if (button) {
-            // Define o estilo do botão com a fonte correspondente
-            button.style.fontFamily = button.dataset.font;
-
-            button.addEventListener("click", () => {
-              const fontFamily = button.dataset.font;
-
-              // Remove active class de todos os botões
-              fontButtons.forEach((btn) => btn.classList.remove("active"));
-              // Adiciona active class ao botão clicado
-              button.classList.add("active");
-
-              // Aplica a fonte
-              document.body.style.setProperty("--font-family", fontFamily);
-              document.querySelectorAll("*").forEach((element) => {
-                if (
-                  !element.classList.contains("fas") &&
-                  !element.classList.contains("fab")
-                ) {
-                  element.style.fontFamily = `${fontFamily}, system-ui, sans-serif`;
-                }
-              });
-
-              // Salva a fonte selecionada
-              localStorage.setItem("selectedFont", fontFamily);
-            });
-          }
-        });
-
-        // Carrega configurações salvas
-        const loadSavedSettings = () => {
-          // Carrega paleta
-          const savedPalette = localStorage.getItem("selectedPalette");
-          if (savedPalette) {
-            const paletteButton = document.querySelector(
-              `[data-palette="${savedPalette}"]`
-            );
-            if (paletteButton) {
-              paletteButton.click();
-            }
-          }
-
-          // Carrega fonte
-          const savedFont = localStorage.getItem("selectedFont");
-          if (savedFont) {
-            const fontButton = document.querySelector(
-              `[data-font="${savedFont}"]`
-            );
-            if (fontButton) {
-              fontButton.click();
-            }
-          }
-        };
-
-        // Inicializa configurações salvas
-        loadSavedSettings();
-
-        // Prevenção de flash de tema incorreto
-        document.documentElement.style.visibility = "visible";
-
-        // Configuração do Intersection Observer para animações de entrada
-        const observerOptions = {
-          threshold: 0.15,
-          rootMargin: "0px 0px -10% 0px",
-        };
-
-        // Observer simplificado apenas para entrada dos elementos
-        const appearOnScroll = new IntersectionObserver((entries, observer) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-
-            entry.target.classList.add("visible");
-            // Removemos o observer após a animação para melhor performance
-            observer.unobserve(entry.target);
-          });
-        }, observerOptions);
-
-        // Observa elementos para animações
-        const animatedElements = document.querySelectorAll(
-          ".fade-up, .fade-down, .fade-left, .fade-right, .fade-scale"
-        );
-        animatedElements.forEach((el) => {
-          appearOnScroll.observe(el);
-        });
 
         // Header scroll effect
         function initHeaderScroll() {
@@ -3623,6 +3101,31 @@
             }
           });
         }
+
+        // Configuração do Intersection Observer para animações de entrada
+        const observerOptions = {
+          threshold: 0.15,
+          rootMargin: "0px 0px -10% 0px",
+        };
+
+        // Observer simplificado apenas para entrada dos elementos
+        const appearOnScroll = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
+            entry.target.classList.add("visible");
+            // Removemos o observer após a animação para melhor performance
+            observer.unobserve(entry.target);
+          });
+        }, observerOptions);
+
+        // Observa elementos para animações
+        const animatedElements = document.querySelectorAll(
+          ".fade-up, .fade-down, .fade-left, .fade-right, .fade-scale"
+        );
+        animatedElements.forEach((el) => {
+          appearOnScroll.observe(el);
+        });
 
         // Inicializa todas as funcionalidades
         initMobileMenu();
